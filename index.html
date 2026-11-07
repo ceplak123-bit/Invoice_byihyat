@@ -8,9 +8,9 @@
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body {
-    font-family: 'Segoe UI', 'Comic Sans MS', Tahoma, sans-serif;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
     background: linear-gradient(135deg, #fcf9f9 0%, #f4ebed 100%);
-    padding: 25px 15px 100px;
+    padding: 20px 10px 100px;
     color: #331015;
     min-height: 100vh;
   }
@@ -21,27 +21,19 @@
     max-width: 900px;
     margin: 0 auto 15px;
     background: #fff;
-    border-radius: 15px;
-    padding: 6px;
+    border-radius: 12px;
+    padding: 5px;
     box-shadow: 0 4px 15px rgba(128, 0, 32, 0.15);
-    gap: 6px;
+    gap: 5px;
   }
   .tab-switch button {
-    flex: 1;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    font-size: 14px;
-    font-weight: bold;
-    cursor: pointer;
-    background: transparent;
-    color: #800020;
-    transition: all 0.25s;
+    flex: 1; padding: 10px; border: none; border-radius: 8px;
+    font-size: 13px; font-weight: bold; cursor: pointer;
+    background: transparent; color: #800020; transition: all 0.2s;
   }
   .tab-switch button.active {
     background: linear-gradient(135deg, #5E1B2B, #800020);
     color: #fff;
-    box-shadow: 0 4px 10px rgba(128, 0, 32, 0.3);
   }
 
   /* ============ LAYOUT ============ */
@@ -50,111 +42,83 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 25px;
+    gap: 20px;
     align-items: start;
   }
 
   /* ============ FORM PANEL ============ */
   .form-panel {
-    background: #fffdfd;
-    border-radius: 22px;
-    box-shadow: 0 12px 35px rgba(128, 0, 32, 0.15);
-    border: 3px dashed #d4a5b1;
-    overflow: hidden;
+    background: #fffdfd; border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(128, 0, 32, 0.15);
+    border: 2px dashed #d4a5b1; overflow: hidden;
   }
   .form-header {
     background: linear-gradient(135deg, #4A0E17 0%, #800020 50%, #A83C51 100%);
-    padding: 20px 25px;
-    color: #fff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    padding: 15px 20px; color: #fff;
+    display: flex; justify-content: space-between; align-items: center;
   }
-  .form-header h2 { font-size: 20px; margin-bottom: 4px; color: #fff; }
-  .form-header p { font-size: 12px; font-style: italic; color: #f0d5da; }
+  .form-header h2 { font-size: 18px; margin-bottom: 2px; }
+  .form-header p { font-size: 11px; font-style: italic; color: #f0d5da; }
   .btn-history {
-    background: #fff; color: #800020; border: 2px solid #d4a5b1;
-    padding: 8px 15px; border-radius: 10px; font-weight: bold;
-    font-size: 12px; cursor: pointer; transition: all 0.2s;
-    display: flex; align-items: center; gap: 5px;
+    background: #fff; color: #800020; border: 1px solid #d4a5b1;
+    padding: 6px 12px; border-radius: 8px; font-weight: bold;
+    font-size: 11px; cursor: pointer; transition: all 0.2s;
   }
-  .btn-history:hover { background: #fcf6f8; transform: scale(1.05); }
+  .btn-history:hover { background: #fcf6f8; }
 
-  .form-body { padding: 22px 25px; }
-  .form-section {
-    margin-bottom: 22px; padding-bottom: 18px;
-    border-bottom: 1.5px dashed #e6d3d8;
-  }
+  .form-body { padding: 18px 20px; }
+  .form-section { margin-bottom: 18px; padding-bottom: 15px; border-bottom: 1px dashed #e6d3d8; }
   .form-section:last-child { border-bottom: none; }
-  .form-section h3 {
-    font-size: 13px; color: #800020; text-transform: uppercase;
-    letter-spacing: 1px; margin-bottom: 14px; display: flex; align-items: center; gap: 6px;
-  }
-  .field { margin-bottom: 12px; }
-  .field label {
-    display: block; font-size: 12px; font-weight: 600;
-    color: #5E1B2B; margin-bottom: 5px;
-  }
+  .form-section h3 { font-size: 12px; color: #800020; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+  
+  .field { margin-bottom: 10px; }
+  .field label { display: block; font-size: 11px; font-weight: 600; color: #5E1B2B; margin-bottom: 4px; }
   .field input, .field select, .field textarea {
-    width: 100%; padding: 10px 14px; border: 2px solid #e6d3d8;
-    border-radius: 10px; font-size: 14px; font-family: inherit;
-    color: #331015; background: #fffdfd; transition: all 0.2s; outline: none;
+    width: 100%; padding: 8px 12px; border: 1px solid #e6d3d8;
+    border-radius: 8px; font-size: 13px; font-family: inherit;
+    color: #331015; background: #fffdfd; outline: none;
   }
-  .field input:focus, .field select:focus, .field textarea:focus {
-    border-color: #800020; background: #fff; box-shadow: 0 0 0 3px rgba(128, 0, 32, 0.1);
-  }
-  .field textarea { resize: vertical; min-height: 60px; }
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .field-row.three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: #800020; }
+  .field textarea { resize: vertical; min-height: 50px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .field-row.three { grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
 
-  /* item rows */
   .item-row {
-    background: #fcf6f8; border: 2px solid #e6d3d8; border-radius: 12px;
-    padding: 12px; margin-bottom: 10px; display: grid;
-    grid-template-columns: 2fr 0.7fr 1.2fr auto; gap: 8px; align-items: end;
+    background: #fcf6f8; border: 1px solid #e6d3d8; border-radius: 8px;
+    padding: 10px; margin-bottom: 8px; display: grid;
+    grid-template-columns: 2fr 0.7fr 1.2fr auto; gap: 6px; align-items: end;
   }
   .item-row .field { margin-bottom: 0; }
-  .item-row .field label { font-size: 10px; }
-  .item-row .field input { padding: 8px 10px; font-size: 13px; }
+  .item-row .field label { font-size: 9px; }
+  .item-row .field input { padding: 6px 8px; font-size: 12px; }
   .btn-remove {
     background: #fce4e6; border: none; color: #b91c1c;
-    width: 38px; height: 38px; border-radius: 10px;
-    font-size: 18px; font-weight: bold; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
+    width: 32px; height: 32px; border-radius: 8px;
+    font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;
   }
-  .btn-remove:hover { background: #fca5a5; }
   .btn-add {
-    width: 100%; padding: 12px; background: #fdf5f6;
-    border: 2px dashed #d4a5b1; border-radius: 12px;
-    color: #800020; font-weight: bold; font-size: 14px; cursor: pointer;
+    width: 100%; padding: 10px; background: #fdf5f6;
+    border: 1px dashed #d4a5b1; border-radius: 8px;
+    color: #800020; font-weight: bold; font-size: 12px; cursor: pointer;
   }
-  .btn-add:hover { background: #fcecee; }
 
-  /* totals */
   .totals-preview {
-    background: #fcf6f8; border-radius: 12px; padding: 15px 18px;
-    border: 2px dashed #d4a5b1; margin-top: 10px;
+    background: #fcf6f8; border-radius: 8px; padding: 12px;
+    border: 1px dashed #d4a5b1; margin-top: 8px;
   }
-  .totals-preview .row {
-    display: flex; justify-content: space-between; font-size: 13px; padding: 5px 0; color: #5E1B2B;
-  }
-  .totals-preview .row.total {
-    border-top: 2px solid #800020; margin-top: 8px;
-    padding-top: 10px; font-size: 17px; font-weight: bold; color: #4A0E17;
-  }
+  .totals-preview .row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; color: #5E1B2B; }
+  .totals-preview .row.total { border-top: 1px solid #800020; margin-top: 6px; padding-top: 8px; font-size: 15px; font-weight: bold; color: #4A0E17; }
 
   /* ============ PREVIEW PANEL ============ */
   .preview-panel { position: sticky; top: 20px; max-height: 95vh; overflow-y: auto; padding-bottom: 20px; }
-  
   .preview-selector {
-    display: flex; gap: 8px; margin-bottom: 15px;
-    background: #fff; padding: 6px; border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(128,0,32,0.1);
-    border: 2px solid #e6d3d8; position: sticky; top: 0; z-index: 10;
+    display: flex; gap: 6px; margin-bottom: 10px;
+    background: #fff; padding: 5px; border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(128,0,32,0.1); border: 1px solid #e6d3d8;
   }
   .preview-selector button {
-    flex: 1; padding: 10px; border: none; border-radius: 8px;
-    font-weight: bold; font-size: 13px; cursor: pointer;
+    flex: 1; padding: 8px; border: none; border-radius: 6px;
+    font-weight: bold; font-size: 12px; cursor: pointer;
     background: transparent; color: #800020; transition: all 0.2s;
   }
   .preview-selector button.active { background: #800020; color: #fff; }
@@ -162,143 +126,133 @@
   .hide-preview { display: none !important; }
 
   .invoice-container, .receipt-container {
-    background: #fffdfd; border-radius: 22px;
-    box-shadow: 0 12px 35px rgba(128, 0, 32, 0.15);
-    border: 3px dashed #d4a5b1; overflow: hidden; margin-bottom: 25px;
+    background: #fffdfd; border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(128, 0, 32, 0.15);
+    border: 2px dashed #d4a5b1; overflow: hidden; margin-bottom: 20px;
   }
   
   /* --- STYLE INVOICE --- */
   .header {
     background: linear-gradient(135deg, #4A0E17 0%, #800020 50%, #A83C51 100%);
-    padding: 25px 30px; position: relative;
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
+    padding: 20px; position: relative;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
   }
-  .header::after {
-    content: "✈"; position: absolute; font-size: 50px; opacity: 0.1; right: 15px; top: 8px; transform: rotate(-15deg); color: #fff;
-  }
-  .brand { display: flex; align-items: center; gap: 15px; z-index: 1; }
+  .brand { display: flex; align-items: center; gap: 12px; z-index: 1; }
   .brand-logo {
-    width: 65px; height: 65px; background: #fff; border-radius: 50%;
+    width: 55px; height: 55px; background: #fff; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2); flex-shrink: 0; overflow: hidden; border: 2px solid #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2); flex-shrink: 0; overflow: hidden; border: 2px solid #fff;
   }
   .brand-logo img { width: 100%; height: 100%; object-fit: contain; }
-  .brand-text { margin-left: 5px; }
-  .brand-text h1 { font-size: 22px; color: #fff; letter-spacing: 0.5px; }
-  .brand-text p { font-size: 11px; color: #f0d5da; font-style: italic; font-weight: bold; margin-top: 2px; }
+  .brand-text h1 { font-size: 20px; color: #fff; letter-spacing: 0.5px; }
+  .brand-text p { font-size: 10px; color: #f0d5da; font-style: italic; font-weight: bold; }
   .invoice-title { text-align: right; z-index: 1; }
-  .invoice-title h2 { font-size: 24px; color: #fff; letter-spacing: 2px; }
+  .invoice-title h2 { font-size: 22px; color: #fff; letter-spacing: 1.5px; }
   .inv-no {
-    font-size: 12px; color: #4A0E17; background: #f4ebed;
-    padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 6px; font-weight: bold;
+    font-size: 11px; color: #4A0E17; background: #f4ebed;
+    padding: 3px 10px; border-radius: 15px; display: inline-block; margin-top: 4px; font-weight: bold;
   }
 
   .scenery {
     background: linear-gradient(180deg, #fdf5f6 0%, #f4ebed 100%);
-    padding: 15px 20px 10px; display: flex; justify-content: space-around;
-    align-items: flex-end; border-bottom: 3px dotted #d4a5b1; min-height: 100px; gap: 8px;
+    padding: 10px 15px; display: flex; justify-content: space-around;
+    align-items: flex-end; border-bottom: 2px dotted #d4a5b1; gap: 5px;
   }
-  .scenery svg { display: block; max-width: 75px; height: auto; }
-  .scenery-label { text-align: center; font-size: 9px; color: #800020; font-weight: bold; margin-top: 3px; }
-  .plane-anim { animation: fly 3s ease-in-out infinite alternate; }
-  @keyframes fly { from { transform: translateX(-8px) translateY(0); } to { transform: translateX(8px) translateY(-6px); } }
+  .scenery svg { display: block; max-width: 60px; height: auto; }
+  .scenery-label { text-align: center; font-size: 9px; color: #800020; font-weight: bold; margin-top: 2px; }
 
-  .body-content { padding: 18px 22px; }
-  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
-  .info-card { background: #fcf6f8; border-left: 4px solid #800020; border-radius: 10px; padding: 12px 14px; }
-  .info-card h3 { font-size: 10px; color: #800020; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 6px; }
-  .info-card p { font-size: 12px; line-height: 1.5; color: #331015; word-break: break-word; }
+  .body-content { padding: 15px 20px; }
+  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
+  .info-card { background: #fcf6f8; border-left: 3px solid #800020; border-radius: 8px; padding: 10px; }
+  .info-card h3 { font-size: 10px; color: #800020; text-transform: uppercase; margin-bottom: 5px; }
+  .info-card p { font-size: 11px; line-height: 1.4; color: #331015; word-break: break-word; }
   .info-card p strong { color: #4A0E17; }
 
-  table { width: 100%; border-collapse: collapse; margin-bottom: 15px; border-radius: 10px; overflow: hidden; }
+  table { width: 100%; border-collapse: collapse; margin-bottom: 15px; table-layout: fixed; }
   thead { background: linear-gradient(135deg, #800020, #5E1B2B); }
-  thead th { padding: 10px 12px; text-align: left; color: #fff; font-size: 11px; letter-spacing: 0.3px; }
+  thead th { padding: 8px 10px; text-align: left; color: #fff; font-size: 11px; }
   tbody tr { background: #fffdfd; border-bottom: 1px solid #f4ebed; }
   tbody tr:nth-child(even) { background: #fcf6f8; }
-  tbody td { padding: 10px 12px; font-size: 12px; color: #331015; word-break: break-word; }
-  tbody td:last-child, thead th:last-child { text-align: right; }
+  tbody td { padding: 8px 10px; font-size: 11px; color: #331015; word-break: break-word; }
 
   .summary { display: flex; justify-content: flex-end; }
-  .summary-box { width: 260px; background: #fcf6f8; border-radius: 12px; padding: 14px 18px; border: 2px dashed #d4a5b1; }
-  .summary-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 12px; color: #5E1B2B; }
-  .summary-row.total { border-top: 2px solid #800020; margin-top: 6px; padding-top: 10px; font-size: 15px; font-weight: bold; color: #4A0E17; }
+  .summary-box { width: 240px; background: #fcf6f8; border-radius: 10px; padding: 12px; border: 1px dashed #d4a5b1; }
+  .summary-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 11px; color: #5E1B2B; }
+  .summary-row.total { border-top: 2px solid #800020; margin-top: 5px; padding-top: 8px; font-size: 14px; font-weight: bold; color: #4A0E17; }
   .summary-row .label-discount { color: #b91c1c; }
 
   .footer {
     background: linear-gradient(135deg, #5E1B2B, #800020);
-    padding: 15px 22px; text-align: center; font-size: 11px; color: #f4ebed;
+    padding: 12px 20px; text-align: center; font-size: 10px; color: #f4ebed;
   }
-  .footer .thanks { font-size: 13px; font-weight: bold; margin-bottom: 6px; color: #fff; }
-  .footer .bank { background: rgba(255,255,255,0.15); display: inline-block; padding: 6px 15px; border-radius: 20px; margin-top: 6px; font-weight: bold; font-size: 11px; border: 1px solid rgba(255,255,255,0.3); }
-  .footer .contact { margin-top: 8px; font-size: 10px; line-height: 1.7; }
-  .footer .contact span { margin: 0 5px; }
+  .footer .thanks { font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #fff; }
+  .footer .bank { background: rgba(255,255,255,0.15); display: inline-block; padding: 5px 12px; border-radius: 15px; margin-top: 5px; font-weight: bold; font-size: 10px; border: 1px solid rgba(255,255,255,0.3); }
+  .footer .contact { margin-top: 5px; }
 
   /* --- STYLE TANDA TERIMA --- */
   .receipt-header {
     background: linear-gradient(135deg, #4A0E17 0%, #800020 50%, #A83C51 100%);
-    padding: 25px 25px 20px;
-    display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 12px;
-    position: relative;
+    padding: 20px 15px; display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 8px;
   }
-  .receipt-header .brand { flex-direction: column; text-align: center; gap: 8px; margin-bottom: 5px; }
-  .receipt-header .brand-logo { width: 60px; height: 60px; }
-  .receipt-header h1 { font-size: 20px; color: #fff; letter-spacing: 1.5px; text-align: center; }
-  .receipt-header p { font-size: 12px; color: #f0d5da; font-weight: bold; letter-spacing: 1px; }
+  .receipt-header .brand { flex-direction: column; text-align: center; gap: 5px; }
+  .receipt-header .brand-logo { width: 55px; height: 55px; }
+  .receipt-header h1 { font-size: 18px; color: #fff; letter-spacing: 1px; }
+  .receipt-header p { font-size: 11px; color: #f0d5da; font-weight: bold; }
   
   .receipt-title-bar {
-    background: #f4ebed; text-align: center; padding: 15px;
-    font-size: 18px; font-weight: bold; color: #800020; border-bottom: 3px dotted #d4a5b1;
-    letter-spacing: 1px;
+    background: #f4ebed; text-align: center; padding: 12px;
+    font-size: 16px; font-weight: bold; color: #800020; border-bottom: 2px dotted #d4a5b1;
   }
 
-  .receipt-body { padding: 18px 22px; }
-  .receipt-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 12px; }
-  .receipt-table td { padding: 8px; border-bottom: 1px dotted #d4a5b1; color: #331015; }
-  .receipt-table td:first-child { font-weight: bold; width: 35%; color: #5E1B2B; }
-  .receipt-table td:nth-child(3) { font-weight: bold; width: 20%; color: #5E1B2B; }
+  .receipt-body { padding: 15px 20px; }
+  .receipt-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 11px; }
+  .receipt-table td { padding: 6px 8px; border-bottom: 1px dotted #d4a5b1; color: #331015; }
+  .receipt-table td:first-child { font-weight: bold; width: 25%; color: #5E1B2B; }
+  .receipt-table td:nth-child(2) { width: 2%; }
+  .receipt-table td:nth-child(3) { font-weight: bold; width: 25%; color: #5E1B2B; }
+  .receipt-table td:nth-child(4) { width: 2%; }
   
-  .receipt-payment-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 12px; }
+  .receipt-payment-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 11px; }
   .receipt-payment-table thead { background: linear-gradient(135deg, #800020, #5E1B2B); }
-  .receipt-payment-table th { padding: 10px 12px; text-align: center; color: #fff; font-size: 11px; border: none; }
-  .receipt-payment-table td { padding: 10px 12px; border: 1px solid #d4a5b1; text-align: center; color: #331015; }
+  .receipt-payment-table th { padding: 8px 10px; text-align: center; color: #fff; font-size: 10px; }
+  .receipt-payment-table td { padding: 8px 10px; border: 1px solid #d4a5b1; text-align: center; color: #331015; }
   .receipt-payment-table td.text-right { text-align: right; }
 
-  .receipt-summary { width: 50%; margin-left: auto; margin-bottom: 20px; }
-  .receipt-summary .r-row { display: flex; justify-content: space-between; padding: 8px 15px; font-size: 13px; font-weight: bold; color: #5E1B2B; border-bottom: 1px dashed #d4a5b1; }
+  .receipt-summary { width: 50%; margin-left: auto; margin-bottom: 15px; }
+  .receipt-summary .r-row { display: flex; justify-content: space-between; padding: 6px 10px; font-size: 12px; font-weight: bold; color: #5E1B2B; border-bottom: 1px dashed #d4a5b1; }
   .receipt-summary .r-row:last-child { border-bottom: none; }
-  .receipt-summary .r-row.total { background: #800020; color: #fff; border-radius: 8px; margin-top: 5px; border: none; }
   
   .status-box {
-    background: #fcf6f8; border: 2px dashed #d4a5b1; border-radius: 10px;
-    padding: 15px; margin-bottom: 20px; text-align: center;
+    background: #fcf6f8; border: 1px dashed #d4a5b1; border-radius: 8px;
+    padding: 10px; margin-bottom: 15px; text-align: center;
   }
-  .status-box h4 { color: #800020; margin-bottom: 5px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
-  .status-text { font-size: 18px; font-weight: bold; color: #b91c1c; }
+  .status-box h4 { color: #800020; margin-bottom: 3px; font-size: 12px; text-transform: uppercase; }
+  .status-text { font-size: 16px; font-weight: bold; color: #b91c1c; }
   .status-text.lunas { color: #047857; }
 
-  .signature-area { display: flex; justify-content: space-between; margin-top: 30px; padding: 0 20px; text-align: center; }
+  .signature-area { display: flex; justify-content: space-between; margin-top: 20px; padding: 0 10px; text-align: center; }
   .sig-box { width: 40%; }
-  .sig-box p { font-size: 12px; margin-bottom: 60px; color: #5E1B2B; }
-  .sig-line { border-top: 1px solid #331015; padding-top: 5px; font-size: 12px; font-weight: bold; color: #331015; }
-  .sig-img { height: 50px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; }
+  .sig-box p { font-size: 11px; margin-bottom: 40px; color: #5E1B2B; }
+  .sig-line { border-top: 1px solid #331015; padding-top: 5px; font-size: 11px; font-weight: bold; color: #331015; }
+  .sig-img { height: 40px; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; }
 
   /* buttons */
   .action-btns { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
   .btn {
-    flex: 1; padding: 12px 20px; border: none; border-radius: 25px;
-    font-size: 14px; font-weight: bold; cursor: pointer;
+    flex: 1; padding: 10px 15px; border: none; border-radius: 20px;
+    font-size: 13px; font-weight: bold; cursor: pointer;
     transition: all 0.2s; color: #fff; min-width: 120px;
-    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
   }
-  .btn:hover { transform: scale(1.03); }
-  .btn-save { background: linear-gradient(135deg, #800020, #4A0E17); box-shadow: 0 6px 15px rgba(128,0,32,0.4); }
-  .btn-clear { background: linear-gradient(135deg, #fca5a5, #dc2626); box-shadow: 0 6px 15px rgba(220,38,38,0.3); }
-  .btn-download { background: linear-gradient(135deg, #D4AF37, #B8860B); box-shadow: 0 6px 15px rgba(212,175,55,0.4); color: #fff; }
-  .btn-wa { background: linear-gradient(135deg, #25d366, #128c7e); box-shadow: 0 6px 15px rgba(37,211,102,0.4); }
+  .btn:hover { transform: scale(1.02); }
+  .btn-save { background: linear-gradient(135deg, #800020, #4A0E17); box-shadow: 0 4px 10px rgba(128,0,32,0.3); }
+  .btn-clear { background: linear-gradient(135deg, #fca5a5, #dc2626); box-shadow: 0 4px 10px rgba(220,38,38,0.3); }
+  .btn-download { background: linear-gradient(135deg, #D4AF37, #B8860B); box-shadow: 0 4px 10px rgba(212,175,55,0.3); }
+  .btn-wa { background: linear-gradient(135deg, #25d366, #128c7e); box-shadow: 0 4px 10px rgba(37,211,102,0.3); }
 
   .btn.loading { pointer-events: none; }
   .btn.loading::before {
-    content: ''; display: inline-block; width: 14px; height: 14px;
+    content: ''; display: inline-block; width: 12px; height: 12px;
     border: 2px solid #fff; border-top-color: transparent; border-radius: 50%;
     animation: spin 0.6s linear infinite; margin-right: 6px;
   }
@@ -307,57 +261,57 @@
   /* ============ MODAL ============ */
   .modal-overlay {
     position: fixed; inset: 0; background: rgba(74, 14, 23, 0.7);
-    backdrop-filter: blur(4px); z-index: 1000; display: none;
-    align-items: center; justify-content: center; padding: 20px;
+    backdrop-filter: blur(3px); z-index: 1000; display: none;
+    align-items: center; justify-content: center; padding: 15px;
   }
   .modal-overlay.show { display: flex; }
   .modal {
-    background: #fffdfd; border-radius: 20px; max-width: 500px; width: 100%;
-    max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(74, 14, 23, 0.4);
+    background: #fffdfd; border-radius: 15px; max-width: 450px; width: 100%;
+    max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(74, 14, 23, 0.4);
     display: flex; flex-direction: column;
   }
   .modal-header {
     background: linear-gradient(135deg, #4A0E17, #800020); color: #fff;
-    padding: 18px 22px; display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 20px; display: flex; justify-content: space-between; align-items: center;
   }
-  .modal-header h3 { font-size: 16px; }
-  .modal-close { background: rgba(255,255,255,0.2); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; font-size: 18px; cursor: pointer; }
-  .modal-body { padding: 20px; overflow-y: auto; }
+  .modal-header h3 { font-size: 15px; }
+  .modal-close { background: rgba(255,255,255,0.2); border: none; color: #fff; width: 28px; height: 28px; border-radius: 50%; font-size: 16px; cursor: pointer; }
+  .modal-body { padding: 15px; overflow-y: auto; }
 
-  .wa-preview { background: #dcf8c6; border-radius: 12px; padding: 15px; font-size: 12px; white-space: pre-wrap; max-height: 280px; overflow-y: auto; border: 2px solid #a4d982; margin-bottom: 15px; }
-  .wa-btn { width: 100%; padding: 12px; border: 2px solid #25d366; background: #fff; color: #128c7e; border-radius: 12px; font-weight: bold; font-size: 12px; cursor: pointer; margin-bottom: 10px; }
+  .wa-preview { background: #dcf8c6; border-radius: 8px; padding: 12px; font-size: 11px; white-space: pre-wrap; max-height: 250px; overflow-y: auto; border: 1px solid #a4d982; margin-bottom: 10px; }
+  .wa-btn { width: 100%; padding: 10px; border: 1px solid #25d366; background: #fff; color: #128c7e; border-radius: 8px; font-weight: bold; font-size: 12px; cursor: pointer; margin-bottom: 8px; }
   .wa-btn:hover { background: #25d366; color: #fff; }
   .wa-btn.primary { background: #25d366; color: #fff; }
 
-  .history-list { display: flex; flex-direction: column; gap: 12px; }
-  .history-card { background: #fcf6f8; border: 2px solid #e6d3d8; border-radius: 12px; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
-  .history-info h4 { font-size: 14px; color: #4A0E17; margin-bottom: 4px; }
-  .history-info p { font-size: 11px; color: #6b7280; }
-  .history-info .h-total { font-size: 13px; font-weight: bold; color: #b91c1c; margin-top: 6px; }
-  .btn-hist { padding: 6px 12px; border: none; border-radius: 8px; font-size: 11px; font-weight: bold; cursor: pointer; margin-left: 5px; }
+  .history-list { display: flex; flex-direction: column; gap: 10px; }
+  .history-card { background: #fcf6f8; border: 1px solid #e6d3d8; border-radius: 10px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
+  .history-info h4 { font-size: 13px; color: #4A0E17; margin-bottom: 2px; }
+  .history-info p { font-size: 10px; color: #6b7280; }
+  .history-info .h-total { font-size: 12px; font-weight: bold; color: #b91c1c; margin-top: 4px; }
+  .btn-hist { padding: 5px 10px; border: none; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; margin-left: 5px; }
   .btn-edit { background: #d1fae5; color: #047857; }
   .btn-del { background: #fee2e2; color: #b91c1c; }
 
   /* ============ MOBILE STICKY BAR ============ */
   .mobile-actions {
     display: none; position: fixed; bottom: 0; left: 0; right: 0;
-    background: rgba(255, 253, 253, 0.98); backdrop-filter: blur(10px);
-    padding: 10px 12px; box-shadow: 0 -4px 20px rgba(128, 0, 32, 0.15);
-    z-index: 500; border-top: 2px dashed #d4a5b1; gap: 8px;
+    background: rgba(255, 253, 253, 0.98); backdrop-filter: blur(8px);
+    padding: 8px 10px; box-shadow: 0 -4px 15px rgba(128, 0, 32, 0.15);
+    z-index: 500; border-top: 1px dashed #d4a5b1; gap: 6px;
   }
-  .mobile-actions .btn { flex: 1; padding: 11px 8px; font-size: 12px; min-width: 0; border-radius: 20px; }
+  .mobile-actions .btn { flex: 1; padding: 10px 6px; font-size: 11px; min-width: 0; border-radius: 15px; }
 
   /* toast */
   .toast {
-    position: fixed; bottom: 100px; left: 50%; transform: translateX(-50%) translateY(100px);
-    background: #4A0E17; color: #fff; padding: 12px 24px; border-radius: 25px;
-    font-size: 13px; font-weight: bold; opacity: 0; transition: all 0.4s; z-index: 9999;
-    box-shadow: 0 8px 25px rgba(74, 14, 23, 0.4);
+    position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(100px);
+    background: #4A0E17; color: #fff; padding: 10px 20px; border-radius: 20px;
+    font-size: 12px; font-weight: bold; opacity: 0; transition: all 0.3s; z-index: 9999;
+    box-shadow: 0 5px 15px rgba(74, 14, 23, 0.4);
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   /* =========================================
-     --- PDF MODE (PERBAIKAN TOTAL LAYOUT & CETAK) ---
+     --- PDF MODE (PAS 1 HALAMAN A4) ---
      ========================================= */
   body.pdf-mode { 
     background: #fff !important; 
@@ -374,7 +328,6 @@
   body.pdf-mode .preview-selector,
   body.pdf-mode .btn-history { display: none !important; }
   
-  /* KUNCI LEBAR A4 (Kertas virtual) */
   body.pdf-mode .wrapper { 
     display: block !important; 
     width: 100% !important; 
@@ -393,12 +346,10 @@
   
   body.pdf-mode #pdfWrapper {
     width: 100% !important;
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    display: block;
   }
 
-  /* Hilangkan border/margin container agar pas di kertas A4 */
+  /* Kunci ukuran kertas A4 dan hilangkan border */
   body.pdf-mode .invoice-container, 
   body.pdf-mode .receipt-container { 
     box-shadow: none !important; 
@@ -406,47 +357,49 @@
     margin: 0 !important; 
     border-radius: 0 !important;
     width: 100% !important;
-    min-height: 270mm !important; /* Tinggi A4 dikurangi margin */
+    height: 290mm !important; /* Dikunci agar tidak lebih dari 1 halaman A4 */
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important; /* Menyebar konten atas-tengah-bawah */
     background: #fffdfd !important;
     overflow: hidden !important;
-  }
-
-  /* Paksa margin 0 untuk konten di dalamnya agar rapi */
-  body.pdf-mode .header { padding: 25px 30px !important; }
-  body.pdf-mode .body-content, 
-  body.pdf-mode .receipt-body { 
-    flex-grow: 1 !important; 
-    padding: 20px 25px !important;
+    page-break-inside: avoid !important;
+    page-break-after: avoid !important;
   }
 
   body.pdf-mode #receiptContainer { 
     page-break-before: always; 
-    margin-top: 10mm !important; /* Jarak antar halaman saat dicetak */
   }
   body.pdf-mode.single-receipt #receiptContainer { 
     page-break-before: auto !important; 
-    margin-top: 0 !important;
   }
   
-  /* =======================================================
-     MENGEMBALIKAN TABEL KE FORMAT DESKTOP (MEMPERBAIKI TABEL HANCUR & TERPOTONG)
-     ======================================================= */
+  /* Paksa layout tabel kembali ke format Desktop (Rapi & Terkunci) */
   body.pdf-mode table { display: table !important; width: 100% !important; table-layout: fixed !important; }
   body.pdf-mode thead { display: table-header-group !important; }
   body.pdf-mode tbody { display: table-row-group !important; }
-  body.pdf-mode tr { display: table-row !important; background: transparent !important; border-bottom: 1px solid #f4ebed !important; padding: 0 !important; margin: 0 !important; border-radius: 0 !important; }
-  body.pdf-mode th, body.pdf-mode td { display: table-cell !important; padding: 8px 10px !important; border: 1px solid #d4a5b1 !important; font-size: 12px !important; word-break: break-word !important; } 
+  body.pdf-mode tr { display: table-row !important; background: transparent !important; border-bottom: 1px solid #f4ebed !important; padding: 0 !important; margin: 0 !important; }
+  body.pdf-mode th, body.pdf-mode td { display: table-cell !important; padding: 6px 8px !important; border: 1px solid #d4a5b1 !important; font-size: 10px !important; word-wrap: break-word !important; white-space: normal !important; } 
   body.pdf-mode th { background: #800020 !important; color: #fff !important; }
-  body.pdf-mode td::before { content: none !important; } /* Hapus label mobile */
+  body.pdf-mode td::before { content: none !important; }
   
-  /* Tanda Tangan & Footer diatur agar menempel bawah */
-  body.pdf-mode .signature-area, body.pdf-mode .footer {
-    margin-top: auto !important; 
-    padding-bottom: 20px !important;
-  }
+  body.pdf-mode .receipt-table td { border: none !important; border-bottom: 1px dotted #d4a5b1 !important; padding: 5px 8px !important; }
+  body.pdf-mode .receipt-table td:first-child, body.pdf-mode .receipt-table td:nth-child(3) { width: 20% !important; }
+  body.pdf-mode .receipt-table td:nth-child(2), body.pdf-mode .receipt-table td:nth-child(4) { width: 2% !important; }
+
+  /* Perkecil padding agar semua konten muat di 1 halaman */
+  body.pdf-mode .header { padding: 15px 20px !important; }
+  body.pdf-mode .brand-logo { width: 45px !important; height: 45px !important; }
+  body.pdf-mode .scenery { padding: 8px !important; }
+  body.pdf-mode .scenery svg { max-width: 50px !important; }
+  body.pdf-mode .body-content, body.pdf-mode .receipt-body { padding: 12px 15px !important; flex-grow: 1 !important; }
+  body.pdf-mode .info-grid { margin-bottom: 10px !important; }
+  body.pdf-mode .info-card { padding: 8px 10px !important; }
+  body.pdf-mode .info-card p { font-size: 10px !important; }
+  body.pdf-mode .summary-box { padding: 8px 12px !important; width: 220px !important; }
+  body.pdf-mode .summary-row { font-size: 10px !important; }
+  body.pdf-mode .footer { padding: 10px !important; margin-top: auto !important; }
+  body.pdf-mode .signature-area { margin-top: 15px !important; }
+  body.pdf-mode .sig-box p { margin-bottom: 30px !important; font-size: 10px !important; }
 
   /* ============ RESPONSIVE ============ */
   @media (max-width: 1024px) {
@@ -456,46 +409,39 @@
     .form-panel, .preview-panel { display: none; }
     .form-panel.active, .preview-panel.active { display: block; }
     .mobile-actions { display: flex; }
-    .form-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-    .btn-history { width: 100%; justify-content: center; }
+    .form-header { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .btn-history { width: 100%; text-align: center; }
   }
 
   @media (max-width: 600px) {
-    body { padding: 15px 10px 90px; }
-    .form-body, .body-content, .receipt-body { padding: 15px; }
-    .item-row { grid-template-columns: 1fr; gap: 6px; position: relative; }
-    .btn-remove { position: absolute; top: 8px; right: 8px; width: 30px; height: 30px; }
+    body { padding: 15px 10px 80px; }
+    .item-row { grid-template-columns: 1fr; position: relative; }
+    .btn-remove { position: absolute; top: 5px; right: 5px; width: 28px; height: 28px; }
     .field-row, .field-row.three { grid-template-columns: 1fr; }
-    .header { flex-direction: column; text-align: center; padding: 20px 15px; }
-    .brand { flex-direction: column; gap: 8px; }
-    .invoice-title { text-align: center; width: 100%; border-top: 1px dashed rgba(255,255,255,0.3); padding-top: 10px; }
-    .scenery { padding: 10px 8px 6px; }
-    .scenery svg { max-width: 55px; }
+    .header { flex-direction: column; text-align: center; padding: 15px; }
+    .brand { flex-direction: column; gap: 5px; }
+    .invoice-title { text-align: center; width: 100%; border-top: 1px dashed rgba(255,255,255,0.3); padding-top: 8px; }
     
-    /* TAMPILAN MOBILE (Di-override oleh pdf-mode) */
+    /* TAMPILAN MOBILE */
     table:not(.pdf-mode table) { display: block; width: 100%; }
     thead:not(.pdf-mode thead) { display: none; }
     tbody:not(.pdf-mode tbody) { display: block; }
-    tbody tr:not(.pdf-mode tr) { background: #fcf6f8; border: 2px dashed #d4a5b1; border-radius: 12px; margin-bottom: 10px; padding: 10px; display: block; }
-    tbody td:not(.pdf-mode td) { padding: 5px 0; display: flex; justify-content: space-between; border-bottom: 1px dashed #e6d3d8; border-left: none; border-right: none; border-top: none; }
-    tbody td:last-child:not(.pdf-mode td) { border-bottom: none; font-weight: bold; border-top: 2px solid #800020; margin-top: 4px; padding-top: 8px; }
-    tbody td:nth-child(1):not(.pdf-mode td)::before { content: "📦 Layanan"; font-weight: bold; color: #800020; font-size: 9px; text-transform: uppercase; }
-    tbody td:nth-child(2):not(.pdf-mode td)::before { content: "Qty:"; font-weight: bold; color: #800020; }
-    tbody td:nth-child(3):not(.pdf-mode td)::before { content: "Harga:"; font-weight: bold; color: #800020; }
-    tbody td:nth-child(4):not(.pdf-mode td)::before { content: "Subtotal:"; font-weight: bold; color: #800020; }
+    tbody tr:not(.pdf-mode tr) { background: #fcf6f8; border: 1px dashed #d4a5b1; border-radius: 10px; margin-bottom: 8px; padding: 8px; display: block; }
+    tbody td:not(.pdf-mode td) { padding: 4px 0; display: flex; justify-content: space-between; border-bottom: 1px dashed #e6d3d8; border-left: none; border-right: none; border-top: none; }
+    tbody td:last-child:not(.pdf-mode td) { border-bottom: none; font-weight: bold; border-top: 1px solid #800020; margin-top: 4px; padding-top: 6px; }
     
     .receipt-table tr:not(.pdf-mode tr) { display: block; background: transparent; border: none; margin: 0; padding: 0; }
     .receipt-table td:not(.pdf-mode td) { display: block; border: none; padding: 4px 0; }
-    .receipt-table td:nth-child(3):not(.pdf-mode td) { margin-top: 10px; }
+    .receipt-table td:nth-child(2):not(.pdf-mode td), .receipt-table td:nth-child(4):not(.pdf-mode td) { display: none; }
+    .receipt-table td:nth-child(3):not(.pdf-mode td) { margin-top: 5px; }
     
     .receipt-payment-table tr:not(.pdf-mode tr) { background: #fffdfd; border: 1px dashed #d4a5b1; display: block; }
     .receipt-payment-table td:not(.pdf-mode td) { text-align: right; border-bottom: 1px dotted #d4a5b1; display: flex; justify-content: space-between; }
     .receipt-payment-table td:before:not(.pdf-mode td) { content: attr(data-label) ": "; float: left; font-weight: bold; color: #800020; }
-    .receipt-payment-table td.text-right:not(.pdf-mode td) { text-align: right; font-weight: bold; border-bottom: none; }
 
     .summary-box { width: 100%; }
     .receipt-summary { width: 100%; }
-    .signature-area { flex-direction: column; gap: 30px; }
+    .signature-area { flex-direction: column; gap: 20px; }
     .sig-box { width: 100%; }
   }
 </style>
@@ -735,10 +681,10 @@
             <table>
               <thead>
                 <tr>
-                  <th style="width: 45%;">Deskripsi Layanan</th>
-                  <th style="width: 15%; text-align:center;">Qty</th>
-                  <th style="width: 20%; text-align:right;">Harga</th>
-                  <th style="width: 20%; text-align:right;">Subtotal</th>
+                  <th style="width: 40%;">Deskripsi Layanan</th>
+                  <th style="width: 10%; text-align:center;">Qty</th>
+                  <th style="width: 25%; text-align:right;">Harga</th>
+                  <th style="width: 25%; text-align:right;">Subtotal</th>
                 </tr>
               </thead>
               <tbody id="previewItems"></tbody>
@@ -778,53 +724,61 @@
               </div>
             </div>
             
-            <div style="width:100%; max-width:300px; height:20px; border-bottom: 2px dashed #D4AF37; position:relative; margin-top:5px;">
-              <div style="position:absolute; bottom:-10px; left:50%; transform:translateX(-50%); background:#800020; padding:0 10px; color:#D4AF37; font-size:14px;">✈ 🕋 🕌</div>
+            <div style="width:100%; max-width:250px; height:15px; border-bottom: 2px dashed #D4AF37; position:relative; margin-top:5px;">
+              <div style="position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); background:#800020; padding:0 8px; color:#D4AF37; font-size:12px;">✈ 🕋 🕌</div>
             </div>
           </div>
 
           <div class="receipt-title-bar">❀ TANDA TERIMA PEMBAYARAN ❀</div>
 
           <div class="receipt-body">
-            <h3 style="font-size:12px; color:#800020; margin-bottom:8px;">❤ DATA INVOICE & PELANGGAN</h3>
+            <h3 style="font-size:11px; color:#800020; margin-bottom:6px;">❤ DATA INVOICE & PELANGGAN</h3>
             <table class="receipt-table">
               <tr>
                 <td>No. Invoice</td>
-                <td>: <span id="rcInvNo">-</span></td>
+                <td>:</td>
+                <td><span id="rcInvNo">-</span></td>
                 <td>Tanggal</td>
-                <td>: <span id="rcInvDate">-</span></td>
+                <td>:</td>
+                <td><span id="rcInvDate">-</span></td>
               </tr>
               <tr>
                 <td>Diterima dari</td>
-                <td>: <span id="rcClientCompany">-</span></td>
+                <td>:</td>
+                <td><span id="rcClientCompany">-</span></td>
                 <td>No. WhatsApp</td>
-                <td>: <span id="rcClientPhone">-</span></td>
+                <td>:</td>
+                <td><span id="rcClientPhone">-</span></td>
               </tr>
               <tr>
                 <td>Jenis perjalanan</td>
-                <td>: <span id="rcTripType">-</span></td>
+                <td>:</td>
+                <td><span id="rcTripType">-</span></td>
                 <td>Jumlah peserta</td>
-                <td>: <span id="rcPax">-</span></td>
+                <td>:</td>
+                <td><span id="rcPax">-</span></td>
               </tr>
               <tr>
                 <td>Paket / tujuan</td>
-                <td colspan="3">: <span id="rcPackage">-</span></td>
+                <td>:</td>
+                <td colspan="4"><span id="rcPackage">-</span></td>
               </tr>
               <tr>
                 <td>Tanggal perjalanan</td>
-                <td colspan="3">: <span id="rcTripDate">-</span></td>
+                <td>:</td>
+                <td colspan="4"><span id="rcTripDate">-</span></td>
               </tr>
             </table>
 
-            <h3 style="font-size:12px; color:#800020; margin-bottom:8px;">❤ RINCIAN PEMBAYARAN</h3>
+            <h3 style="font-size:11px; color:#800020; margin-bottom:6px;">❤ RINCIAN PEMBAYARAN</h3>
             <table class="receipt-payment-table">
               <thead>
                 <tr>
-                  <th style="width: 10%;">NO</th>
-                  <th style="width: 40%;">URAIAN PEMBAYARAN</th>
+                  <th style="width: 8%;">NO</th>
+                  <th style="width: 42%;">URAIAN PEMBAYARAN</th>
                   <th style="width: 15%;">JUMLAH</th>
-                  <th style="width: 20%;">HARGA / NOMINAL</th>
-                  <th style="width: 25%;">TOTAL (Rp)</th>
+                  <th style="width: 15%;">HARGA / NOMINAL</th>
+                  <th style="width: 20%;">TOTAL (Rp)</th>
                 </tr>
               </thead>
               <tbody>
@@ -844,18 +798,18 @@
               <div class="r-row"><span>SISA TAGIHAN</span><span id="rcSisaTagihan">Rp 0</span></div>
             </div>
 
-            <h3 style="font-size:12px; color:#800020; margin-bottom:8px;">❤ STATUS & KETERANGAN</h3>
+            <h3 style="font-size:11px; color:#800020; margin-bottom:6px;">❤ STATUS & KETERANGAN</h3>
             <div class="status-box">
               <h4>Status</h4>
               <div class="status-text" id="rcStatus">-</div>
             </div>
             
-            <p style="font-size:11px; margin-bottom:5px;">Catatan: Pembayaran telah diterima sesuai nominal yang tercantum di atas.</p>
-            <p style="font-size:11px;">Metode pembayaran: <span id="rcBank">-</span></p>
+            <p style="font-size:10px; margin-bottom:4px;">Catatan: Pembayaran telah diterima sesuai nominal yang tercantum di atas.</p>
+            <p style="font-size:10px;">Metode pembayaran: <span id="rcBank">-</span></p>
           </div>
         </div>
 
-        <div style="padding: 0 22px 20px;">
+        <div style="padding: 0 20px 15px;">
           <div class="signature-area">
             <div class="sig-box">
               <p>Penerima,</p>
@@ -864,14 +818,14 @@
             </div>
             <div class="sig-box">
               <p>Trip by Ihyat</p>
-              <div class="sig-img" style="font-family:'Brush Script MT', cursive; font-size:24px; color:#4A0E17; transform:rotate(-5deg);">
+              <div class="sig-img" style="font-family:'Brush Script MT', cursive; font-size:22px; color:#4A0E17; transform:rotate(-5deg);">
                 TripbyIhyat
               </div>
               <div class="sig-line">( Admin Trip by Ihyat )</div>
             </div>
           </div>
 
-          <p style="text-align:center; font-size:11px; color:#800020; margin-top:20px; font-weight:bold;">
+          <p style="text-align:center; font-size:10px; color:#800020; margin-top:15px; font-weight:bold;">
             Barakallahu fiikum Jazakumullahu Khairan Katsiran. Terima kasih, Sahabat Trip by Ihyat!
           </p>
         </div>
@@ -1182,7 +1136,7 @@ async function downloadPDF(event) {
     
     document.body.classList.add('pdf-mode');
     
-    // Beri waktu render
+    // Beri waktu render layout desktop
     await new Promise(r => setTimeout(r, 500)); 
 
     let targetElement;
@@ -1195,19 +1149,19 @@ async function downloadPDF(event) {
     }
 
     const opt = {
-      margin:       [10, 10, 10, 10],
+      margin:       [10, 10, 10, 10], // Margin A4
       filename:     fileName,
       image:        { type: 'jpeg', quality: 0.98 },
       html2canvas:  { 
         scale: 2, 
         useCORS: true, 
         backgroundColor: '#ffffff',
-        windowWidth: 1024, // Paksa layout Desktop (mencegah tabel hancur)
+        windowWidth: 1024, // Paksa render 1024px agar tidak hancur
         scrollX: 0,
         scrollY: 0
       },
       jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak:    { mode: ['css', 'legacy'], avoid: ['tr', '.summary-box', '.info-grid'] }
+      pagebreak:    { mode: ['css', 'legacy'], avoid: ['tr', '.summary-box', '.info-grid', '.status-box', '.signature-area'] }
     };
 
     await html2pdf().set(opt).from(targetElement).save();
