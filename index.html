@@ -10,43 +10,41 @@
   body {
     font-family: 'Segoe UI', Tahoma, sans-serif;
     background: linear-gradient(135deg, #fcf9f9 0%, #f4ebed 100%);
-    padding: 20px 10px 100px;
+    padding: 15px 15px 90px; /* Padding bawah untuk sticky bar mobile */
     color: #331015;
     min-height: 100vh;
   }
 
-  /* ============ TAB SWITCH (mobile) ============ */
+  /* ============ NAVIGASI TAB (MOBILE) ============ */
   .tab-switch {
     display: none;
     max-width: 900px;
     margin: 0 auto 15px;
     background: #fff;
     border-radius: 12px;
-    padding: 5px;
+    padding: 6px;
     box-shadow: 0 4px 15px rgba(128, 0, 32, 0.15);
-    gap: 5px;
+    gap: 6px;
+    position: sticky;
+    top: 10px;
+    z-index: 100;
   }
   .tab-switch button {
-    flex: 1; padding: 10px; border: none; border-radius: 8px;
-    font-size: 13px; font-weight: bold; cursor: pointer;
+    flex: 1; padding: 12px; border: none; border-radius: 8px;
+    font-size: 14px; font-weight: bold; cursor: pointer;
     background: transparent; color: #800020; transition: all 0.2s;
   }
   .tab-switch button.active {
-    background: linear-gradient(135deg, #5E1B2B, #800020);
-    color: #fff;
+    background: linear-gradient(135deg, #5E1B2B, #800020); color: #fff;
   }
 
-  /* ============ LAYOUT ============ */
+  /* ============ LAYOUT UTAMA ============ */
   .wrapper {
-    max-width: 1300px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    align-items: start;
+    max-width: 1300px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;
   }
 
-  /* ============ FORM PANEL ============ */
+  /* ============ PANEL FORM (KIRI) ============ */
   .form-panel {
     background: #fffdfd; border-radius: 18px;
     box-shadow: 0 8px 25px rgba(128, 0, 32, 0.15);
@@ -64,7 +62,6 @@
     padding: 6px 12px; border-radius: 8px; font-weight: bold;
     font-size: 11px; cursor: pointer; transition: all 0.2s;
   }
-  .btn-history:hover { background: #fcf6f8; }
 
   .form-body { padding: 18px 20px; }
   .form-section { margin-bottom: 18px; padding-bottom: 15px; border-bottom: 1px dashed #e6d3d8; }
@@ -81,8 +78,9 @@
   .field input:focus, .field select:focus, .field textarea:focus { border-color: #800020; }
   .field textarea { resize: vertical; min-height: 50px; }
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .field-row.three { grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .field-row.three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
 
+  /* Item Layanan */
   .item-row {
     background: #fcf6f8; border: 1px solid #e6d3d8; border-radius: 8px;
     padding: 10px; margin-bottom: 8px; display: grid;
@@ -109,8 +107,9 @@
   .totals-preview .row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; color: #5E1B2B; }
   .totals-preview .row.total { border-top: 1px solid #800020; margin-top: 6px; padding-top: 8px; font-size: 15px; font-weight: bold; color: #4A0E17; }
 
-  /* ============ PREVIEW PANEL ============ */
+  /* ============ PANEL PREVIEW (KANAN) ============ */
   .preview-panel { position: sticky; top: 20px; max-height: 95vh; overflow-y: auto; padding-bottom: 20px; }
+  
   .preview-selector {
     display: flex; gap: 6px; margin-bottom: 10px;
     background: #fff; padding: 5px; border-radius: 10px;
@@ -121,17 +120,18 @@
     font-weight: bold; font-size: 12px; cursor: pointer;
     background: transparent; color: #800020; transition: all 0.2s;
   }
-  .preview-selector button.active { background: #800020; color: #fff; }
+  .preview-selector button.active:not(:disabled) { background: #800020; color: #fff; }
+  .preview-selector button:disabled { opacity: 0.4; cursor: not-allowed; }
   
   .hide-preview { display: none !important; }
 
   .invoice-container, .receipt-container {
     background: #fffdfd; border-radius: 18px;
     box-shadow: 0 8px 25px rgba(128, 0, 32, 0.15);
-    border: 2px dashed #d4a5b1; overflow: hidden; margin-bottom: 20px;
+    border: 2px dashed #d4a5b1; overflow: hidden; margin-bottom: 15px;
   }
   
-  /* --- STYLE INVOICE --- */
+  /* --- STYLE INVOICE & TANDA TERIMA --- */
   .header {
     background: linear-gradient(135deg, #4A0E17 0%, #800020 50%, #A83C51 100%);
     padding: 20px; position: relative;
@@ -179,7 +179,7 @@
   .summary-box { width: 240px; background: #fcf6f8; border-radius: 10px; padding: 12px; border: 1px dashed #d4a5b1; }
   .summary-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 11px; color: #5E1B2B; }
   .summary-row.total { border-top: 2px solid #800020; margin-top: 5px; padding-top: 8px; font-size: 14px; font-weight: bold; color: #4A0E17; }
-  .summary-row .label-discount { color: #b91c1c; }
+  .summary-row.bg-dark { background: #800020; color: #fff; padding: 4px 6px; border-radius: 4px; font-weight: bold; margin-top: 4px; }
 
   .footer {
     background: linear-gradient(135deg, #5E1B2B, #800020);
@@ -189,7 +189,7 @@
   .footer .bank { background: rgba(255,255,255,0.15); display: inline-block; padding: 5px 12px; border-radius: 15px; margin-top: 5px; font-weight: bold; font-size: 10px; border: 1px solid rgba(255,255,255,0.3); }
   .footer .contact { margin-top: 5px; }
 
-  /* --- STYLE TANDA TERIMA --- */
+  /* Tanda Terima */
   .receipt-header {
     background: linear-gradient(135deg, #4A0E17 0%, #800020 50%, #A83C51 100%);
     padding: 20px 15px; display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 8px;
@@ -205,13 +205,15 @@
   }
 
   .receipt-body { padding: 15px 20px; }
-  .receipt-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 11px; }
-  .receipt-table td { padding: 6px 8px; border-bottom: 1px dotted #d4a5b1; color: #331015; }
-  .receipt-table td:first-child { font-weight: bold; width: 25%; color: #5E1B2B; }
-  .receipt-table td:nth-child(2) { width: 2%; }
-  .receipt-table td:nth-child(3) { font-weight: bold; width: 25%; color: #5E1B2B; }
-  .receipt-table td:nth-child(4) { width: 2%; }
   
+  .receipt-data-grid {
+    display: grid; grid-template-columns: 25% 2% 73%;
+    gap: 6px; font-size: 11px; margin-bottom: 15px;
+  }
+  .receipt-data-grid .lbl { font-weight: bold; color: #5E1B2B; }
+  .receipt-data-grid .sep { text-align: center; }
+  .receipt-data-grid .val { color: #331015; }
+
   .receipt-payment-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 11px; }
   .receipt-payment-table thead { background: linear-gradient(135deg, #800020, #5E1B2B); }
   .receipt-payment-table th { padding: 8px 10px; text-align: center; color: #fff; font-size: 10px; }
@@ -236,19 +238,21 @@
   .sig-line { border-top: 1px solid #331015; padding-top: 5px; font-size: 11px; font-weight: bold; color: #331015; }
   .sig-img { height: 40px; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; }
 
-  /* buttons */
-  .action-btns { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+  /* ============ TOMBOL AKSI (PDF & WA) ============ */
+  /* Hanya ada satu set tombol, diletakkan di bawah preview */
+  .main-action-btns { display: flex; gap: 10px; margin-top: 10px; }
   .btn {
-    flex: 1; padding: 10px 15px; border: none; border-radius: 20px;
-    font-size: 13px; font-weight: bold; cursor: pointer;
+    flex: 1; padding: 12px 15px; border: none; border-radius: 20px;
+    font-size: 14px; font-weight: bold; cursor: pointer;
     transition: all 0.2s; color: #fff; min-width: 120px;
-    display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
   }
   .btn:hover { transform: scale(1.02); }
-  .btn-save { background: linear-gradient(135deg, #800020, #4A0E17); box-shadow: 0 4px 10px rgba(128,0,32,0.3); }
-  .btn-clear { background: linear-gradient(135deg, #fca5a5, #dc2626); box-shadow: 0 4px 10px rgba(220,38,38,0.3); }
   .btn-download { background: linear-gradient(135deg, #D4AF37, #B8860B); box-shadow: 0 4px 10px rgba(212,175,55,0.3); }
   .btn-wa { background: linear-gradient(135deg, #25d366, #128c7e); box-shadow: 0 4px 10px rgba(37,211,102,0.3); }
+  .btn-save { background: linear-gradient(135deg, #800020, #4A0E17); }
+  .btn-clear { background: linear-gradient(135deg, #fca5a5, #dc2626); }
+  .btn-receipt { background: linear-gradient(135deg, #f59e0b, #d97706); }
 
   .btn.loading { pointer-events: none; }
   .btn.loading::before {
@@ -261,7 +265,7 @@
   /* ============ MODAL ============ */
   .modal-overlay {
     position: fixed; inset: 0; background: rgba(74, 14, 23, 0.7);
-    backdrop-filter: blur(3px); z-index: 1000; display: none;
+    backdrop-filter: blur(3px); z-index: 9999; display: none;
     align-items: center; justify-content: center; padding: 15px;
   }
   .modal-overlay.show { display: flex; }
@@ -292,14 +296,14 @@
   .btn-edit { background: #d1fae5; color: #047857; }
   .btn-del { background: #fee2e2; color: #b91c1c; }
 
-  /* ============ MOBILE STICKY BAR ============ */
-  .mobile-actions {
-    display: none; position: fixed; bottom: 0; left: 0; right: 0;
+  /* Sticky Action Bar (Hanya Muncul di Tab Preview pada Mobile) */
+  .sticky-preview-actions {
+    display: none;
+    position: fixed; bottom: 0; left: 0; right: 0;
     background: rgba(255, 253, 253, 0.98); backdrop-filter: blur(8px);
-    padding: 8px 10px; box-shadow: 0 -4px 15px rgba(128, 0, 32, 0.15);
-    z-index: 500; border-top: 1px dashed #d4a5b1; gap: 6px;
+    padding: 10px 15px; box-shadow: 0 -4px 15px rgba(128, 0, 32, 0.15);
+    z-index: 500; border-top: 1px dashed #d4a5b1;
   }
-  .mobile-actions .btn { flex: 1; padding: 10px 6px; font-size: 11px; min-width: 0; border-radius: 15px; }
 
   /* toast */
   .toast {
@@ -311,110 +315,62 @@
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   /* =========================================
-     --- PDF MODE (PAS 1 HALAMAN A4) ---
+     --- PDF MODE (RAPI 1 HALAMAN) ---
      ========================================= */
-  body.pdf-mode { 
-    background: #fff !important; 
-    padding: 0 !important; 
-    margin: 0 !important;
-    overflow: visible !important;
-  }
+  body.pdf-mode { background: #fff !important; padding: 0 !important; margin: 0 !important; }
   
   body.pdf-mode .tab-switch,
   body.pdf-mode .form-panel,
-  body.pdf-mode .action-btns,
-  body.pdf-mode .mobile-actions,
+  body.pdf-mode .main-action-btns,
+  body.pdf-mode .sticky-preview-actions,
   body.pdf-mode .modal-overlay,
-  body.pdf-mode .preview-selector,
-  body.pdf-mode .btn-history { display: none !important; }
+  body.pdf-mode .preview-selector { display: none !important; }
   
-  body.pdf-mode .wrapper { 
-    display: block !important; 
-    width: 100% !important; 
-    max-width: 100% !important; 
-    margin: 0 !important; 
-    padding: 0 !important;
-  }
+  body.pdf-mode .wrapper { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
+  body.pdf-mode .preview-panel { display: block !important; position: static !important; max-height: none !important; padding: 0 !important; }
   
-  body.pdf-mode .preview-panel { 
-    display: block !important; 
-    position: static !important; 
-    max-height: none !important; 
-    overflow: visible !important; 
-    padding: 0 !important;
-  }
-  
-  body.pdf-mode #pdfWrapper {
-    width: 100% !important;
-    display: block;
-  }
-
-  /* Kunci ukuran kertas A4 dan hilangkan border */
   body.pdf-mode .invoice-container, 
   body.pdf-mode .receipt-container { 
-    box-shadow: none !important; 
-    border: none !important; 
-    margin: 0 !important; 
-    border-radius: 0 !important;
-    width: 100% !important;
-    height: 290mm !important; /* Dikunci agar tidak lebih dari 1 halaman A4 */
-    display: flex !important;
-    flex-direction: column !important;
-    background: #fffdfd !important;
-    overflow: hidden !important;
-    page-break-inside: avoid !important;
-    page-break-after: avoid !important;
+    box-shadow: none !important; border: none !important; margin: 0 !important; border-radius: 0 !important;
+    width: 100% !important; height: auto !important;
+    background: #fffdfd !important; page-break-after: avoid !important;
   }
 
-  body.pdf-mode #receiptContainer { 
-    page-break-before: always; 
-  }
-  body.pdf-mode.single-receipt #receiptContainer { 
-    page-break-before: auto !important; 
-  }
+  body.pdf-mode #receiptContainer { page-break-before: always; }
+  body.pdf-mode.single-receipt #receiptContainer { page-break-before: auto !important; }
   
-  /* Paksa layout tabel kembali ke format Desktop (Rapi & Terkunci) */
   body.pdf-mode table { display: table !important; width: 100% !important; table-layout: fixed !important; }
-  body.pdf-mode thead { display: table-header-group !important; }
-  body.pdf-mode tbody { display: table-row-group !important; }
-  body.pdf-mode tr { display: table-row !important; background: transparent !important; border-bottom: 1px solid #f4ebed !important; padding: 0 !important; margin: 0 !important; }
-  body.pdf-mode th, body.pdf-mode td { display: table-cell !important; padding: 6px 8px !important; border: 1px solid #d4a5b1 !important; font-size: 10px !important; word-wrap: break-word !important; white-space: normal !important; } 
+  body.pdf-mode tr { display: table-row !important; }
+  body.pdf-mode th, body.pdf-mode td { display: table-cell !important; padding: 6px 8px !important; border: 1px solid #d4a5b1 !important; font-size: 10px !important; }
   body.pdf-mode th { background: #800020 !important; color: #fff !important; }
-  body.pdf-mode td::before { content: none !important; }
+  body.pdf-mode .receipt-data-grid { display: grid !important; grid-template-columns: 25% 2% 73% !important; }
   
-  body.pdf-mode .receipt-table td { border: none !important; border-bottom: 1px dotted #d4a5b1 !important; padding: 5px 8px !important; }
-  body.pdf-mode .receipt-table td:first-child, body.pdf-mode .receipt-table td:nth-child(3) { width: 20% !important; }
-  body.pdf-mode .receipt-table td:nth-child(2), body.pdf-mode .receipt-table td:nth-child(4) { width: 2% !important; }
-
-  /* Perkecil padding agar semua konten muat di 1 halaman */
   body.pdf-mode .header { padding: 15px 20px !important; }
-  body.pdf-mode .brand-logo { width: 45px !important; height: 45px !important; }
-  body.pdf-mode .scenery { padding: 8px !important; }
-  body.pdf-mode .scenery svg { max-width: 50px !important; }
-  body.pdf-mode .body-content, body.pdf-mode .receipt-body { padding: 12px 15px !important; flex-grow: 1 !important; }
+  body.pdf-mode .body-content, body.pdf-mode .receipt-body { padding: 10px 15px !important; }
   body.pdf-mode .info-grid { margin-bottom: 10px !important; }
-  body.pdf-mode .info-card { padding: 8px 10px !important; }
-  body.pdf-mode .info-card p { font-size: 10px !important; }
   body.pdf-mode .summary-box { padding: 8px 12px !important; width: 220px !important; }
-  body.pdf-mode .summary-row { font-size: 10px !important; }
-  body.pdf-mode .footer { padding: 10px !important; margin-top: auto !important; }
   body.pdf-mode .signature-area { margin-top: 15px !important; }
-  body.pdf-mode .sig-box p { margin-bottom: 30px !important; font-size: 10px !important; }
 
-  /* ============ RESPONSIVE ============ */
+  /* ============ RESPONSIVE (MOBILE) ============ */
   @media (max-width: 1024px) {
     .wrapper { grid-template-columns: 1fr; }
     .preview-panel { position: static; max-height: none; }
     .tab-switch { display: flex; }
+    
+    /* Sembunyikan/tampilkan panel berdasarkan tab yang aktif */
     .form-panel, .preview-panel { display: none; }
     .form-panel.active, .preview-panel.active { display: block; }
-    .mobile-actions { display: flex; }
-    .form-header { flex-direction: column; align-items: flex-start; gap: 8px; }
-    .btn-history { width: 100%; text-align: center; }
+    
+    /* Sembunyikan tombol desktop di preview, ganti dengan sticky bar */
+    .main-action-btns { display: none; }
+    .sticky-preview-actions { display: none; } /* Default hide */
+    
+    /* Tampilkan sticky action bar hanya saat previewPanel aktif */
+    .preview-panel.active ~ .sticky-preview-actions { display: flex; }
   }
 
   @media (max-width: 600px) {
-    body { padding: 15px 10px 80px; }
+    body { padding: 10px 10px 80px; }
     .item-row { grid-template-columns: 1fr; position: relative; }
     .btn-remove { position: absolute; top: 5px; right: 5px; width: 28px; height: 28px; }
     .field-row, .field-row.three { grid-template-columns: 1fr; }
@@ -422,18 +378,13 @@
     .brand { flex-direction: column; gap: 5px; }
     .invoice-title { text-align: center; width: 100%; border-top: 1px dashed rgba(255,255,255,0.3); padding-top: 8px; }
     
-    /* TAMPILAN MOBILE */
+    /* Tabel Mobile View */
     table:not(.pdf-mode table) { display: block; width: 100%; }
     thead:not(.pdf-mode thead) { display: none; }
     tbody:not(.pdf-mode tbody) { display: block; }
     tbody tr:not(.pdf-mode tr) { background: #fcf6f8; border: 1px dashed #d4a5b1; border-radius: 10px; margin-bottom: 8px; padding: 8px; display: block; }
     tbody td:not(.pdf-mode td) { padding: 4px 0; display: flex; justify-content: space-between; border-bottom: 1px dashed #e6d3d8; border-left: none; border-right: none; border-top: none; }
     tbody td:last-child:not(.pdf-mode td) { border-bottom: none; font-weight: bold; border-top: 1px solid #800020; margin-top: 4px; padding-top: 6px; }
-    
-    .receipt-table tr:not(.pdf-mode tr) { display: block; background: transparent; border: none; margin: 0; padding: 0; }
-    .receipt-table td:not(.pdf-mode td) { display: block; border: none; padding: 4px 0; }
-    .receipt-table td:nth-child(2):not(.pdf-mode td), .receipt-table td:nth-child(4):not(.pdf-mode td) { display: none; }
-    .receipt-table td:nth-child(3):not(.pdf-mode td) { margin-top: 5px; }
     
     .receipt-payment-table tr:not(.pdf-mode tr) { background: #fffdfd; border: 1px dashed #d4a5b1; display: block; }
     .receipt-payment-table td:not(.pdf-mode td) { text-align: right; border-bottom: 1px dotted #d4a5b1; display: flex; justify-content: space-between; }
@@ -448,24 +399,24 @@
 </head>
 <body>
 
+<!-- TABS (Hanya Mobile) -->
 <div class="tab-switch">
   <button class="active" onclick="switchTab('form')">📝 Form Input</button>
   <button onclick="switchTab('preview')">👁 Preview Dokumen</button>
 </div>
 
 <div class="wrapper">
-  <!-- ============ FORM PANEL ============ -->
+  <!-- ============ PANEL FORM ============ -->
   <div class="form-panel active" id="formPanel">
     <div class="form-header">
       <div>
         <h2>📝 Form Invoice</h2>
-        <p>Data otomatis sinkron ke Invoice & Tanda Terima ✨</p>
+        <p>Isi data tagihan & perjalanan</p>
       </div>
       <button class="btn-history" onclick="openHistory()">📊 Riwayat</button>
     </div>
 
     <div class="form-body">
-      <!-- Data Klien -->
       <div class="form-section">
         <h3>👤 Data Klien</h3>
         <div class="field">
@@ -492,7 +443,6 @@
         </div>
       </div>
 
-      <!-- Detail Perjalanan -->
       <div class="form-section">
         <h3>🕋 Detail Perjalanan</h3>
         <div class="field-row">
@@ -524,7 +474,6 @@
         </div>
       </div>
 
-      <!-- Detail Invoice -->
       <div class="form-section">
         <h3>📄 Detail Invoice</h3>
         <div class="field-row">
@@ -553,17 +502,15 @@
         </div>
       </div>
 
-      <!-- Item Layanan -->
       <div class="form-section">
         <h3>🛎 Item Layanan</h3>
         <div id="itemsContainer"></div>
         <button class="btn-add" onclick="addItem()">+ Tambah Layanan</button>
       </div>
 
-      <!-- Diskon & Pajak & Pembayaran -->
       <div class="form-section">
-        <h3>💰 Diskon, Pajak & Pembayaran</h3>
-        <div class="field-row three">
+        <h3>💰 Diskon & Pajak</h3>
+        <div class="field-row">
           <div class="field">
             <label>Diskon (%)</label>
             <input type="number" id="discountPct" value="0" oninput="recalc()">
@@ -571,10 +518,6 @@
           <div class="field">
             <label>PPN (%)</label>
             <input type="number" id="taxPct" value="0" oninput="recalc()">
-          </div>
-          <div class="field">
-            <label>Jumlah Dibayar (DP)</label>
-            <input type="number" id="dpAmount" value="10000000" oninput="recalc()">
           </div>
         </div>
         <div class="totals-preview">
@@ -585,7 +528,22 @@
         </div>
       </div>
 
-      <!-- Info Pembayaran & TTD -->
+      <!-- MENU PEMBAYARAN BARU -->
+      <div class="form-section" style="background: #fff8f9; border: 2px dashed #d4a5b1; padding: 15px; border-radius: 12px;">
+        <h3>💳 Menu Pembayaran & Tindakan</h3>
+        <div class="field">
+          <label>Nominal DP / Telah Dibayar (Rp)</label>
+          <input type="number" id="dpAmount" value="0" oninput="recalc()" placeholder="Contoh: 5000000">
+          <p style="font-size:10px; color:#6b7280; margin-top:4px; font-style:italic;">* Isi nominal jika klien sudah membayar DP.</p>
+        </div>
+        
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:15px;">
+          <button class="btn btn-save" onclick="saveData()" style="width:100%;">💾 Simpan / Perbarui Invoice</button>
+          <button class="btn btn-receipt" id="btnIssueReceipt" onclick="issueReceipt()" style="width:100%;" disabled>🧾 Terbitkan Tanda Terima</button>
+          <button class="btn btn-clear" onclick="clearData()" style="width:100%;">🗑 Reset Form</button>
+        </div>
+      </div>
+
       <div class="form-section">
         <h3>🏦 Info Rekening</h3>
         <div class="field">
@@ -603,21 +561,16 @@
           </div>
         </div>
       </div>
-
-      <div class="action-btns">
-        <button class="btn btn-save" onclick="saveData()">💾 Simpan Riwayat</button>
-        <button class="btn btn-clear" onclick="clearData()">🗑 Reset</button>
-      </div>
     </div>
   </div>
 
-  <!-- ============ PREVIEW PANEL ============ -->
+  <!-- ============ PANEL PREVIEW ============ -->
   <div class="preview-panel" id="previewPanel">
     
     <div class="preview-selector">
-      <button class="active" onclick="switchPreviewMode('invoice', event)">📄 Invoice</button>
-      <button onclick="switchPreviewMode('receipt', event)">🧾 Tanda Terima</button>
-      <button onclick="switchPreviewMode('both', event)">📚 Keduanya</button>
+      <button id="btnTabInvoice" class="active" onclick="switchPreviewMode('invoice', event)">📄 Invoice</button>
+      <button id="btnTabReceipt" onclick="switchPreviewMode('receipt', event)" disabled>🧾 Tanda Terima</button>
+      <button id="btnTabBoth" onclick="switchPreviewMode('both', event)" disabled>📚 Keduanya</button>
     </div>
 
     <div id="pdfWrapper">
@@ -696,6 +649,10 @@
                 <div class="summary-row"><span class="label-discount" id="pvDiscLabel">Diskon (0%)</span><span class="label-discount" id="pvDiscount">– Rp 0</span></div>
                 <div class="summary-row"><span id="pvTaxLabel">PPN (0%)</span><span id="pvTax">Rp 0</span></div>
                 <div class="summary-row total"><span>Total Tagihan</span><span id="pvTotal">Rp 0</span></div>
+                
+                <!-- LOGIKA PEMBAYARAN -->
+                <div class="summary-row" id="pvDpRow" style="display:none; margin-top:5px; color:#047857;"><span>Telah Dibayar (DP)</span><span id="pvDp">Rp 0</span></div>
+                <div class="summary-row bg-dark" id="pvSisaRow" style="display:none;"><span>Sisa Tagihan</span><span id="pvSisa">Rp 0</span></div>
               </div>
             </div>
           </div>
@@ -711,7 +668,7 @@
       </div>
 
       <!-- HALAMAN 2: TANDA TERIMA -->
-      <div class="receipt-container" id="receiptContainer">
+      <div class="receipt-container hide-preview" id="receiptContainer">
         <div>
           <div class="receipt-header">
             <div class="brand">
@@ -733,42 +690,21 @@
 
           <div class="receipt-body">
             <h3 style="font-size:11px; color:#800020; margin-bottom:6px;">❤ DATA INVOICE & PELANGGAN</h3>
-            <table class="receipt-table">
-              <tr>
-                <td>No. Invoice</td>
-                <td>:</td>
-                <td><span id="rcInvNo">-</span></td>
-                <td>Tanggal</td>
-                <td>:</td>
-                <td><span id="rcInvDate">-</span></td>
-              </tr>
-              <tr>
-                <td>Diterima dari</td>
-                <td>:</td>
-                <td><span id="rcClientCompany">-</span></td>
-                <td>No. WhatsApp</td>
-                <td>:</td>
-                <td><span id="rcClientPhone">-</span></td>
-              </tr>
-              <tr>
-                <td>Jenis perjalanan</td>
-                <td>:</td>
-                <td><span id="rcTripType">-</span></td>
-                <td>Jumlah peserta</td>
-                <td>:</td>
-                <td><span id="rcPax">-</span></td>
-              </tr>
-              <tr>
-                <td>Paket / tujuan</td>
-                <td>:</td>
-                <td colspan="4"><span id="rcPackage">-</span></td>
-              </tr>
-              <tr>
-                <td>Tanggal perjalanan</td>
-                <td>:</td>
-                <td colspan="4"><span id="rcTripDate">-</span></td>
-              </tr>
-            </table>
+            
+            <!-- CSS GRID (Bukan Tabel, agar aman dari PDF Terpotong) -->
+            <div class="receipt-data-grid">
+              <div class="lbl">No. Invoice</div><div class="sep">:</div><div class="val"><span id="rcInvNo">-</span></div>
+              <div class="lbl">Tanggal</div><div class="sep">:</div><div class="val"><span id="rcInvDate">-</span></div>
+              
+              <div class="lbl">Diterima dari</div><div class="sep">:</div><div class="val"><span id="rcClientCompany">-</span></div>
+              <div class="lbl">No. WhatsApp</div><div class="sep">:</div><div class="val"><span id="rcClientPhone">-</span></div>
+              
+              <div class="lbl">Jenis perjalanan</div><div class="sep">:</div><div class="val"><span id="rcTripType">-</span></div>
+              <div class="lbl">Jumlah peserta</div><div class="sep">:</div><div class="val"><span id="rcPax">-</span></div>
+              
+              <div class="lbl">Paket / tujuan</div><div class="sep">:</div><div class="val"><span id="rcPackage">-</span></div>
+              <div class="lbl">Tgl perjalanan</div><div class="sep">:</div><div class="val"><span id="rcTripDate">-</span></div>
+            </div>
 
             <h3 style="font-size:11px; color:#800020; margin-bottom:6px;">❤ RINCIAN PEMBAYARAN</h3>
             <table class="receipt-payment-table">
@@ -832,19 +768,18 @@
       </div>
     </div>
 
-    <!-- Tombol Aksi -->
-    <div class="action-btns">
+    <!-- Tombol Aksi (Desktop) -->
+    <div class="main-action-btns">
       <button class="btn btn-download" onclick="downloadPDF(event)">📄 Download PDF</button>
       <button class="btn btn-wa" onclick="openWaModal()">📱 WhatsApp</button>
     </div>
   </div>
 </div>
 
-<!-- Mobile Sticky Actions -->
-<div class="mobile-actions">
+<!-- Sticky Action Bar (Hanya Muncul saat Preview di Mobile) -->
+<div class="sticky-preview-actions">
   <button class="btn btn-download" onclick="downloadPDF(event)">📄 PDF</button>
   <button class="btn btn-wa" onclick="openWaModal()">📱 WA</button>
-  <button class="btn btn-history" onclick="openHistory()">📊 Riwayat</button>
 </div>
 
 <!-- MODAL WA -->
@@ -908,8 +843,30 @@ function formatDate(str) {
 function rupiah(n) { return 'Rp ' + Math.round(n).toLocaleString('id-ID'); }
 function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
 
+/* ================= TABS MOBILE ================= */
+function switchTab(tab) {
+  document.querySelectorAll('.tab-switch button').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('formPanel').classList.toggle('active', tab === 'form');
+  document.getElementById('previewPanel').classList.toggle('active', tab === 'preview');
+  
+  // Sembunyikan sticky bar jika di tab form
+  const stickyBar = document.querySelector('.sticky-preview-actions');
+  if (tab === 'preview') {
+    stickyBar.style.display = 'flex';
+  } else {
+    stickyBar.style.display = 'none';
+  }
+}
+
 /* ================= PREVIEW MODE TOGGLE ================= */
 function switchPreviewMode(mode, event) {
+  const dp = parseFloat(document.getElementById('dpAmount').value) || 0;
+  if ((mode === 'receipt' || mode === 'both') && dp <= 0) {
+    showToast('⚠ Isi Nominal DP terlebih dahulu!', 'warn');
+    return;
+  }
+
   currentPreviewMode = mode;
   
   document.querySelectorAll('.preview-selector button').forEach(btn => btn.classList.remove('active'));
@@ -937,6 +894,24 @@ function switchPreviewMode(mode, event) {
   }
 }
 
+/* ================= TERBITKAN TANDA TERIMA ================= */
+function issueReceipt() {
+  const dp = parseFloat(document.getElementById('dpAmount').value) || 0;
+  if (dp <= 0) {
+    showToast('⚠ Isi Nominal DP terlebih dahulu!', 'warn');
+    return;
+  }
+  
+  // Pindah ke tab preview
+  if (window.innerWidth <= 1024) {
+    document.querySelectorAll('.tab-switch button')[1].click();
+  }
+  
+  // Pilih tab Tanda Terima
+  switchPreviewMode('receipt');
+  showToast('🧾 Tanda Terima berhasil diterbitkan!');
+}
+
 /* ================= RENDER ITEMS ================= */
 function renderItems() {
   const c = document.getElementById('itemsContainer');
@@ -961,7 +936,7 @@ function updateItem(i, key, val) {
 function addItem() { items.push({ desc: '', qty: 1, price: 0 }); renderItems(); recalc(); }
 function removeItem(i) { if (items.length === 1) return; items.splice(i, 1); renderItems(); recalc(); }
 
-/* ================= RECALC ================= */
+/* ================= RECALC & LOGIKA PEMBAYARAN ================= */
 function recalc() {
   const name = document.getElementById('clientName').value || '-';
   const company = document.getElementById('clientCompany').value || '';
@@ -996,11 +971,13 @@ function recalc() {
   const dp = parseFloat(document.getElementById('dpAmount').value) || 0;
   const sisa = total - dp;
 
+  // Update Form
   document.getElementById('subtotalDisplay').textContent = rupiah(subtotal);
   document.getElementById('discountDisplay').textContent = '– ' + rupiah(discount);
   document.getElementById('taxDisplay').textContent = rupiah(tax);
   document.getElementById('totalDisplay').textContent = rupiah(total);
 
+  // Update Invoice
   document.getElementById('pvSubtotal').textContent = rupiah(subtotal);
   document.getElementById('pvDiscLabel').textContent = `Diskon (${discPct}%)`;
   document.getElementById('pvDiscount').textContent = '– ' + rupiah(discount);
@@ -1010,6 +987,33 @@ function recalc() {
   document.getElementById('pvBank').textContent = document.getElementById('bankInfo').value;
   document.getElementById('pvPhone').textContent = document.getElementById('csPhone').value;
 
+  // Tampilkan DP dan Sisa di Invoice jika DP > 0
+  if (dp > 0) {
+    document.getElementById('pvDpRow').style.display = 'flex';
+    document.getElementById('pvSisaRow').style.display = 'flex';
+    document.getElementById('pvDp').textContent = rupiah(dp);
+    document.getElementById('pvSisa').textContent = rupiah(sisa);
+    
+    // Aktifkan Tab Tanda Terima & Tombol Terbitkan
+    document.getElementById('btnTabReceipt').disabled = false;
+    document.getElementById('btnTabBoth').disabled = false;
+    document.getElementById('btnIssueReceipt').disabled = false;
+  } else {
+    document.getElementById('pvDpRow').style.display = 'none';
+    document.getElementById('pvSisaRow').style.display = 'none';
+    
+    // Disable Tab Tanda Terima & Tombol Terbitkan
+    document.getElementById('btnTabReceipt').disabled = true;
+    document.getElementById('btnTabBoth').disabled = true;
+    document.getElementById('btnIssueReceipt').disabled = true;
+    
+    // Jika sedang di tab receipt/both, paksa balik ke invoice
+    if (currentPreviewMode !== 'invoice') {
+      switchPreviewMode('invoice');
+    }
+  }
+
+  // Update Tanda Terima
   document.getElementById('rcInvNo').textContent = invNo;
   document.getElementById('rcInvDate').textContent = formatDate(invDate);
   document.getElementById('rcClientCompany').textContent = company || name;
@@ -1057,19 +1061,19 @@ function fillForm(d) {
   renderItems();
   recalc();
 }
-function saveDraftSilent() { localStorage.setItem('ihyat_invoice_draft_v2', JSON.stringify(getFormData())); }
+function saveDraftSilent() { localStorage.setItem('ihyat_invoice_draft_v4', JSON.stringify(getFormData())); }
 function loadDraft() {
-  const raw = localStorage.getItem('ihyat_invoice_draft_v2');
+  const raw = localStorage.getItem('ihyat_invoice_draft_v4');
   if (raw) { try { fillForm(JSON.parse(raw)); } catch(e){} }
 }
 function clearData() {
   if (!confirm('Reset semua isian form?')) return;
-  localStorage.removeItem('ihyat_invoice_draft_v2');
+  localStorage.removeItem('ihyat_invoice_draft_v4');
   location.reload();
 }
 
-function getHistory() { return JSON.parse(localStorage.getItem('ihyat_invoice_history_v2')) || []; }
-function saveHistory(arr) { localStorage.setItem('ihyat_invoice_history_v2', JSON.stringify(arr)); }
+function getHistory() { return JSON.parse(localStorage.getItem('ihyat_invoice_history_v4')) || []; }
+function saveHistory(arr) { localStorage.setItem('ihyat_invoice_history_v4', JSON.stringify(arr)); }
 function saveData() {
   const data = getFormData();
   let history = getHistory();
@@ -1077,13 +1081,14 @@ function saveData() {
   if (currentInvoiceId) {
     const idx = history.findIndex(h => h.id === currentInvoiceId);
     if (idx !== -1) { history[idx].data = data; history[idx].updatedAt = Date.now(); }
+    showToast('✅ Invoice diperbarui!');
   } else {
     currentInvoiceId = 'inv_' + Date.now();
     history.unshift({ id: currentInvoiceId, invNo: data.invNo, clientName: data.clientName, total: lastTotals.total, date: data.invDate, data: data });
+    showToast('✅ Invoice baru disimpan!');
   }
   saveHistory(history);
   renderHistory();
-  showToast('✅ Disimpan ke Riwayat!');
 }
 function renderHistory() {
   const list = document.getElementById('historyList');
@@ -1118,6 +1123,12 @@ function closeHistory() { document.getElementById('historyModal').classList.remo
 
 /* ================= PDF GENERATOR ================= */
 async function downloadPDF(event) {
+  const dp = parseFloat(document.getElementById('dpAmount').value) || 0;
+  if ((currentPreviewMode === 'receipt' || currentPreviewMode === 'both') && dp <= 0) {
+    showToast('⚠ Tanda Terima butuh Nominal DP!', 'warn');
+    return;
+  }
+
   const btn = event ? event.currentTarget : document.querySelector('.btn-download');
   const originalHTML = btn.innerHTML;
   btn.classList.add('loading');
@@ -1135,9 +1146,7 @@ async function downloadPDF(event) {
     }
     
     document.body.classList.add('pdf-mode');
-    
-    // Beri waktu render layout desktop
-    await new Promise(r => setTimeout(r, 500)); 
+    await new Promise(r => setTimeout(r, 400)); 
 
     let targetElement;
     if (currentPreviewMode === 'invoice') {
@@ -1149,19 +1158,14 @@ async function downloadPDF(event) {
     }
 
     const opt = {
-      margin:       [10, 10, 10, 10], // Margin A4
+      margin:       [10, 10, 10, 10],
       filename:     fileName,
       image:        { type: 'jpeg', quality: 0.98 },
       html2canvas:  { 
-        scale: 2, 
-        useCORS: true, 
-        backgroundColor: '#ffffff',
-        windowWidth: 1024, // Paksa render 1024px agar tidak hancur
-        scrollX: 0,
-        scrollY: 0
+        scale: 2, useCORS: true, backgroundColor: '#ffffff', windowWidth: 1024, scrollX: 0, scrollY: 0
       },
       jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak:    { mode: ['css', 'legacy'], avoid: ['tr', '.summary-box', '.info-grid', '.status-box', '.signature-area'] }
+      pagebreak:    { mode: ['css', 'legacy'] }
     };
 
     await html2pdf().set(opt).from(targetElement).save();
@@ -1184,7 +1188,13 @@ function openWaModal() {
   const invNo = document.getElementById('invNo').value;
   const status = document.getElementById('paymentStatus').value;
   
-  let msg = `*INVOICE & TANDA TERIMA*\n*TRIP BY IHYAT* ✈🕌🕋\n\nHalo *${name}*,\nBerikut rincian tagihan Anda:\n\n📄 *No. Invoice:* ${invNo}\n💰 *Total Tagihan:* ${rupiah(lastTotals.total)}\n✅ *Telah Dibayar:* ${rupiah(lastTotals.dp)}\n⚠️ *Sisa Tagihan:* ${rupiah(lastTotals.sisa)}\n\n*Status:* ${status.toUpperCase()}\n\n`;
+  let msg = `*INVOICE TRIP BY IHYAT* ✈🕌🕋\n\nHalo *${name}*,\nBerikut rincian tagihan Anda:\n\n📄 *No. Invoice:* ${invNo}\n💰 *Total Tagihan:* ${rupiah(lastTotals.total)}\n`;
+  
+  if (lastTotals.dp > 0) {
+    msg += `✅ *Telah Dibayar:* ${rupiah(lastTotals.dp)}\n⚠️ *Sisa Tagihan:* ${rupiah(lastTotals.sisa)}\n`;
+  }
+  
+  msg += `\n*Status:* ${status.toUpperCase()}\n\n`;
   
   if (lastTotals.sisa > 0) {
     msg += `Mohon segera melakukan pelunasan. Pembayaran dapat ditransfer ke:\n${document.getElementById('bankInfo').value}\n\n`;
@@ -1211,17 +1221,13 @@ function sendGeneric() {
   closeWaModal();
 }
 
-/* ================= MISC ================= */
-function switchTab(tab) {
-  document.querySelectorAll('.tab-switch button').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById('formPanel').classList.toggle('active', tab === 'form');
-  document.getElementById('previewPanel').classList.toggle('active', tab === 'preview');
-}
-function showToast(msg) {
+function showToast(msg, type) {
   const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  t.textContent = msg;
+  t.style.background = type === 'warn' ? '#be123c' : '#4A0E17';
+  t.classList.add('show');
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => t.classList.remove('show'), 2500);
 }
 </script>
 </body>
