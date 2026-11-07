@@ -9,9 +9,10 @@
   * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   body {
     font-family: 'Segoe UI', 'Comic Sans MS', Tahoma, sans-serif;
-    background: linear-gradient(135deg, #fef6e4 0%, #f0e6ff 100%);
+    /* Background Cream/Rose Gold Lembut */
+    background: linear-gradient(135deg, #fcf9f9 0%, #f4ebed 100%);
     padding: 25px 15px 100px;
-    color: #3a2e4a;
+    color: #331015; /* Teks Dark Burgundy */
     min-height: 100vh;
   }
 
@@ -23,7 +24,7 @@
     background: #fff;
     border-radius: 15px;
     padding: 6px;
-    box-shadow: 0 4px 15px rgba(160,120,200,0.15);
+    box-shadow: 0 4px 15px rgba(128, 0, 32, 0.15);
     gap: 6px;
   }
   .tab-switch button {
@@ -35,13 +36,13 @@
     font-weight: bold;
     cursor: pointer;
     background: transparent;
-    color: #7c3aed;
+    color: #800020; /* Burgundy */
     transition: all 0.25s;
   }
   .tab-switch button.active {
-    background: linear-gradient(135deg, #a78bfa, #f472b6);
+    background: linear-gradient(135deg, #5E1B2B, #800020);
     color: #fff;
-    box-shadow: 0 4px 10px rgba(167,139,250,0.4);
+    box-shadow: 0 4px 10px rgba(128, 0, 32, 0.3);
   }
 
   /* ============ LAYOUT ============ */
@@ -56,26 +57,26 @@
 
   /* ============ FORM PANEL ============ */
   .form-panel {
-    background: #fffdf9;
+    background: #fffdfd;
     border-radius: 22px;
-    box-shadow: 0 12px 35px rgba(160,120,200,0.2);
-    border: 3px dashed #d8b4fe;
+    box-shadow: 0 12px 35px rgba(128, 0, 32, 0.15);
+    border: 3px dashed #d4a5b1; /* Border Rose Gold Pudar */
     overflow: hidden;
   }
   .form-header {
-    background: linear-gradient(135deg, #c4b5fd, #a5b4fc, #fbcfe8);
+    background: linear-gradient(135deg, #4A0E17 0%, #800020 50%, #A83C51 100%);
     padding: 20px 25px;
-    color: #4c1d95;
+    color: #fff;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .form-header h2 { font-size: 20px; margin-bottom: 4px; }
-  .form-header p { font-size: 12px; font-style: italic; }
+  .form-header h2 { font-size: 20px; margin-bottom: 4px; color: #fff; }
+  .form-header p { font-size: 12px; font-style: italic; color: #f0d5da; }
   .btn-history {
     background: #fff;
-    color: #7c3aed;
-    border: 2px solid #c4b5fd;
+    color: #800020;
+    border: 2px solid #d4a5b1;
     padding: 8px 15px;
     border-radius: 10px;
     font-weight: bold;
@@ -84,18 +85,18 @@
     transition: all 0.2s;
     display: flex; align-items: center; gap: 5px;
   }
-  .btn-history:hover { background: #f3e8ff; transform: scale(1.05); }
+  .btn-history:hover { background: #fcf6f8; transform: scale(1.05); }
 
   .form-body { padding: 22px 25px; }
   .form-section {
     margin-bottom: 22px;
     padding-bottom: 18px;
-    border-bottom: 1.5px dashed #e9d5ff;
+    border-bottom: 1.5px dashed #e6d3d8;
   }
   .form-section:last-child { border-bottom: none; }
   .form-section h3 {
     font-size: 13px;
-    color: #7c3aed;
+    color: #800020;
     text-transform: uppercase;
     letter-spacing: 1px;
     margin-bottom: 14px;
@@ -108,33 +109,33 @@
     display: block;
     font-size: 12px;
     font-weight: 600;
-    color: #5b21b6;
+    color: #5E1B2B;
     margin-bottom: 5px;
   }
   .field input, .field select, .field textarea {
     width: 100%;
     padding: 10px 14px;
-    border: 2px solid #e9d5ff;
+    border: 2px solid #e6d3d8;
     border-radius: 10px;
     font-size: 14px;
     font-family: inherit;
-    color: #3a2e4a;
-    background: #fdfcff;
+    color: #331015;
+    background: #fffdfd;
     transition: all 0.2s;
     outline: none;
   }
   .field input:focus, .field select:focus, .field textarea:focus {
-    border-color: #a78bfa;
+    border-color: #800020;
     background: #fff;
-    box-shadow: 0 0 0 3px rgba(167,139,250,0.15);
+    box-shadow: 0 0 0 3px rgba(128, 0, 32, 0.1);
   }
   .field textarea { resize: vertical; min-height: 60px; }
   .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
   /* item rows */
   .item-row {
-    background: #faf5ff;
-    border: 2px solid #e9d5ff;
+    background: #fcf6f8;
+    border: 2px solid #e6d3d8;
     border-radius: 12px;
     padding: 12px;
     margin-bottom: 10px;
@@ -149,82 +150,83 @@
   .item-row .field label { font-size: 10px; }
   .item-row .field input { padding: 8px 10px; font-size: 13px; }
   .btn-remove {
-    background: #fecdd3; border: none; color: #be123c;
+    background: #fce4e6; border: none; color: #b91c1c;
     width: 38px; height: 38px; border-radius: 10px;
     font-size: 18px; font-weight: bold; cursor: pointer;
     transition: all 0.2s;
     display: flex; align-items: center; justify-content: center;
   }
-  .btn-remove:hover { background: #fda4af; transform: scale(1.05); }
+  .btn-remove:hover { background: #fca5a5; transform: scale(1.05); }
   .btn-add {
     width: 100%; padding: 12px;
-    background: #f3e8ff; border: 2px dashed #c4b5fd;
-    border-radius: 12px; color: #7c3aed; font-weight: bold;
+    background: #fdf5f6; border: 2px dashed #d4a5b1;
+    border-radius: 12px; color: #800020; font-weight: bold;
     font-size: 14px; cursor: pointer; transition: all 0.2s;
   }
-  .btn-add:hover { background: #ede9fe; border-color: #a78bfa; }
+  .btn-add:hover { background: #fcecee; border-color: #800020; }
 
   /* totals */
   .totals-preview {
-    background: #faf5ff; border-radius: 12px;
-    padding: 15px 18px; border: 2px dashed #c4b5fd; margin-top: 10px;
+    background: #fcf6f8; border-radius: 12px;
+    padding: 15px 18px; border: 2px dashed #d4a5b1; margin-top: 10px;
   }
   .totals-preview .row {
     display: flex; justify-content: space-between;
-    font-size: 13px; padding: 5px 0; color: #5b21b6;
+    font-size: 13px; padding: 5px 0; color: #5E1B2B;
   }
   .totals-preview .row.total {
-    border-top: 2px solid #a78bfa; margin-top: 8px;
-    padding-top: 10px; font-size: 17px; font-weight: bold; color: #4c1d95;
+    border-top: 2px solid #800020; margin-top: 8px;
+    padding-top: 10px; font-size: 17px; font-weight: bold; color: #4A0E17;
   }
 
   /* ============ PREVIEW PANEL ============ */
   .preview-panel { position: sticky; top: 20px; }
   .invoice-container {
-    background: #fffdf9;
+    background: #fffdfd;
     border-radius: 22px;
-    box-shadow: 0 12px 35px rgba(160,120,200,0.2);
-    border: 3px dashed #d8b4fe;
+    box-shadow: 0 12px 35px rgba(128, 0, 32, 0.15);
+    border: 3px dashed #d4a5b1;
     overflow: hidden;
   }
   .header {
-    background: linear-gradient(135deg, #c4b5fd 0%, #a5b4fc 50%, #fbcfe8 100%);
+    background: linear-gradient(135deg, #4A0E17 0%, #800020 50%, #A83C51 100%);
     padding: 20px 25px; position: relative;
     display: flex; justify-content: space-between;
     align-items: center; flex-wrap: wrap; gap: 12px;
   }
   .header::after {
     content: "✈"; position: absolute; font-size: 50px;
-    opacity: 0.15; right: 15px; top: 8px; transform: rotate(-15deg);
+    opacity: 0.1; right: 15px; top: 8px; transform: rotate(-15deg);
+    color: #fff;
   }
   .brand { display: flex; align-items: center; gap: 12px; z-index: 1; }
   .brand-logo {
     width: 65px; height: 65px; background: #fff; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); flex-shrink: 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2); flex-shrink: 0;
     overflow: hidden; border: 2px solid #fff;
   }
   .brand-logo img { width: 100%; height: 100%; object-fit: contain; }
-  .brand-text h1 { font-size: 20px; color: #4c1d95; }
-  .brand-text p { font-size: 10px; color: #6b21a8; font-style: italic; font-weight: bold; }
+  .brand-text h1 { font-size: 20px; color: #fff; }
+  .brand-text p { font-size: 10px; color: #f0d5da; font-style: italic; font-weight: bold; }
   .invoice-title { text-align: right; z-index: 1; }
-  .invoice-title h2 { font-size: 22px; color: #4c1d95; letter-spacing: 1.5px; }
+  .invoice-title h2 { font-size: 22px; color: #fff; letter-spacing: 1.5px; }
   .inv-no {
-    font-size: 11px; color: #5b21b6;
-    background: rgba(255,255,255,0.7); padding: 3px 10px;
+    font-size: 11px; color: #4A0E17;
+    background: #f4ebed; padding: 3px 10px;
     border-radius: 20px; display: inline-block; margin-top: 4px; font-weight: bold;
   }
 
   /* scenery */
   .scenery {
-    background: linear-gradient(180deg, #e0f2fe 0%, #fef9c3 100%);
+    background: linear-gradient(180deg, #fdf5f6 0%, #f4ebed 100%);
     padding: 12px 15px 8px; display: flex; justify-content: space-around;
-    align-items: flex-end; border-bottom: 3px dotted #fcd34d;
+    align-items: flex-end; border-bottom: 3px dotted #d4a5b1;
     min-height: 100px; gap: 8px;
   }
   .scenery svg { display: block; max-width: 75px; height: auto; }
   .scenery-label {
-    text-align: center; font-size: 9px; color: #92400e;
+    text-align: center; font-size: 9px; color: #800020;
     font-weight: bold; margin-top: 3px;
   }
   .plane-anim { animation: fly 3s ease-in-out infinite alternate; }
@@ -236,46 +238,46 @@
   /* body */
   .body-content { padding: 18px 22px; }
   .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
-  .info-card { background: #faf5ff; border-left: 4px solid #a78bfa; border-radius: 10px; padding: 12px 14px; }
+  .info-card { background: #fcf6f8; border-left: 4px solid #800020; border-radius: 10px; padding: 12px 14px; }
   .info-card h3 {
-    font-size: 10px; color: #7c3aed; text-transform: uppercase;
+    font-size: 10px; color: #800020; text-transform: uppercase;
     letter-spacing: 0.8px; margin-bottom: 6px;
   }
-  .info-card p { font-size: 12px; line-height: 1.5; color: #4c1d95; word-break: break-word; }
-  .info-card p strong { color: #3b0764; }
+  .info-card p { font-size: 12px; line-height: 1.5; color: #331015; word-break: break-word; }
+  .info-card p strong { color: #4A0E17; }
 
   table {
     width: 100%; border-collapse: collapse;
     margin-bottom: 15px; border-radius: 10px; overflow: hidden;
   }
-  thead { background: linear-gradient(135deg, #a5b4fc, #c4b5fd); }
+  thead { background: linear-gradient(135deg, #800020, #5E1B2B); }
   thead th { padding: 10px 12px; text-align: left; color: #fff; font-size: 11px; letter-spacing: 0.3px; }
-  tbody tr { background: #fdfcff; border-bottom: 1px solid #ede9fe; }
-  tbody tr:nth-child(even) { background: #f7f3ff; }
-  tbody td { padding: 10px 12px; font-size: 12px; color: #4c1d95; word-break: break-word; }
+  tbody tr { background: #fffdfd; border-bottom: 1px solid #f4ebed; }
+  tbody tr:nth-child(even) { background: #fcf6f8; }
+  tbody td { padding: 10px 12px; font-size: 12px; color: #331015; word-break: break-word; }
   tbody td:last-child, thead th:last-child { text-align: right; }
 
   .summary { display: flex; justify-content: flex-end; }
   .summary-box {
-    width: 260px; background: #faf5ff; border-radius: 12px;
-    padding: 14px 18px; border: 2px dashed #c4b5fd;
+    width: 260px; background: #fcf6f8; border-radius: 12px;
+    padding: 14px 18px; border: 2px dashed #d4a5b1;
   }
-  .summary-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 12px; color: #5b21b6; }
+  .summary-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 12px; color: #5E1B2B; }
   .summary-row.total {
-    border-top: 2px solid #a78bfa; margin-top: 6px;
-    padding-top: 10px; font-size: 15px; font-weight: bold; color: #4c1d95;
+    border-top: 2px solid #800020; margin-top: 6px;
+    padding-top: 10px; font-size: 15px; font-weight: bold; color: #4A0E17;
   }
-  .summary-row .label-discount { color: #db2777; }
+  .summary-row .label-discount { color: #b91c1c; }
 
   .footer {
-    background: linear-gradient(135deg, #fbcfe8, #c4b5fd);
-    padding: 15px 22px; text-align: center; font-size: 11px; color: #4c1d95;
+    background: linear-gradient(135deg, #5E1B2B, #800020);
+    padding: 15px 22px; text-align: center; font-size: 11px; color: #f4ebed;
   }
-  .footer .thanks { font-size: 13px; font-weight: bold; margin-bottom: 6px; color: #6b21a8; }
+  .footer .thanks { font-size: 13px; font-weight: bold; margin-bottom: 6px; color: #fff; }
   .footer .bank {
-    background: rgba(255,255,255,0.6); display: inline-block;
+    background: rgba(255,255,255,0.15); display: inline-block;
     padding: 6px 15px; border-radius: 20px; margin-top: 6px;
-    font-weight: bold; font-size: 11px;
+    font-weight: bold; font-size: 11px; border: 1px solid rgba(255,255,255,0.3);
   }
   .footer .contact { margin-top: 8px; font-size: 10px; line-height: 1.7; }
   .footer .contact span { margin: 0 5px; }
@@ -291,11 +293,13 @@
   .btn:hover { transform: scale(1.03); }
   .btn:active { transform: scale(0.97); }
   .btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
-  .btn-print { background: linear-gradient(135deg, #a78bfa, #f472b6); box-shadow: 0 6px 15px rgba(167,139,250,0.4); }
-  .btn-clear { background: linear-gradient(135deg, #fca5a5, #f87171); box-shadow: 0 6px 15px rgba(248,113,113,0.3); }
-  .btn-save { background: linear-gradient(135deg, #34d399, #60a5fa); box-shadow: 0 6px 15px rgba(52,211,153,0.3); }
-  .btn-download { background: linear-gradient(135deg, #f59e0b, #ef4444); box-shadow: 0 6px 15px rgba(245,158,11,0.4); }
+  
+  /* Warna Tombol Disesuaikan dengan Tema Burgundy */
+  .btn-save { background: linear-gradient(135deg, #800020, #4A0E17); box-shadow: 0 6px 15px rgba(128,0,32,0.4); }
+  .btn-clear { background: linear-gradient(135deg, #fca5a5, #dc2626); box-shadow: 0 6px 15px rgba(220,38,38,0.3); }
+  .btn-download { background: linear-gradient(135deg, #D4AF37, #B8860B); box-shadow: 0 6px 15px rgba(212,175,55,0.4); color: #fff; } /* Gold */
   .btn-wa { background: linear-gradient(135deg, #25d366, #128c7e); box-shadow: 0 6px 15px rgba(37,211,102,0.4); }
+  .btn-print { background: linear-gradient(135deg, #800020, #A83C51); box-shadow: 0 6px 15px rgba(128,0,32,0.4); }
 
   .btn.loading { pointer-events: none; }
   .btn.loading::before {
@@ -309,7 +313,7 @@
 
   /* ============ MODAL (WhatsApp & Riwayat) ============ */
   .modal-overlay {
-    position: fixed; inset: 0; background: rgba(76,29,149,0.5);
+    position: fixed; inset: 0; background: rgba(74, 14, 23, 0.7);
     backdrop-filter: blur(4px); z-index: 1000;
     display: none; align-items: center; justify-content: center;
     padding: 20px; animation: fadeIn 0.2s;
@@ -317,14 +321,14 @@
   .modal-overlay.show { display: flex; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
   .modal {
-    background: #fffdf9; border-radius: 20px;
+    background: #fffdfd; border-radius: 20px;
     max-width: 500px; width: 100%; max-height: 90vh;
-    overflow-y: auto; box-shadow: 0 20px 60px rgba(76,29,149,0.3);
+    overflow-y: auto; box-shadow: 0 20px 60px rgba(74, 14, 23, 0.4);
     animation: slideUp 0.3s; display: flex; flex-direction: column;
   }
   @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
   .modal-header {
-    background: linear-gradient(135deg, #a78bfa, #f472b6);
+    background: linear-gradient(135deg, #4A0E17, #800020);
     color: #fff; padding: 18px 22px;
     display: flex; justify-content: space-between; align-items: center;
     border-radius: 20px 20px 0 0;
@@ -346,7 +350,7 @@
     font-family: 'Segoe UI', sans-serif; color: #1f2937;
     margin-bottom: 15px; border: 2px solid #a4d982;
   }
-  .wa-label { font-size: 12px; color: #5b21b6; font-weight: 600; margin-bottom: 8px; display: block; }
+  .wa-label { font-size: 12px; color: #5E1B2B; font-weight: 600; margin-bottom: 8px; display: block; }
   .wa-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
   .wa-btn {
     padding: 12px; border: 2px solid #25d366; background: #fff;
@@ -362,15 +366,15 @@
   /* Riwayat Modal Specifics */
   .history-list { display: flex; flex-direction: column; gap: 12px; }
   .history-card {
-    background: #faf5ff; border: 2px solid #e9d5ff;
+    background: #fcf6f8; border: 2px solid #e6d3d8;
     border-radius: 12px; padding: 15px;
     display: flex; justify-content: space-between; align-items: center;
     transition: all 0.2s;
   }
-  .history-card:hover { border-color: #a78bfa; box-shadow: 0 4px 10px rgba(167,139,250,0.15); }
-  .history-info h4 { font-size: 14px; color: #4c1d95; margin-bottom: 4px; }
+  .history-card:hover { border-color: #800020; box-shadow: 0 4px 10px rgba(128,0,32,0.1); }
+  .history-info h4 { font-size: 14px; color: #4A0E17; margin-bottom: 4px; }
   .history-info p { font-size: 11px; color: #6b7280; margin-bottom: 2px; }
-  .history-info .h-total { font-size: 13px; font-weight: bold; color: #db2777; margin-top: 6px; }
+  .history-info .h-total { font-size: 13px; font-weight: bold; color: #b91c1c; margin-top: 6px; }
   .history-actions { display: flex; gap: 6px; flex-direction: column; }
   .btn-hist {
     padding: 6px 12px; border: none; border-radius: 8px;
@@ -387,11 +391,11 @@
   .mobile-actions {
     display: none;
     position: fixed; bottom: 0; left: 0; right: 0;
-    background: rgba(255,253,249,0.98);
+    background: rgba(255, 253, 253, 0.98);
     backdrop-filter: blur(10px);
     padding: 10px 12px;
-    box-shadow: 0 -4px 20px rgba(160,120,200,0.25);
-    z-index: 500; border-top: 2px dashed #d8b4fe; gap: 8px;
+    box-shadow: 0 -4px 20px rgba(128, 0, 32, 0.15);
+    z-index: 500; border-top: 2px dashed #d4a5b1; gap: 8px;
   }
   .mobile-actions .btn {
     flex: 1; padding: 11px 8px; font-size: 12px; min-width: 0;
@@ -402,11 +406,11 @@
   .toast {
     position: fixed; bottom: 100px; left: 50%;
     transform: translateX(-50%) translateY(100px);
-    background: #4c1d95; color: #fff;
+    background: #4A0E17; color: #fff;
     padding: 12px 24px; border-radius: 25px;
     font-size: 13px; font-weight: bold;
     opacity: 0; transition: all 0.4s; z-index: 9999;
-    box-shadow: 0 8px 25px rgba(76,29,149,0.4);
+    box-shadow: 0 8px 25px rgba(74, 14, 23, 0.4);
     max-width: 90%; text-align: center;
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
@@ -428,15 +432,15 @@
   }
   body.pdf-mode .invoice-container {
     box-shadow: none !important;
-    border: 2px solid #d8b4fe !important;
+    border: 2px solid #d4a5b1 !important;
   }
   body.pdf-mode table { display: table !important; }
   body.pdf-mode thead { display: table-header-group !important; }
   body.pdf-mode tbody { display: table-row-group !important; }
   body.pdf-mode tr { display: table-row !important; }
   body.pdf-mode th, body.pdf-mode td { display: table-cell !important; padding: 10px 12px !important; font-size: 12px !important; }
-  body.pdf-mode tbody tr { background: transparent !important; border: none !important; padding: 0 !important; margin: 0 !important; border-bottom: 1px solid #ede9fe !important; border-radius: 0 !important; }
-  body.pdf-mode tbody tr:nth-child(even) { background: #f7f3ff !important; }
+  body.pdf-mode tbody tr { background: transparent !important; border: none !important; padding: 0 !important; margin: 0 !important; border-bottom: 1px solid #f4ebed !important; border-radius: 0 !important; }
+  body.pdf-mode tbody tr:nth-child(even) { background: #fcf6f8 !important; }
   body.pdf-mode td::before { content: none !important; }
   body.pdf-mode tbody td:last-child { border-top: none !important; font-weight: normal !important; font-size: 12px !important; padding-top: 10px !important; margin-top: 0 !important; }
   body.pdf-mode .header { flex-direction: row !important; text-align: left !important; padding: 20px 25px !important; }
@@ -476,7 +480,7 @@
     .brand-logo { width: 55px; height: 55px; }
     .brand-text h1 { font-size: 16px; }
     .brand-text p { font-size: 9px; }
-    .invoice-title { text-align: center; width: 100%; border-top: 1px dashed rgba(255,255,255,0.6); padding-top: 8px; }
+    .invoice-title { text-align: center; width: 100%; border-top: 1px dashed rgba(255,255,255,0.3); padding-top: 8px; }
     .invoice-title h2 { font-size: 18px; }
     .scenery { padding: 10px 8px 6px; min-height: 80px; }
     .scenery svg { max-width: 55px; }
@@ -488,15 +492,15 @@
     .info-card p { font-size: 11px; }
     table, thead, tbody, th, td, tr { display: block; width: 100%; }
     thead { display: none; }
-    tbody tr { background: #faf5ff; border: 2px dashed #c4b5fd; border-radius: 12px; margin-bottom: 10px; padding: 10px 12px; }
-    tbody tr:nth-child(even) { background: #f7f3ff; }
-    tbody td { padding: 5px 0; font-size: 12px; text-align: left !important; display: flex; justify-content: space-between; border-bottom: 1px dashed #e9d5ff; }
-    tbody td:last-child { border-bottom: none; font-weight: bold; padding-top: 8px; margin-top: 4px; border-top: 2px solid #a78bfa; font-size: 13px; }
+    tbody tr { background: #fcf6f8; border: 2px dashed #d4a5b1; border-radius: 12px; margin-bottom: 10px; padding: 10px 12px; }
+    tbody tr:nth-child(even) { background: #fdf5f6; }
+    tbody td { padding: 5px 0; font-size: 12px; text-align: left !important; display: flex; justify-content: space-between; border-bottom: 1px dashed #e6d3d8; }
+    tbody td:last-child { border-bottom: none; font-weight: bold; padding-top: 8px; margin-top: 4px; border-top: 2px solid #800020; font-size: 13px; }
     tbody td:nth-child(1) { flex-direction: column; align-items: flex-start; gap: 2px; font-weight: 600; padding-bottom: 6px; }
-    tbody td:nth-child(1)::before { content: "📦 Layanan"; font-weight: bold; color: #7c3aed; font-size: 9px; text-transform: uppercase; }
-    tbody td:nth-child(2)::before { content: "Qty:"; font-weight: bold; color: #7c3aed; font-size: 11px; }
-    tbody td:nth-child(3)::before { content: "Harga:"; font-weight: bold; color: #7c3aed; font-size: 11px; }
-    tbody td:nth-child(4)::before { content: "Subtotal:"; font-weight: bold; color: #7c3aed; font-size: 11px; }
+    tbody td:nth-child(1)::before { content: "📦 Layanan"; font-weight: bold; color: #800020; font-size: 9px; text-transform: uppercase; }
+    tbody td:nth-child(2)::before { content: "Qty:"; font-weight: bold; color: #800020; font-size: 11px; }
+    tbody td:nth-child(3)::before { content: "Harga:"; font-weight: bold; color: #800020; font-size: 11px; }
+    tbody td:nth-child(4)::before { content: "Subtotal:"; font-weight: bold; color: #800020; font-size: 11px; }
     .summary { justify-content: stretch; }
     .summary-box { width: 100%; padding: 12px 15px; }
     .summary-row { font-size: 12px; }
@@ -515,17 +519,17 @@
     .mobile-actions, .modal-overlay { display: none !important; }
     .wrapper { display: block; max-width: 100%; }
     .preview-panel { display: block !important; position: static; }
-    .invoice-container { box-shadow: none; border: 2px solid #ddd; border-radius: 0; }
+    .invoice-container { box-shadow: none; border: 2px solid #d4a5b1; border-radius: 0; }
     .scenery, .header, .footer, thead { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
     table { display: table !important; }
     thead { display: table-header-group !important; }
     tbody { display: table-row-group !important; }
     tr { display: table-row !important; background: transparent !important; border: none !important; padding: 0 !important; margin: 0 !important; }
-    th, td { display: table-cell !important; border-bottom: 1px solid #ede9fe !important; padding: 8px 10px !important; }
-    th { background: #a5b4fc !important; color: #fff !important; }
+    th, td { display: table-cell !important; border-bottom: 1px solid #f4ebed !important; padding: 8px 10px !important; }
+    th { background: #800020 !important; color: #fff !important; }
     td::before { content: none !important; }
     tbody td:last-child { border-top: none !important; font-weight: normal !important; font-size: 12px !important; }
-    tbody tr:nth-child(even) { background: #f7f3ff !important; }
+    tbody tr:nth-child(even) { background: #fcf6f8 !important; }
   }
 </style>
 </head>
@@ -666,8 +670,7 @@
       <div class="header">
         <div class="brand">
           <div class="brand-logo">
-            <!-- Ganti src dengan nama file logo Anda -->
-            <img src="logo.png" alt="TripByIhyat" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg width=\'34\' height=\'34\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'48\' fill=\'#ede9fe\'/><path d=\'M50 15 Q30 35 30 55 L70 55 Q70 35 50 15 Z\' fill=\'#7c3aed\'/><rect x=\'30\' y=\'55\' width=\'40\' height=\'25\' fill=\'#a78bfa\'/><path d=\'M50 8 L50 15\' stroke=\'#7c3aed\' stroke-width=\'3\'/><circle cx=\'50\' cy=\'8\' r=\'3\' fill=\'#fbbf24\'/></svg>'">
+            <img src="Logo.png" alt="TripByIhyat" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg width=\'34\' height=\'34\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'48\' fill=\'#f4ebed\'/><path d=\'M50 15 Q30 35 30 55 L70 55 Q70 35 50 15 Z\' fill=\'#800020\'/><rect x=\'30\' y=\'55\' width=\'40\' height=\'25\' fill=\'#4A0E17\'/><path d=\'M50 8 L50 15\' stroke=\'#800020\' stroke-width=\'3\'/><circle cx=\'50\' cy=\'8\' r=\'3\' fill=\'#D4AF37\'/></svg>'">
           </div>
           <div class="brand-text">
             <h1>TripByIhyat</h1>
@@ -684,32 +687,32 @@
         <div style="text-align:center;">
           <svg class="plane-anim" width="70" height="50" viewBox="0 0 120 80">
             <path d="M10 45 L60 40 L85 15 L95 15 L80 42 L110 45 L110 52 L80 55 L95 78 L85 78 L60 58 L10 55 Z"
-                  fill="#818cf8" stroke="#4f46e5" stroke-width="2"/>
-            <circle cx="50" cy="48" r="3" fill="#fef9c3"/>
-            <circle cx="42" cy="48" r="3" fill="#fef9c3"/>
-            <circle cx="34" cy="48" r="3" fill="#fef9c3"/>
+                  fill="#800020" stroke="#4A0E17" stroke-width="2"/>
+            <circle cx="50" cy="48" r="3" fill="#fff"/>
+            <circle cx="42" cy="48" r="3" fill="#fff"/>
+            <circle cx="34" cy="48" r="3" fill="#fff"/>
           </svg>
           <div class="scenery-label">✈ Penerbangan</div>
         </div>
         <div style="text-align:center;">
           <svg width="70" height="60" viewBox="0 0 120 90">
-            <rect x="12" y="30" width="10" height="50" fill="#86efac"/>
-            <path d="M17 20 L12 30 L22 30 Z" fill="#22c55e"/>
-            <rect x="30" y="50" width="60" height="30" fill="#bbf7d0"/>
-            <path d="M60 20 Q40 40 40 55 L80 55 Q80 40 60 20 Z" fill="#22c55e"/>
-            <path d="M60 15 L60 20" stroke="#166534" stroke-width="2"/>
-            <rect x="52" y="62" width="16" height="18" rx="6" fill="#166534"/>
+            <rect x="12" y="30" width="10" height="50" fill="#d4a5b1"/>
+            <path d="M17 20 L12 30 L22 30 Z" fill="#800020"/>
+            <rect x="30" y="50" width="60" height="30" fill="#f4ebed"/>
+            <path d="M60 20 Q40 40 40 55 L80 55 Q80 40 60 20 Z" fill="#800020"/>
+            <path d="M60 15 L60 20" stroke="#4A0E17" stroke-width="2"/>
+            <rect x="52" y="62" width="16" height="18" rx="6" fill="#4A0E17"/>
           </svg>
           <div class="scenery-label">🕌 Madinah</div>
         </div>
         <div style="text-align:center;">
           <svg width="70" height="60" viewBox="0 0 120 90">
-            <rect x="35" y="35" width="50" height="45" fill="#1f2937"/>
-            <rect x="35" y="50" width="50" height="8" fill="#fbbf24"/>
-            <rect x="55" y="35" width="10" height="45" fill="#fbbf24" opacity="0.85"/>
-            <rect x="53" y="60" width="14" height="20" fill="#d97706"/>
-            <rect x="35" y="32" width="50" height="5" fill="#111827"/>
-            <circle cx="95" cy="20" r="8" fill="#fde68a"/>
+            <rect x="35" y="35" width="50" height="45" fill="#331015"/>
+            <rect x="35" y="50" width="50" height="8" fill="#D4AF37"/>
+            <rect x="55" y="35" width="10" height="45" fill="#D4AF37" opacity="0.85"/>
+            <rect x="53" y="60" width="14" height="20" fill="#4A0E17"/>
+            <rect x="35" y="32" width="50" height="5" fill="#1a080b"/>
+            <circle cx="95" cy="20" r="8" fill="#D4AF37"/>
           </svg>
           <div class="scenery-label">🕋 Mekah</div>
         </div>
@@ -852,7 +855,7 @@ let items = [
   { desc: '🤝 Land Agreement (Visa + Hotel + Transport)', qty: 1, price: 8000000 }
 ];
 let lastTotals = { subtotal: 0, discount: 0, tax: 0, total: 0, discPct: 0, taxPct: 0 };
-let currentInvoiceId = null; // ID untuk edit data
+let currentInvoiceId = null;
 
 /* ================= INIT ================= */
 document.addEventListener('DOMContentLoaded', () => {
@@ -1091,7 +1094,6 @@ function saveData() {
   if (!data.invNo) { showToast('⚠ No. Invoice wajib diisi!', 'warn'); return; }
 
   if (currentInvoiceId) {
-    // Update existing
     const idx = history.findIndex(h => h.id === currentInvoiceId);
     if (idx !== -1) {
       history[idx].data = data;
@@ -1099,7 +1101,6 @@ function saveData() {
       showToast('✅ Invoice diperbarui di Riwayat!');
     }
   } else {
-    // Save new
     const newId = 'inv_' + Date.now();
     history.unshift({
       id: newId,
@@ -1152,7 +1153,6 @@ function loadInvoice(id) {
   closeHistory();
   showToast('📝 Invoice berhasil dibuka!');
   
-  // Jika di mobile, pindah ke tab form
   if (window.innerWidth <= 1024) {
     document.querySelectorAll('.tab-switch button').forEach(b => b.classList.remove('active'));
     document.querySelector('.tab-switch button').classList.add('active');
@@ -1381,7 +1381,7 @@ async function sharePDFviaWA() {
 function showToast(msg, type) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.style.background = type === 'warn' ? '#be123c' : '#4c1d95';
+  t.style.background = type === 'warn' ? '#b91c1c' : '#4A0E17';
   t.classList.add('show');
   clearTimeout(t._timer);
   t._timer = setTimeout(() => t.classList.remove('show'), 2500);
