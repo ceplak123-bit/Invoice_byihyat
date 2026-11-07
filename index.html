@@ -171,31 +171,32 @@
   /* --- STYLE INVOICE (HEADER & FOOTER) --- */
   .header {
     background: linear-gradient(135deg, #4A0E17 0%, #800020 50%, #A83C51 100%);
-    padding: 20px 25px; position: relative;
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    padding: 25px 30px; position: relative; /* Padding ditambah agar lebih lega */
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
   }
   .header::after {
     content: "✈"; position: absolute; font-size: 50px; opacity: 0.1; right: 15px; top: 8px; transform: rotate(-15deg); color: #fff;
   }
-  .brand { display: flex; align-items: center; gap: 12px; z-index: 1; }
+  .brand { display: flex; align-items: center; gap: 15px; z-index: 1; } /* Gap ditambah */
   .brand-logo {
     width: 65px; height: 65px; background: #fff; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2); flex-shrink: 0; overflow: hidden; border: 2px solid #fff;
   }
   .brand-logo img { width: 100%; height: 100%; object-fit: contain; }
-  .brand-text h1 { font-size: 20px; color: #fff; }
-  .brand-text p { font-size: 10px; color: #f0d5da; font-style: italic; font-weight: bold; }
+  .brand-text { margin-left: 5px; } /* Spasi tambahan untuk teks */
+  .brand-text h1 { font-size: 22px; color: #fff; letter-spacing: 0.5px; }
+  .brand-text p { font-size: 11px; color: #f0d5da; font-style: italic; font-weight: bold; margin-top: 2px; }
   .invoice-title { text-align: right; z-index: 1; }
-  .invoice-title h2 { font-size: 22px; color: #fff; letter-spacing: 1.5px; }
+  .invoice-title h2 { font-size: 24px; color: #fff; letter-spacing: 2px; }
   .inv-no {
-    font-size: 11px; color: #4A0E17; background: #f4ebed;
-    padding: 3px 10px; border-radius: 20px; display: inline-block; margin-top: 4px; font-weight: bold;
+    font-size: 12px; color: #4A0E17; background: #f4ebed;
+    padding: 4px 12px; border-radius: 20px; display: inline-block; margin-top: 6px; font-weight: bold;
   }
 
   .scenery {
     background: linear-gradient(180deg, #fdf5f6 0%, #f4ebed 100%);
-    padding: 12px 15px 8px; display: flex; justify-content: space-around;
+    padding: 15px 20px 10px; display: flex; justify-content: space-around;
     align-items: flex-end; border-bottom: 3px dotted #d4a5b1; min-height: 100px; gap: 8px;
   }
   .scenery svg { display: block; max-width: 75px; height: auto; }
@@ -234,17 +235,18 @@
   .footer .contact span { margin: 0 5px; }
 
   /* =========================================
-     --- STYLE TANDA TERIMA (DISAMAKAN) ---
+     --- STYLE TANDA TERIMA (TEMA DISAMAKAN) ---
      ========================================= */
-  /* Header Tanda Terima meniru Invoice Header */
   .receipt-header {
     background: linear-gradient(135deg, #4A0E17 0%, #800020 50%, #A83C51 100%);
-    padding: 20px 25px;
-    display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 10px;
+    padding: 25px 25px 20px;
+    display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 12px;
     position: relative;
   }
-  .receipt-header h1 { font-size: 18px; color: #fff; letter-spacing: 2px; text-align: center; }
-  .receipt-header svg { max-width: 300px; }
+  .receipt-header .brand { flex-direction: column; text-align: center; gap: 8px; margin-bottom: 5px; }
+  .receipt-header .brand-logo { width: 60px; height: 60px; }
+  .receipt-header h1 { font-size: 20px; color: #fff; letter-spacing: 1.5px; text-align: center; }
+  .receipt-header p { font-size: 12px; color: #f0d5da; font-weight: bold; letter-spacing: 1px; }
   
   .receipt-title-bar {
     background: #f4ebed; text-align: center; padding: 15px;
@@ -258,7 +260,6 @@
   .receipt-table td:first-child { font-weight: bold; width: 35%; color: #5E1B2B; }
   .receipt-table td:nth-child(3) { font-weight: bold; width: 20%; color: #5E1B2B; }
   
-  /* Tabel Rincian Pembayaran Tanda Terima disamakan dengan tabel Invoice */
   .receipt-payment-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; font-size: 12px; }
   .receipt-payment-table thead { background: linear-gradient(135deg, #800020, #5E1B2B); }
   .receipt-payment-table th { padding: 10px 12px; text-align: center; color: #fff; font-size: 11px; border: none; }
@@ -359,9 +360,14 @@
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   /* =========================================
-     --- PDF MODE (ANTI TERPOTONG) ---
+     --- PDF MODE (PERBAIKAN ANTI TERPOTONG) ---
      ========================================= */
-  body.pdf-mode { background: #fff; padding: 0; }
+  body.pdf-mode { 
+    background: #fff !important; 
+    padding: 0 !important; 
+    margin: 0 !important;
+  }
+  
   body.pdf-mode .tab-switch,
   body.pdf-mode .form-panel,
   body.pdf-mode .action-btns,
@@ -370,33 +376,49 @@
   body.pdf-mode .preview-selector,
   body.pdf-mode .btn-history { display: none !important; }
   
-  body.pdf-mode .wrapper { display: block !important; max-width: 100% !important; margin: 0 !important; }
-  body.pdf-mode .preview-panel { display: block !important; position: static !important; max-height: none !important; overflow: visible !important; }
+  body.pdf-mode .wrapper { 
+    display: block !important; 
+    width: 800px !important; 
+    max-width: 800px !important; 
+    margin: 0 auto !important; 
+    padding: 0 !important;
+  }
   
-  /* KUNCI PERBAIKAN: Hapus border/margin agar pas di kertas A4 */
-  body.pdf-mode .invoice-container, body.pdf-mode .receipt-container { 
+  body.pdf-mode .preview-panel { 
+    display: block !important; 
+    position: static !important; 
+    max-height: none !important; 
+    overflow: visible !important; 
+    padding: 0 !important;
+  }
+  
+  body.pdf-mode .invoice-container, 
+  body.pdf-mode .receipt-container { 
     box-shadow: none !important; 
     border: none !important; 
-    margin-bottom: 0 !important; 
+    margin: 0 !important; 
     border-radius: 0 !important;
+    width: 100% !important;
   }
 
-  /* Page Break: Pastikan Tanda Terima SELALU di halaman baru saat mode Both */
   body.pdf-mode #receiptContainer { 
     page-break-before: always; 
-    padding-top: 10px;
+    padding-top: 20px;
+  }
+  body.pdf-mode.single-receipt #receiptContainer { 
+    page-break-before: auto !important; 
+    padding-top: 0;
   }
   
-  /* Reset layout table untuk PDF (agar layout desktop dipaksa) */
   body.pdf-mode table { display: table !important; width: 100% !important; }
   body.pdf-mode thead { display: table-header-group !important; }
   body.pdf-mode tbody { display: table-row-group !important; }
   body.pdf-mode tr { display: table-row !important; background: transparent !important; border-bottom: 1px solid #f4ebed !important; padding: 0 !important; }
-  body.pdf-mode th, body.pdf-mode td { display: table-cell !important; padding: 8px 10px !important; border: 1px solid #d4a5b1 !important; } /* Beri border agar rapi */
+  body.pdf-mode th, body.pdf-mode td { display: table-cell !important; padding: 8px 10px !important; border: 1px solid #d4a5b1 !important; } 
   body.pdf-mode th { background: #800020 !important; color: #fff !important; }
   body.pdf-mode td::before { content: none !important; }
   
-  body.pdf-mode .header { flex-direction: row !important; text-align: left !important; padding: 20px 25px !important; }
+  body.pdf-mode .header { flex-direction: row !important; text-align: left !important; padding: 25px 30px !important; }
   body.pdf-mode .invoice-title { text-align: right !important; width: auto !important; border-top: none !important; padding-top: 0 !important; }
   body.pdf-mode .info-grid { grid-template-columns: 1fr 1fr !important; }
   body.pdf-mode .summary { justify-content: flex-end !important; }
@@ -422,20 +444,18 @@
     .item-row { grid-template-columns: 1fr; gap: 6px; position: relative; }
     .btn-remove { position: absolute; top: 8px; right: 8px; width: 30px; height: 30px; }
     .field-row, .field-row.three { grid-template-columns: 1fr; }
-    .header { flex-direction: column; text-align: center; padding: 15px 12px; }
-    .brand { flex-direction: column; }
-    .invoice-title { text-align: center; width: 100%; border-top: 1px dashed rgba(255,255,255,0.3); padding-top: 8px; }
+    .header { flex-direction: column; text-align: center; padding: 20px 15px; }
+    .brand { flex-direction: column; gap: 8px; }
+    .invoice-title { text-align: center; width: 100%; border-top: 1px dashed rgba(255,255,255,0.3); padding-top: 10px; }
     .scenery { padding: 10px 8px 6px; }
     .scenery svg { max-width: 55px; }
     
-    /* Tabel Invoice & Tanda Terima Mobile */
     table, thead, tbody, th, td, tr { display: block; width: 100%; }
     thead { display: none; }
     tbody tr { background: #fcf6f8; border: 2px dashed #d4a5b1; border-radius: 12px; margin-bottom: 10px; padding: 10px; }
     tbody td { padding: 5px 0; display: flex; justify-content: space-between; border-bottom: 1px dashed #e6d3d8; }
     tbody td:last-child { border-bottom: none; font-weight: bold; border-top: 2px solid #800020; margin-top: 4px; padding-top: 8px; }
     
-    /* Khusus Tabel Tanda Terima Mobile */
     .receipt-table td { display: block; border: none; padding: 4px 0; }
     .receipt-table td:nth-child(3) { margin-top: 10px; }
     .receipt-payment-table tr { background: #fffdfd; border: 1px dashed #d4a5b1; }
@@ -712,18 +732,24 @@
         </div>
       </div>
 
-      <!-- HALAMAN 2: TANDA TERIMA (TEMA DISAMAKAN) -->
+      <!-- HALAMAN 2: TANDA TERIMA -->
       <div class="receipt-container" id="receiptContainer">
-        <!-- Header Tanda Terima -->
+        <!-- Header Tanda Terima (Dengan Logo) -->
         <div class="receipt-header">
-          <h1>TRIP BY IHYAT ✈ HAJI • UMRAH • WISATA</h1>
-          <svg width="100%" height="60" viewBox="0 0 400 60" style="max-width:300px;">
-            <path d="M50 40 Q150 0 200 40 T350 40" fill="none" stroke="#D4AF37" stroke-width="2" stroke-dasharray="5,5"/>
-            <polygon points="100,30 130,20 140,30 130,40" fill="#D4AF37" />
-            <circle cx="200" cy="40" r="20" fill="#D4AF37" />
-            <rect x="190" y="40" width="20" height="20" fill="#331015" />
-            <path d="M280 40 Q260 20 280 0 Q300 20 280 40 Z" fill="#D4AF37" />
-          </svg>
+          <div class="brand">
+            <div class="brand-logo">
+              <img src="logo.png" alt="TripByIhyat" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg width=\'34\' height=\'34\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'48\' fill=\'#f4ebed\'/><path d=\'M50 15 Q30 35 30 55 L70 55 Q70 35 50 15 Z\' fill=\'#800020\'/><rect x=\'30\' y=\'55\' width=\'40\' height=\'25\' fill=\'#4A0E17\'/><path d=\'M50 8 L50 15\' stroke=\'#800020\' stroke-width=\'3\'/><circle cx=\'50\' cy=\'8\' r=\'3\' fill=\'#D4AF37\'/></svg>'">
+            </div>
+            <div class="brand-text" style="margin-left:0; text-align:center;">
+              <h1>TRIP BY IHYAT</h1>
+              <p>HAJI • UMRAH • WISATA</p>
+            </div>
+          </div>
+          
+          <!-- Ornamen Garis -->
+          <div style="width:100%; max-width:300px; height:20px; border-bottom: 2px dashed #D4AF37; position:relative; margin-top:5px;">
+            <div style="position:absolute; bottom:-10px; left:50%; transform:translateX(-50%); background:#800020; padding:0 10px; color:#D4AF37; font-size:14px;">✈ 🕋 🕌</div>
+          </div>
         </div>
 
         <div class="receipt-title-bar">❀ TANDA TERIMA PEMBAYARAN ❀</div>
@@ -1100,7 +1126,7 @@ function deleteInvoice(id) {
 function openHistory() { document.getElementById('historyModal').classList.add('show'); }
 function closeHistory() { document.getElementById('historyModal').classList.remove('show'); }
 
-/* ================= PDF GENERATOR ================= */
+/* ================= PDF GENERATOR (FIXED) ================= */
 async function downloadPDF(event) {
   const btn = event ? event.currentTarget : document.querySelector('.btn-download');
   const originalHTML = btn.innerHTML;
@@ -1113,38 +1139,37 @@ async function downloadPDF(event) {
                    `TandaTerima_${invNo}.pdf`;
 
   try {
-    // 1. Tambahkan class khusus untuk mode cetak
-    document.body.classList.add('pdf-mode');
+    document.body.classList.remove('single-receipt');
+    if (currentPreviewMode === 'receipt') {
+      document.body.classList.add('single-receipt');
+    }
     
-    // 2. Beri waktu bagi browser untuk merender layout desktop secara penuh
-    await new Promise(r => setTimeout(r, 500)); 
+    document.body.classList.add('pdf-mode');
+    await new Promise(r => setTimeout(r, 400)); 
 
     let targetElement;
     if (currentPreviewMode === 'invoice') {
       targetElement = document.getElementById('invoiceContainer');
     } else if (currentPreviewMode === 'receipt') {
       targetElement = document.getElementById('receiptContainer');
-      // Pastikan tidak ada page break di halaman pertama saat dicetak tunggal
-      targetElement.style.pageBreakBefore = 'auto'; 
     } else {
       targetElement = document.getElementById('pdfWrapper');
     }
 
-    // 3. Konfigurasi html2pdf yang lebih stabil
     const opt = {
-      margin:       [10, 10, 10, 10], // Margin 10mm di semua sisi
+      margin:       [10, 10, 10, 10],
       filename:     fileName,
       image:        { type: 'jpeg', quality: 0.98 },
       html2canvas:  { 
         scale: 2, 
         useCORS: true, 
         backgroundColor: '#ffffff',
-        windowWidth: 1024, // Paksa lebar desktop agar tabel tidak gepeng/terpotong
-        scrollY: 0,
-        scrollX: 0
+        windowWidth: 800,
+        scrollX: 0,
+        scrollY: 0
       },
       jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak:    { mode: ['css', 'legacy'], avoid: ['tr', '.summary-box', '.info-grid'] } // Hindari potong di tengah tabel
+      pagebreak:    { mode: ['css', 'legacy'], avoid: ['tr', '.summary-box', '.info-grid'] }
     };
 
     await html2pdf().set(opt).from(targetElement).save();
@@ -1155,9 +1180,7 @@ async function downloadPDF(event) {
     showToast('❌ Gagal membuat PDF.', 'warn');
   } finally {
     document.body.classList.remove('pdf-mode');
-    if (currentPreviewMode === 'receipt') {
-      document.getElementById('receiptContainer').style.pageBreakBefore = '';
-    }
+    document.body.classList.remove('single-receipt');
     btn.classList.remove('loading');
     btn.innerHTML = originalHTML;
   }
