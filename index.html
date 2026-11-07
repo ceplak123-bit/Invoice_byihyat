@@ -357,12 +357,13 @@
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
   /* =========================================
-     --- PDF MODE (PERBAIKAN ANTI TERPOTONG & TABEL HANCUR) ---
+     --- PDF MODE (PERBAIKAN TOTAL LAYOUT & CETAK) ---
      ========================================= */
   body.pdf-mode { 
     background: #fff !important; 
     padding: 0 !important; 
     margin: 0 !important;
+    overflow: visible !important;
   }
   
   body.pdf-mode .tab-switch,
@@ -373,12 +374,12 @@
   body.pdf-mode .preview-selector,
   body.pdf-mode .btn-history { display: none !important; }
   
-  /* KUNCI LEBAR A4 */
+  /* KUNCI LEBAR A4 (Kertas virtual) */
   body.pdf-mode .wrapper { 
     display: block !important; 
-    width: 800px !important; 
-    max-width: 800px !important; 
-    margin: 0 auto !important; 
+    width: 100% !important; 
+    max-width: 100% !important; 
+    margin: 0 !important; 
     padding: 0 !important;
   }
   
@@ -390,6 +391,14 @@
     padding: 0 !important;
   }
   
+  body.pdf-mode #pdfWrapper {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Hilangkan border/margin container agar pas di kertas A4 */
   body.pdf-mode .invoice-container, 
   body.pdf-mode .receipt-container { 
     box-shadow: none !important; 
@@ -397,53 +406,47 @@
     margin: 0 !important; 
     border-radius: 0 !important;
     width: 100% !important;
-    min-height: 280mm; /* Memaksa tinggi kertas A4 agar tidak ada white space besar */
-    display: flex;
-    flex-direction: column;
+    min-height: 270mm !important; /* Tinggi A4 dikurangi margin */
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important; /* Menyebar konten atas-tengah-bawah */
+    background: #fffdfd !important;
+    overflow: hidden !important;
   }
 
-  /* Memastikan footer atau konten mengisi sisa ruang (opsional) */
-  body.pdf-mode .invoice-container .body-content,
-  body.pdf-mode .receipt-container .receipt-body {
-    flex-grow: 1;
+  /* Paksa margin 0 untuk konten di dalamnya agar rapi */
+  body.pdf-mode .header { padding: 25px 30px !important; }
+  body.pdf-mode .body-content, 
+  body.pdf-mode .receipt-body { 
+    flex-grow: 1 !important; 
+    padding: 20px 25px !important;
   }
 
   body.pdf-mode #receiptContainer { 
     page-break-before: always; 
-    padding-top: 20px;
+    margin-top: 10mm !important; /* Jarak antar halaman saat dicetak */
   }
   body.pdf-mode.single-receipt #receiptContainer { 
     page-break-before: auto !important; 
-    padding-top: 0;
+    margin-top: 0 !important;
   }
   
   /* =======================================================
-     MENGEMBALIKAN TABEL KE FORMAT DESKTOP (MEMPERBAIKI TABEL HANCUR)
+     MENGEMBALIKAN TABEL KE FORMAT DESKTOP (MEMPERBAIKI TABEL HANCUR & TERPOTONG)
      ======================================================= */
-  body.pdf-mode table { display: table !important; width: 100% !important; }
+  body.pdf-mode table { display: table !important; width: 100% !important; table-layout: fixed !important; }
   body.pdf-mode thead { display: table-header-group !important; }
   body.pdf-mode tbody { display: table-row-group !important; }
   body.pdf-mode tr { display: table-row !important; background: transparent !important; border-bottom: 1px solid #f4ebed !important; padding: 0 !important; margin: 0 !important; border-radius: 0 !important; }
-  body.pdf-mode th, body.pdf-mode td { display: table-cell !important; padding: 8px 10px !important; border: 1px solid #d4a5b1 !important; font-size: 12px !important; } 
+  body.pdf-mode th, body.pdf-mode td { display: table-cell !important; padding: 8px 10px !important; border: 1px solid #d4a5b1 !important; font-size: 12px !important; word-break: break-word !important; } 
   body.pdf-mode th { background: #800020 !important; color: #fff !important; }
   body.pdf-mode td::before { content: none !important; } /* Hapus label mobile */
   
-  body.pdf-mode .header { flex-direction: row !important; text-align: left !important; padding: 25px 30px !important; }
-  body.pdf-mode .invoice-title { text-align: right !important; width: auto !important; border-top: none !important; padding-top: 0 !important; }
-  body.pdf-mode .info-grid { grid-template-columns: 1fr 1fr !important; }
-  body.pdf-mode .summary { justify-content: flex-end !important; }
-  body.pdf-mode .receipt-summary { width: 50% !important; }
-  body.pdf-mode .signature-area { flex-direction: row !important; }
-  body.pdf-mode .sig-box { width: 40% !important; }
-  
-  /* Kembalikan Tanda Terima Table */
-  body.pdf-mode .receipt-table { display: table !important; width: 100% !important; }
-  body.pdf-mode .receipt-table tr { display: table-row !important; }
-  body.pdf-mode .receipt-table td { display: table-cell !important; border-bottom: 1px dotted #d4a5b1 !important; padding: 8px !important; margin: 0 !important; }
-  body.pdf-mode .receipt-payment-table { display: table !important; width: 100% !important; }
-  body.pdf-mode .receipt-payment-table tr { display: table-row !important; }
-  body.pdf-mode .receipt-payment-table td { display: table-cell !important; text-align: center !important; border: 1px solid #d4a5b1 !important; }
-  body.pdf-mode .receipt-payment-table td.text-right { text-align: right !important; }
+  /* Tanda Tangan & Footer diatur agar menempel bawah */
+  body.pdf-mode .signature-area, body.pdf-mode .footer {
+    margin-top: auto !important; 
+    padding-bottom: 20px !important;
+  }
 
   /* ============ RESPONSIVE ============ */
   @media (max-width: 1024px) {
@@ -469,18 +472,26 @@
     .scenery { padding: 10px 8px 6px; }
     .scenery svg { max-width: 55px; }
     
-    table, thead, tbody, th, td, tr { display: block; width: 100%; }
-    thead { display: none; }
-    tbody tr { background: #fcf6f8; border: 2px dashed #d4a5b1; border-radius: 12px; margin-bottom: 10px; padding: 10px; }
-    tbody td { padding: 5px 0; display: flex; justify-content: space-between; border-bottom: 1px dashed #e6d3d8; }
-    tbody td:last-child { border-bottom: none; font-weight: bold; border-top: 2px solid #800020; margin-top: 4px; padding-top: 8px; }
+    /* TAMPILAN MOBILE (Di-override oleh pdf-mode) */
+    table:not(.pdf-mode table) { display: block; width: 100%; }
+    thead:not(.pdf-mode thead) { display: none; }
+    tbody:not(.pdf-mode tbody) { display: block; }
+    tbody tr:not(.pdf-mode tr) { background: #fcf6f8; border: 2px dashed #d4a5b1; border-radius: 12px; margin-bottom: 10px; padding: 10px; display: block; }
+    tbody td:not(.pdf-mode td) { padding: 5px 0; display: flex; justify-content: space-between; border-bottom: 1px dashed #e6d3d8; border-left: none; border-right: none; border-top: none; }
+    tbody td:last-child:not(.pdf-mode td) { border-bottom: none; font-weight: bold; border-top: 2px solid #800020; margin-top: 4px; padding-top: 8px; }
+    tbody td:nth-child(1):not(.pdf-mode td)::before { content: "📦 Layanan"; font-weight: bold; color: #800020; font-size: 9px; text-transform: uppercase; }
+    tbody td:nth-child(2):not(.pdf-mode td)::before { content: "Qty:"; font-weight: bold; color: #800020; }
+    tbody td:nth-child(3):not(.pdf-mode td)::before { content: "Harga:"; font-weight: bold; color: #800020; }
+    tbody td:nth-child(4):not(.pdf-mode td)::before { content: "Subtotal:"; font-weight: bold; color: #800020; }
     
-    .receipt-table td { display: block; border: none; padding: 4px 0; }
-    .receipt-table td:nth-child(3) { margin-top: 10px; }
-    .receipt-payment-table tr { background: #fffdfd; border: 1px dashed #d4a5b1; }
-    .receipt-payment-table td { text-align: right; border-bottom: 1px dotted #d4a5b1; }
-    .receipt-payment-table td:before { content: attr(data-label) ": "; float: left; font-weight: bold; color: #800020; }
-    .receipt-payment-table td.text-right { text-align: right; font-weight: bold; border-bottom: none; }
+    .receipt-table tr:not(.pdf-mode tr) { display: block; background: transparent; border: none; margin: 0; padding: 0; }
+    .receipt-table td:not(.pdf-mode td) { display: block; border: none; padding: 4px 0; }
+    .receipt-table td:nth-child(3):not(.pdf-mode td) { margin-top: 10px; }
+    
+    .receipt-payment-table tr:not(.pdf-mode tr) { background: #fffdfd; border: 1px dashed #d4a5b1; display: block; }
+    .receipt-payment-table td:not(.pdf-mode td) { text-align: right; border-bottom: 1px dotted #d4a5b1; display: flex; justify-content: space-between; }
+    .receipt-payment-table td:before:not(.pdf-mode td) { content: attr(data-label) ": "; float: left; font-weight: bold; color: #800020; }
+    .receipt-payment-table td.text-right:not(.pdf-mode td) { text-align: right; font-weight: bold; border-bottom: none; }
 
     .summary-box { width: 100%; }
     .receipt-summary { width: 100%; }
@@ -666,83 +677,85 @@
     <div id="pdfWrapper">
       <!-- HALAMAN 1: INVOICE -->
       <div class="invoice-container" id="invoiceContainer">
-        <div class="header">
-          <div class="brand">
-            <div class="brand-logo">
-              <img src="logo.png" alt="TripByIhyat" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg width=\'34\' height=\'34\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'48\' fill=\'#f4ebed\'/><path d=\'M50 15 Q30 35 30 55 L70 55 Q70 35 50 15 Z\' fill=\'#800020\'/><rect x=\'30\' y=\'55\' width=\'40\' height=\'25\' fill=\'#4A0E17\'/><path d=\'M50 8 L50 15\' stroke=\'#800020\' stroke-width=\'3\'/><circle cx=\'50\' cy=\'8\' r=\'3\' fill=\'#D4AF37\'/></svg>'">
+        <div>
+          <div class="header">
+            <div class="brand">
+              <div class="brand-logo">
+                <img src="logo.png" alt="TripByIhyat" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg width=\'34\' height=\'34\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'48\' fill=\'#f4ebed\'/><path d=\'M50 15 Q30 35 30 55 L70 55 Q70 35 50 15 Z\' fill=\'#800020\'/><rect x=\'30\' y=\'55\' width=\'40\' height=\'25\' fill=\'#4A0E17\'/><path d=\'M50 8 L50 15\' stroke=\'#800020\' stroke-width=\'3\'/><circle cx=\'50\' cy=\'8\' r=\'3\' fill=\'#D4AF37\'/></svg>'">
+              </div>
+              <div class="brand-text">
+                <h1>TripByIhyat</h1>
+                <p>Land Arrangement</p>
+              </div>
             </div>
-            <div class="brand-text">
-              <h1>TripByIhyat</h1>
-              <p>Land Arrangement</p>
+            <div class="invoice-title">
+              <h2>INVOICE</h2>
+              <span class="inv-no">#<span id="previewInvNo">TBI-INV-157</span></span>
             </div>
           </div>
-          <div class="invoice-title">
-            <h2>INVOICE</h2>
-            <span class="inv-no">#<span id="previewInvNo">TBI-INV-157</span></span>
+
+          <div class="scenery">
+            <div style="text-align:center;">
+              <svg class="plane-anim" width="70" height="50" viewBox="0 0 120 80">
+                <path d="M10 45 L60 40 L85 15 L95 15 L80 42 L110 45 L110 52 L80 55 L95 78 L85 78 L60 58 L10 55 Z" fill="#800020" stroke="#4A0E17" stroke-width="2"/>
+                <circle cx="50" cy="48" r="3" fill="#fff"/><circle cx="42" cy="48" r="3" fill="#fff"/><circle cx="34" cy="48" r="3" fill="#fff"/>
+              </svg>
+              <div class="scenery-label">✈ Penerbangan</div>
+            </div>
+            <div style="text-align:center;">
+              <svg width="70" height="60" viewBox="0 0 120 90">
+                <rect x="12" y="30" width="10" height="50" fill="#d4a5b1"/><path d="M17 20 L12 30 L22 30 Z" fill="#800020"/>
+                <rect x="30" y="50" width="60" height="30" fill="#f4ebed"/><path d="M60 20 Q40 40 40 55 L80 55 Q80 40 60 20 Z" fill="#800020"/>
+                <path d="M60 15 L60 20" stroke="#4A0E17" stroke-width="2"/><rect x="52" y="62" width="16" height="18" rx="6" fill="#4A0E17"/>
+              </svg>
+              <div class="scenery-label">🕌 Madinah</div>
+            </div>
+            <div style="text-align:center;">
+              <svg width="70" height="60" viewBox="0 0 120 90">
+                <rect x="35" y="35" width="50" height="45" fill="#331015"/><rect x="35" y="50" width="50" height="8" fill="#D4AF37"/>
+                <rect x="55" y="35" width="10" height="45" fill="#D4AF37" opacity="0.85"/><rect x="53" y="60" width="14" height="20" fill="#4A0E17"/>
+                <rect x="35" y="32" width="50" height="5" fill="#1a080b"/><circle cx="95" cy="20" r="8" fill="#D4AF37"/>
+              </svg>
+              <div class="scenery-label">🕋 Mekah</div>
+            </div>
+          </div>
+
+          <div class="body-content">
+            <div class="info-grid">
+              <div class="info-card">
+                <h3>Ditagihkan Kepada</h3>
+                <p id="previewClient"></p>
+              </div>
+              <div class="info-card">
+                <h3>Detail Invoice</h3>
+                <p id="previewMeta"></p>
+              </div>
+            </div>
+
+            <table>
+              <thead>
+                <tr>
+                  <th style="width: 45%;">Deskripsi Layanan</th>
+                  <th style="width: 15%; text-align:center;">Qty</th>
+                  <th style="width: 20%; text-align:right;">Harga</th>
+                  <th style="width: 20%; text-align:right;">Subtotal</th>
+                </tr>
+              </thead>
+              <tbody id="previewItems"></tbody>
+            </table>
+
+            <div class="summary">
+              <div class="summary-box">
+                <div class="summary-row"><span>Subtotal</span><span id="pvSubtotal">Rp 0</span></div>
+                <div class="summary-row"><span class="label-discount" id="pvDiscLabel">Diskon (0%)</span><span class="label-discount" id="pvDiscount">– Rp 0</span></div>
+                <div class="summary-row"><span id="pvTaxLabel">PPN (0%)</span><span id="pvTax">Rp 0</span></div>
+                <div class="summary-row total"><span>Total Tagihan</span><span id="pvTotal">Rp 0</span></div>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="scenery">
-          <div style="text-align:center;">
-            <svg class="plane-anim" width="70" height="50" viewBox="0 0 120 80">
-              <path d="M10 45 L60 40 L85 15 L95 15 L80 42 L110 45 L110 52 L80 55 L95 78 L85 78 L60 58 L10 55 Z" fill="#800020" stroke="#4A0E17" stroke-width="2"/>
-              <circle cx="50" cy="48" r="3" fill="#fff"/><circle cx="42" cy="48" r="3" fill="#fff"/><circle cx="34" cy="48" r="3" fill="#fff"/>
-            </svg>
-            <div class="scenery-label">✈ Penerbangan</div>
-          </div>
-          <div style="text-align:center;">
-            <svg width="70" height="60" viewBox="0 0 120 90">
-              <rect x="12" y="30" width="10" height="50" fill="#d4a5b1"/><path d="M17 20 L12 30 L22 30 Z" fill="#800020"/>
-              <rect x="30" y="50" width="60" height="30" fill="#f4ebed"/><path d="M60 20 Q40 40 40 55 L80 55 Q80 40 60 20 Z" fill="#800020"/>
-              <path d="M60 15 L60 20" stroke="#4A0E17" stroke-width="2"/><rect x="52" y="62" width="16" height="18" rx="6" fill="#4A0E17"/>
-            </svg>
-            <div class="scenery-label">🕌 Madinah</div>
-          </div>
-          <div style="text-align:center;">
-            <svg width="70" height="60" viewBox="0 0 120 90">
-              <rect x="35" y="35" width="50" height="45" fill="#331015"/><rect x="35" y="50" width="50" height="8" fill="#D4AF37"/>
-              <rect x="55" y="35" width="10" height="45" fill="#D4AF37" opacity="0.85"/><rect x="53" y="60" width="14" height="20" fill="#4A0E17"/>
-              <rect x="35" y="32" width="50" height="5" fill="#1a080b"/><circle cx="95" cy="20" r="8" fill="#D4AF37"/>
-            </svg>
-            <div class="scenery-label">🕋 Mekah</div>
-          </div>
-        </div>
-
-        <div class="body-content">
-          <div class="info-grid">
-            <div class="info-card">
-              <h3>Ditagihkan Kepada</h3>
-              <p id="previewClient"></p>
-            </div>
-            <div class="info-card">
-              <h3>Detail Invoice</h3>
-              <p id="previewMeta"></p>
-            </div>
-          </div>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Deskripsi Layanan</th>
-                <th>Qty</th>
-                <th>Harga</th>
-                <th>Subtotal</th>
-              </tr>
-            </thead>
-            <tbody id="previewItems"></tbody>
-          </table>
-
-          <div class="summary">
-            <div class="summary-box">
-              <div class="summary-row"><span>Subtotal</span><span id="pvSubtotal">Rp 0</span></div>
-              <div class="summary-row"><span class="label-discount" id="pvDiscLabel">Diskon (0%)</span><span class="label-discount" id="pvDiscount">– Rp 0</span></div>
-              <div class="summary-row"><span id="pvTaxLabel">PPN (0%)</span><span id="pvTax">Rp 0</span></div>
-              <div class="summary-row total"><span>Total Tagihan</span><span id="pvTotal">Rp 0</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="footer" style="margin-top:auto;">
+        <div class="footer">
           <div class="thanks">🌟 Terima kasih telah mempercayakan perjalanan Anda kepada TripByIhyat! 🌟</div>
           <div class="bank">💳 <span id="pvBank"></span></div>
           <div class="contact">
@@ -753,92 +766,97 @@
 
       <!-- HALAMAN 2: TANDA TERIMA -->
       <div class="receipt-container" id="receiptContainer">
-        <!-- Header Tanda Terima -->
-        <div class="receipt-header">
-          <div class="brand">
-            <div class="brand-logo">
-              <img src="logo.png" alt="TripByIhyat" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg width=\'34\' height=\'34\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'48\' fill=\'#f4ebed\'/><path d=\'M50 15 Q30 35 30 55 L70 55 Q70 35 50 15 Z\' fill=\'#800020\'/><rect x=\'30\' y=\'55\' width=\'40\' height=\'25\' fill=\'#4A0E17\'/><path d=\'M50 8 L50 15\' stroke=\'#800020\' stroke-width=\'3\'/><circle cx=\'50\' cy=\'8\' r=\'3\' fill=\'#D4AF37\'/></svg>'">
+        <div>
+          <div class="receipt-header">
+            <div class="brand">
+              <div class="brand-logo">
+                <img src="logo.png" alt="TripByIhyat" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg width=\'34\' height=\'34\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'48\' fill=\'#f4ebed\'/><path d=\'M50 15 Q30 35 30 55 L70 55 Q70 35 50 15 Z\' fill=\'#800020\'/><rect x=\'30\' y=\'55\' width=\'40\' height=\'25\' fill=\'#4A0E17\'/><path d=\'M50 8 L50 15\' stroke=\'#800020\' stroke-width=\'3\'/><circle cx=\'50\' cy=\'8\' r=\'3\' fill=\'#D4AF37\'/></svg>'">
+              </div>
+              <div class="brand-text" style="margin-left:0; text-align:center;">
+                <h1>TRIP BY IHYAT</h1>
+                <p>HAJI • UMRAH • WISATA</p>
+              </div>
             </div>
-            <div class="brand-text" style="margin-left:0; text-align:center;">
-              <h1>TRIP BY IHYAT</h1>
-              <p>HAJI • UMRAH • WISATA</p>
+            
+            <div style="width:100%; max-width:300px; height:20px; border-bottom: 2px dashed #D4AF37; position:relative; margin-top:5px;">
+              <div style="position:absolute; bottom:-10px; left:50%; transform:translateX(-50%); background:#800020; padding:0 10px; color:#D4AF37; font-size:14px;">✈ 🕋 🕌</div>
             </div>
           </div>
-          
-          <div style="width:100%; max-width:300px; height:20px; border-bottom: 2px dashed #D4AF37; position:relative; margin-top:5px;">
-            <div style="position:absolute; bottom:-10px; left:50%; transform:translateX(-50%); background:#800020; padding:0 10px; color:#D4AF37; font-size:14px;">✈ 🕋 🕌</div>
+
+          <div class="receipt-title-bar">❀ TANDA TERIMA PEMBAYARAN ❀</div>
+
+          <div class="receipt-body">
+            <h3 style="font-size:12px; color:#800020; margin-bottom:8px;">❤ DATA INVOICE & PELANGGAN</h3>
+            <table class="receipt-table">
+              <tr>
+                <td>No. Invoice</td>
+                <td>: <span id="rcInvNo">-</span></td>
+                <td>Tanggal</td>
+                <td>: <span id="rcInvDate">-</span></td>
+              </tr>
+              <tr>
+                <td>Diterima dari</td>
+                <td>: <span id="rcClientCompany">-</span></td>
+                <td>No. WhatsApp</td>
+                <td>: <span id="rcClientPhone">-</span></td>
+              </tr>
+              <tr>
+                <td>Jenis perjalanan</td>
+                <td>: <span id="rcTripType">-</span></td>
+                <td>Jumlah peserta</td>
+                <td>: <span id="rcPax">-</span></td>
+              </tr>
+              <tr>
+                <td>Paket / tujuan</td>
+                <td colspan="3">: <span id="rcPackage">-</span></td>
+              </tr>
+              <tr>
+                <td>Tanggal perjalanan</td>
+                <td colspan="3">: <span id="rcTripDate">-</span></td>
+              </tr>
+            </table>
+
+            <h3 style="font-size:12px; color:#800020; margin-bottom:8px;">❤ RINCIAN PEMBAYARAN</h3>
+            <table class="receipt-payment-table">
+              <thead>
+                <tr>
+                  <th style="width: 10%;">NO</th>
+                  <th style="width: 40%;">URAIAN PEMBAYARAN</th>
+                  <th style="width: 15%;">JUMLAH</th>
+                  <th style="width: 20%;">HARGA / NOMINAL</th>
+                  <th style="width: 25%;">TOTAL (Rp)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td data-label="NO">1</td>
+                  <td data-label="URAIAN">Pembayaran DP / Angsuran</td>
+                  <td data-label="JUMLAH" id="rcPaxRincian">10 Pax</td>
+                  <td data-label="HARGA" class="text-right" id="rcDpNominal">Rp 0</td>
+                  <td data-label="TOTAL" class="text-right" id="rcDpTotal">Rp 0</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="receipt-summary">
+              <div class="r-row"><span>TOTAL TAGIHAN</span><span id="rcTotalTagihan">Rp 0</span></div>
+              <div class="r-row"><span>JUMLAH DITERIMA</span><span id="rcTotalDiterima">Rp 0</span></div>
+              <div class="r-row"><span>SISA TAGIHAN</span><span id="rcSisaTagihan">Rp 0</span></div>
+            </div>
+
+            <h3 style="font-size:12px; color:#800020; margin-bottom:8px;">❤ STATUS & KETERANGAN</h3>
+            <div class="status-box">
+              <h4>Status</h4>
+              <div class="status-text" id="rcStatus">-</div>
+            </div>
+            
+            <p style="font-size:11px; margin-bottom:5px;">Catatan: Pembayaran telah diterima sesuai nominal yang tercantum di atas.</p>
+            <p style="font-size:11px;">Metode pembayaran: <span id="rcBank">-</span></p>
           </div>
         </div>
 
-        <div class="receipt-title-bar">❀ TANDA TERIMA PEMBAYARAN ❀</div>
-
-        <div class="receipt-body">
-          <h3 style="font-size:12px; color:#800020; margin-bottom:8px;">❤ DATA INVOICE & PELANGGAN</h3>
-          <table class="receipt-table">
-            <tr>
-              <td>No. Invoice</td>
-              <td>: <span id="rcInvNo">-</span></td>
-              <td>Tanggal</td>
-              <td>: <span id="rcInvDate">-</span></td>
-            </tr>
-            <tr>
-              <td>Diterima dari</td>
-              <td>: <span id="rcClientCompany">-</span></td>
-              <td>No. WhatsApp</td>
-              <td>: <span id="rcClientPhone">-</span></td>
-            </tr>
-            <tr>
-              <td>Jenis perjalanan</td>
-              <td>: <span id="rcTripType">-</span></td>
-              <td>Jumlah peserta</td>
-              <td>: <span id="rcPax">-</span></td>
-            </tr>
-            <tr>
-              <td>Paket / tujuan</td>
-              <td>: <span id="rcPackage">-</span></td>
-              <td>Tanggal perjalanan</td>
-              <td>: <span id="rcTripDate">-</span></td>
-            </tr>
-          </table>
-
-          <h3 style="font-size:12px; color:#800020; margin-bottom:8px;">❤ RINCIAN PEMBAYARAN</h3>
-          <table class="receipt-payment-table">
-            <thead>
-              <tr>
-                <th>NO</th>
-                <th>URAIAN PEMBAYARAN</th>
-                <th>JUMLAH</th>
-                <th>HARGA / NOMINAL</th>
-                <th>TOTAL (Rp)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td data-label="NO">1</td>
-                <td data-label="URAIAN">Pembayaran DP / Angsuran</td>
-                <td data-label="JUMLAH" id="rcPaxRincian">10 Pax</td>
-                <td data-label="HARGA" class="text-right" id="rcDpNominal">Rp 0</td>
-                <td data-label="TOTAL" class="text-right" id="rcDpTotal">Rp 0</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <div class="receipt-summary">
-            <div class="r-row"><span>TOTAL TAGIHAN</span><span id="rcTotalTagihan">Rp 0</span></div>
-            <div class="r-row"><span>JUMLAH DITERIMA</span><span id="rcTotalDiterima">Rp 0</span></div>
-            <div class="r-row"><span>SISA TAGIHAN</span><span id="rcSisaTagihan">Rp 0</span></div>
-          </div>
-
-          <h3 style="font-size:12px; color:#800020; margin-bottom:8px;">❤ STATUS & KETERANGAN</h3>
-          <div class="status-box">
-            <h4>Status</h4>
-            <div class="status-text" id="rcStatus">-</div>
-          </div>
-          
-          <p style="font-size:11px; margin-bottom:5px;">Catatan: Pembayaran telah diterima sesuai nominal yang tercantum di atas.</p>
-          <p style="font-size:11px; margin-bottom:20px;">Metode pembayaran: <span id="rcBank">-</span></p>
-
-          <div class="signature-area" style="margin-top:auto;">
+        <div style="padding: 0 22px 20px;">
+          <div class="signature-area">
             <div class="sig-box">
               <p>Penerima,</p>
               <div class="sig-img"></div>
@@ -909,7 +927,7 @@
 let items = [{ desc: 'Pembayaran DP Umroh', qty: 10, price: 1000000 }];
 let lastTotals = { subtotal: 0, discount: 0, tax: 0, total: 0, dp: 0, sisa: 0 };
 let currentInvoiceId = null;
-let currentPreviewMode = 'invoice'; // 'invoice', 'receipt', 'both'
+let currentPreviewMode = 'invoice';
 
 document.addEventListener('DOMContentLoaded', () => {
   const today = new Date();
@@ -1011,7 +1029,7 @@ function recalc() {
   items.forEach(it => {
     const sub = it.qty * it.price;
     subtotal += sub;
-    tbody.innerHTML += `<tr><td>${escapeHtml(it.desc) || '-'}</td><td>${it.qty}</td><td>${rupiah(it.price)}</td><td>${rupiah(sub)}</td></tr>`;
+    tbody.innerHTML += `<tr><td>${escapeHtml(it.desc) || '-'}</td><td style="text-align:center;">${it.qty}</td><td style="text-align:right;">${rupiah(it.price)}</td><td style="text-align:right;">${rupiah(sub)}</td></tr>`;
   });
 
   const discPct = parseFloat(document.getElementById('discountPct').value) || 0;
@@ -1164,7 +1182,7 @@ async function downloadPDF(event) {
     
     document.body.classList.add('pdf-mode');
     
-    // Beri waktu render (terutama untuk rendering tabel desktop)
+    // Beri waktu render
     await new Promise(r => setTimeout(r, 500)); 
 
     let targetElement;
@@ -1184,7 +1202,7 @@ async function downloadPDF(event) {
         scale: 2, 
         useCORS: true, 
         backgroundColor: '#ffffff',
-        windowWidth: 1024, // KUNCI: Paksa render 1024px agar layout desktop (tabel) yang diambil
+        windowWidth: 1024, // Paksa layout Desktop (mencegah tabel hancur)
         scrollX: 0,
         scrollY: 0
       },
