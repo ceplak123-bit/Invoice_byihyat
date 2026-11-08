@@ -34,7 +34,7 @@
         /* Wrapper agar tabel bisa di-scroll di HP */
         .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 10px; min-width: 600px; /* Lebar minimum agar tidak gepeng */ }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 10px; min-width: 600px; }
         th { background-color: #fbecef; color: #6b162c; padding: 10px; text-align: left; white-space: nowrap; }
         td { padding: 10px; border-bottom: 1px solid #eee; vertical-align: middle; }
         
@@ -49,20 +49,10 @@
         .bg-lunas { background-color: #198754; }
         .bg-belum { background-color: #d9534f; }
 
-        /* =========================================
-           MEDIA QUERY UNTUK TAMPILAN HP (MOBILE)
-           ========================================= */
         @media (max-width: 600px) {
-            /* Ubah form row menjadi vertikal (atas-bawah) */
             .form-row { flex-direction: column; gap: 0; }
-            
-            /* Tombol menumpuk */
             .btn-group { flex-direction: column; gap: 10px; }
-            
-            /* Perkecil padding card di HP */
             .card, .history-card { padding: 15px; }
-            
-            /* Perkecil ukuran font tabel */
             table { font-size: 0.8rem; }
             th, td { padding: 8px; }
         }
@@ -93,7 +83,7 @@
             </div>
             <div class="form-group">
                 <label>No. WhatsApp</label>
-                <input type="text" id="wa" value="6281287825694">
+                <input type="tel" id="wa" value="6281287825694" inputmode="numeric" pattern="[0-9]*">
             </div>
         </div>
 
@@ -108,7 +98,7 @@
             </div>
             <div class="form-group">
                 <label>Jumlah Peserta</label>
-                <input type="number" id="pax" value="45">
+                <input type="number" id="pax" value="45" inputmode="numeric" pattern="[0-9]*">
             </div>
             <div class="form-group">
                 <label>Tgl Perjalanan</label>
@@ -125,11 +115,13 @@
         <div class="form-row">
             <div class="form-group">
                 <label>Total Biaya (Rp)</label>
-                <input type="number" id="totalBill" value="45000000">
+                <!-- PERUBAHAN: type="text" dan tambah onkeyup="formatRupiah(this)" -->
+                <input type="text" id="totalBill" value="45.000.000" inputmode="numeric" onkeyup="formatRupiah(this)">
             </div>
             <div class="form-group">
                 <label>Uang Masuk / DP (Rp)</label>
-                <input type="number" id="amountPaid" value="10000000">
+                <!-- PERUBAHAN: type="text" dan tambah onkeyup="formatRupiah(this)" -->
+                <input type="text" id="amountPaid" value="10.000.000" inputmode="numeric" onkeyup="formatRupiah(this)">
             </div>
             <div class="form-group">
                 <label>Keterangan Pembayaran</label>
@@ -147,7 +139,6 @@
     <div class="history-card">
         <h3>📁 Riwayat Dokumen & Pembayaran</h3>
         
-        <!-- Table Responsive Wrapper -->
         <div class="table-responsive">
             <table>
                 <thead>
@@ -169,7 +160,21 @@
     </div>
 
     <script>
-        // Format Rupiah
+        // --- FUNGSI FORMAT TITIK RUPIAH SAAT DIKETIK ---
+        function formatRupiah(input) {
+            // Hapus semua karakter selain angka
+            let value = input.value.replace(/[^0-9]/g, '');
+            
+            // Jika ada angkanya, format dengan titik
+            if (value) {
+                value = parseInt(value, 10).toLocaleString('id-ID');
+            }
+            
+            // Kembalikan nilai yang sudah diformat ke input
+            input.value = value;
+        }
+
+        // Format Rupiah untuk Tampilan Tabel
         const rupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
 
         let daftarRiwayat = JSON.parse(localStorage.getItem('riwayatDokumen')) || [];
@@ -184,7 +189,6 @@
             }
 
             daftarRiwayat.forEach((item, index) => {
-                // Hitung total yang sudah dibayar
                 const totalDibayar = item.payments.reduce((sum, p) => sum + p.amount, 0);
                 const sisa = item.totalBill - totalDibayar;
                 const statusClass = sisa <= 0 ? 'bg-lunas' : 'bg-belum';
@@ -209,8 +213,11 @@
             });
         }
 
-        // Simpan Data Baru (DP Pertama)
         function simpanData(docType) {
+            // PERUBAHAN: Hapus titik (.) sebelum diubah menjadi angka desimal
+            let rawTotalBill = document.getElementById('totalBill').value.replace(/\./g, '');
+            let rawAmountPaid = document.getElementById('amountPaid').value.replace(/\./g, '');
+
             const data = {
                 id: Date.now(),
                 invNo: document.getElementById('invNo').value,
@@ -221,11 +228,11 @@
                 pax: document.getElementById('pax').value,
                 package: document.getElementById('package').value,
                 travelDate: document.getElementById('travelDate').value,
-                totalBill: parseFloat(document.getElementById('totalBill').value) || 0,
+                totalBill: parseFloat(rawTotalBill) || 0, // Gunakan angka bersih
                 payments: [
                     {
                         date: document.getElementById('date').value,
-                        amount: parseFloat(document.getElementById('amountPaid').value) || 0,
+                        amount: parseFloat(rawAmountPaid) || 0, // Gunakan angka bersih
                         desc: document.getElementById('desc').value
                     }
                 ]
@@ -239,7 +246,6 @@
             }
 
             localStorage.setItem('riwayatDokumen', JSON.stringify(daftarRiwayat));
-            
             localStorage.setItem('invoiceAktif', JSON.stringify(data));
             localStorage.setItem('printType', docType);
             localStorage.setItem('paymentIndex', 0); 
@@ -247,7 +253,6 @@
             window.location.href = 'preview.html';
         }
 
-        // Tambah Pembayaran Lanjutan
         function tambahPembayaran(index) {
             const item = daftarRiwayat[index];
             const totalDibayar = item.payments.reduce((sum, p) => sum + p.amount, 0);
@@ -258,10 +263,12 @@
                 return;
             }
 
-            let nominalStr = prompt(`Sisa tagihan: ${rupiah(sisa)}\nMasukkan nominal pembayaran baru (Angka saja):`);
+            let nominalStr = prompt(`Sisa tagihan: ${rupiah(sisa)}\nMasukkan nominal pembayaran baru (Angka saja, contoh: 5000000 atau 5.000.000):`);
             if (!nominalStr) return; 
 
-            let nominal = parseFloat(nominalStr);
+            // PERUBAHAN: Bersihkan titik jika user tidak sengaja mengetiknya di prompt
+            let nominal = parseFloat(nominalStr.replace(/\./g, ''));
+            
             if (isNaN(nominal) || nominal <= 0) {
                 alert("Nominal tidak valid!");
                 return;
@@ -290,7 +297,6 @@
             }
         }
 
-        // Pilih Tanda Terima
         function pilihTandaTerima(index) {
             const item = daftarRiwayat[index];
             let pesan = "Pilih nomor pembayaran yang ingin dicetak Tanda Terimanya:\n\n";
@@ -311,7 +317,6 @@
             }
         }
 
-        // Fungsi cetak
         function cetakDokumen(index, docType, paymentIndex = null) {
             localStorage.setItem('invoiceAktif', JSON.stringify(daftarRiwayat[index]));
             localStorage.setItem('printType', docType);
@@ -325,7 +330,6 @@
             window.location.href = 'preview.html';
         }
 
-        // Hapus Data
         function hapusData(index) {
             if(confirm("Yakin ingin menghapus seluruh data invoice ini?")) {
                 daftarRiwayat.splice(index, 1);
