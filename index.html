@@ -7,49 +7,72 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; font-family: 'Nunito', sans-serif; }
-        body { background-color: #e9ecef; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        body { background-color: #e9ecef; padding: 20px 10px; display: flex; flex-direction: column; align-items: center; margin: 0; }
         
-        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 900px; margin-bottom: 20px; }
-        h2 { color: #6b162c; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #f7c45a; padding-bottom: 10px; }
+        .card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 800px; margin-bottom: 20px; }
+        h2 { color: #6b162c; text-align: center; margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid #f7c45a; padding-bottom: 10px; font-size: 1.2rem;}
         
         .section-title { background-color: #fbecef; color: #6b162c; padding: 8px 15px; border-radius: 6px; font-weight: bold; margin: 20px 0 15px 0; font-size: 0.9rem;}
         
-        .form-group { margin-bottom: 15px; }
-        label { display: block; font-size: 0.9rem; font-weight: 700; color: #333; margin-bottom: 5px; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; background: #fff; }
-        .form-row { display: flex; gap: 15px; }
-        .form-row .form-group { flex: 1; }
+        .form-group { margin-bottom: 15px; width: 100%; }
+        label { display: block; font-size: 0.85rem; font-weight: 700; color: #333; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem; background: #fff; }
         
-        .btn-group { display: flex; gap: 15px; margin-top: 30px; }
-        .btn { flex: 1; padding: 15px; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.3s; text-align: center; }
+        .form-row { display: flex; gap: 15px; flex-wrap: wrap; }
+        
+        .btn-group { display: flex; gap: 15px; margin-top: 30px; flex-wrap: wrap; }
+        .btn { flex: 1; padding: 15px; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.3s; text-align: center; width: 100%;}
         .btn-invoice { background-color: #f7c45a; color: #6b162c; border: 2px solid #6b162c;}
         .btn-invoice:hover { background-color: #e0b04c; }
         .btn-receipt { background-color: #6b162c; color: white; }
         .btn-receipt:hover { background-color: #4a0f1d; }
 
         /* CSS Tabel Riwayat */
-        .history-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 900px; }
-        .history-card h3 { color: #6b162c; margin-top: 0; }
-        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 10px; }
-        th { background-color: #fbecef; color: #6b162c; padding: 10px; text-align: left; }
+        .history-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 800px; overflow: hidden; }
+        .history-card h3 { color: #6b162c; margin-top: 0; font-size: 1.1rem; }
+        
+        /* Wrapper agar tabel bisa di-scroll di HP */
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+        
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 10px; min-width: 600px; /* Lebar minimum agar tidak gepeng */ }
+        th { background-color: #fbecef; color: #6b162c; padding: 10px; text-align: left; white-space: nowrap; }
         td { padding: 10px; border-bottom: 1px solid #eee; vertical-align: middle; }
         
-        /* Tombol Aksi */
-        .btn-action { padding: 6px 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.75rem; margin-right: 5px; margin-bottom: 5px; display: inline-block;}
+        /* Tombol Aksi Tabel */
+        .btn-action { padding: 5px 8px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.75rem; margin-right: 2px; margin-bottom: 4px; display: inline-block;}
         .btn-pay { background-color: #0d6efd; color: white; }
         .btn-inv { background-color: #f7c45a; color: #333; }
         .btn-rec { background-color: #6b162c; color: white; }
         .btn-delete { background-color: #dc3545; color: white; }
-        .status-badge { padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; color: white; }
+        
+        .status-badge { padding: 4px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; color: white; white-space: nowrap;}
         .bg-lunas { background-color: #198754; }
         .bg-belum { background-color: #d9534f; }
+
+        /* =========================================
+           MEDIA QUERY UNTUK TAMPILAN HP (MOBILE)
+           ========================================= */
+        @media (max-width: 600px) {
+            /* Ubah form row menjadi vertikal (atas-bawah) */
+            .form-row { flex-direction: column; gap: 0; }
+            
+            /* Tombol menumpuk */
+            .btn-group { flex-direction: column; gap: 10px; }
+            
+            /* Perkecil padding card di HP */
+            .card, .history-card { padding: 15px; }
+            
+            /* Perkecil ukuran font tabel */
+            table { font-size: 0.8rem; }
+            th, td { padding: 8px; }
+        }
     </style>
 </head>
 <body>
 
-    <!-- FORM INPUT AWAL -->
+    <!-- FORM INPUT -->
     <div class="card">
-        <h2>Buat Dokumen Baru (DP Awal)</h2>
+        <h2>Buat Dokumen Baru</h2>
         
         <div class="section-title">👤 Data Pemesan & Perjalanan</div>
         <div class="form-row">
@@ -101,11 +124,11 @@
         <div class="section-title">💰 Rincian Biaya & Pembayaran Pertama (DP)</div>
         <div class="form-row">
             <div class="form-group">
-                <label>Total Biaya Keseluruhan (Rp)</label>
+                <label>Total Biaya (Rp)</label>
                 <input type="number" id="totalBill" value="45000000">
             </div>
             <div class="form-group">
-                <label>Nominal DP / Pembayaran Awal (Rp)</label>
+                <label>Uang Masuk / DP (Rp)</label>
                 <input type="number" id="amountPaid" value="10000000">
             </div>
             <div class="form-group">
@@ -123,22 +146,26 @@
     <!-- TABEL RIWAYAT -->
     <div class="history-card">
         <h3>📁 Riwayat Dokumen & Pembayaran</h3>
-        <table>
-            <thead>
-                <tr>
-                    <th>No. Invoice</th>
-                    <th>Klien</th>
-                    <th>Total Biaya</th>
-                    <th>Total Dibayar</th>
-                    <th>Sisa</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody id="tabelRiwayat">
-                <!-- Data diisi JavaScript -->
-            </tbody>
-        </table>
+        
+        <!-- Table Responsive Wrapper -->
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th>No. Invoice</th>
+                        <th>Klien</th>
+                        <th>Total Biaya</th>
+                        <th>Dibayar</th>
+                        <th>Sisa</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody id="tabelRiwayat">
+                    <!-- Data diisi JavaScript -->
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>
@@ -171,7 +198,7 @@
                     <td style="color: #198754; font-weight:bold;">${rupiah(totalDibayar)}</td>
                     <td style="color: #d9534f; font-weight:bold;">${rupiah(sisa)}</td>
                     <td><span class="status-badge ${statusClass}">${statusText}</span></td>
-                    <td>
+                    <td style="white-space: nowrap;">
                         <button class="btn-action btn-pay" onclick="tambahPembayaran(${index})">+ Bayar</button>
                         <button class="btn-action btn-inv" onclick="cetakDokumen(${index}, 'invoice')">Invoice</button>
                         <button class="btn-action btn-rec" onclick="pilihTandaTerima(${index})">Tanda Terima</button>
@@ -195,7 +222,6 @@
                 package: document.getElementById('package').value,
                 travelDate: document.getElementById('travelDate').value,
                 totalBill: parseFloat(document.getElementById('totalBill').value) || 0,
-                // Array untuk menyimpan riwayat pembayaran
                 payments: [
                     {
                         date: document.getElementById('date').value,
@@ -207,22 +233,21 @@
 
             const indexExist = daftarRiwayat.findIndex(item => item.invNo === data.invNo);
             if (indexExist !== -1) {
-                daftarRiwayat[indexExist] = data; // Update jika no invoice sama
+                daftarRiwayat[indexExist] = data; 
             } else {
-                daftarRiwayat.push(data); // Tambah baru
+                daftarRiwayat.push(data); 
             }
 
             localStorage.setItem('riwayatDokumen', JSON.stringify(daftarRiwayat));
             
-            // Cetak langsung
             localStorage.setItem('invoiceAktif', JSON.stringify(data));
             localStorage.setItem('printType', docType);
-            localStorage.setItem('paymentIndex', 0); // Cetak pembayaran pertama (DP)
+            localStorage.setItem('paymentIndex', 0); 
             
             window.location.href = 'preview.html';
         }
 
-        // Tambah Pembayaran Lanjutan (Cicilan/Pelunasan)
+        // Tambah Pembayaran Lanjutan
         function tambahPembayaran(index) {
             const item = daftarRiwayat[index];
             const totalDibayar = item.payments.reduce((sum, p) => sum + p.amount, 0);
@@ -234,7 +259,7 @@
             }
 
             let nominalStr = prompt(`Sisa tagihan: ${rupiah(sisa)}\nMasukkan nominal pembayaran baru (Angka saja):`);
-            if (!nominalStr) return; // Batal
+            if (!nominalStr) return; 
 
             let nominal = parseFloat(nominalStr);
             if (isNaN(nominal) || nominal <= 0) {
@@ -247,18 +272,15 @@
 
             const today = new Date().toISOString().split('T')[0];
 
-            // Masukkan ke array payments
             item.payments.push({
                 date: today,
                 amount: nominal,
                 desc: ket
             });
 
-            // Simpan ke localStorage
             localStorage.setItem('riwayatDokumen', JSON.stringify(daftarRiwayat));
             tampilkanRiwayat();
 
-            // Tawaran langsung cetak tanda terima untuk cicilan ini
             if(confirm("Pembayaran berhasil disimpan. Cetak Tanda Terima sekarang?")) {
                 const lastPaymentIndex = item.payments.length - 1;
                 localStorage.setItem('invoiceAktif', JSON.stringify(item));
@@ -268,7 +290,7 @@
             }
         }
 
-        // Pilih Tanda Terima mana yang mau dicetak (jika ada beberapa cicilan)
+        // Pilih Tanda Terima
         function pilihTandaTerima(index) {
             const item = daftarRiwayat[index];
             let pesan = "Pilih nomor pembayaran yang ingin dicetak Tanda Terimanya:\n\n";
@@ -289,7 +311,7 @@
             }
         }
 
-        // Fungsi cetak (dari riwayat)
+        // Fungsi cetak
         function cetakDokumen(index, docType, paymentIndex = null) {
             localStorage.setItem('invoiceAktif', JSON.stringify(daftarRiwayat[index]));
             localStorage.setItem('printType', docType);
@@ -297,7 +319,7 @@
             if (docType === 'receipt' && paymentIndex !== null) {
                 localStorage.setItem('paymentIndex', paymentIndex);
             } else {
-                localStorage.removeItem('paymentIndex'); // Invoice tidak butuh payment index
+                localStorage.removeItem('paymentIndex'); 
             }
             
             window.location.href = 'preview.html';
