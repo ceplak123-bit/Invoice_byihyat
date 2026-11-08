@@ -1,1144 +1,318 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-<title>Invoice & Tanda Terima - Trip by Ihyat</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<style>
-  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  body {
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    background: linear-gradient(135deg, #fcf9f9 0%, #f4ebed 100%);
-    padding: 15px 15px 90px;
-    color: #331015;
-    min-height: 100vh;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Input & Riwayat - TripByIhyat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; font-family: 'Nunito', sans-serif; }
+        body { background-color: #e9ecef; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 900px; margin-bottom: 20px; }
+        h2 { color: #6b162c; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #f7c45a; padding-bottom: 10px; }
+        
+        .section-title { background-color: #fbecef; color: #6b162c; padding: 8px 15px; border-radius: 6px; font-weight: bold; margin: 20px 0 15px 0; font-size: 0.9rem;}
+        
+        .form-group { margin-bottom: 15px; }
+        label { display: block; font-size: 0.9rem; font-weight: 700; color: #333; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; background: #fff; }
+        .form-row { display: flex; gap: 15px; }
+        .form-row .form-group { flex: 1; }
+        
+        .btn-group { display: flex; gap: 15px; margin-top: 30px; }
+        .btn { flex: 1; padding: 15px; border: none; border-radius: 8px; font-size: 1rem; font-weight: bold; cursor: pointer; transition: 0.3s; text-align: center; }
+        .btn-invoice { background-color: #f7c45a; color: #6b162c; border: 2px solid #6b162c;}
+        .btn-invoice:hover { background-color: #e0b04c; }
+        .btn-receipt { background-color: #6b162c; color: white; }
+        .btn-receipt:hover { background-color: #4a0f1d; }
 
-  /* ============ NAVIGASI TAB (MOBILE) ============ */
-  .tab-switch {
-    display: none; max-width: 900px; margin: 0 auto 15px;
-    background: #fff; border-radius: 12px; padding: 6px;
-    box-shadow: 0 4px 15px rgba(128, 0, 32, 0.15); gap: 6px;
-    position: sticky; top: 10px; z-index: 100;
-  }
-  .tab-switch button {
-    flex: 1; padding: 12px; border: none; border-radius: 8px;
-    font-size: 14px; font-weight: bold; cursor: pointer;
-    background: transparent; color: #800020; transition: all 0.2s;
-  }
-  .tab-switch button.active { background: linear-gradient(135deg, #5E1B2B, #800020); color: #fff; }
-
-  /* ============ LAYOUT UTAMA ============ */
-  .wrapper {
-    max-width: 1300px; margin: 0 auto;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start;
-  }
-
-  /* ============ PANEL FORM ============ */
-  .form-panel {
-    background: #fffdfd; border-radius: 18px;
-    box-shadow: 0 8px 25px rgba(128, 0, 32, 0.15);
-    border: 2px dashed #d4a5b1; overflow: hidden;
-  }
-  .form-header {
-    background: linear-gradient(135deg, #4A0E17 0%, #800020 50%, #A83C51 100%);
-    padding: 15px 20px; color: #fff; display: flex; justify-content: space-between; align-items: center;
-  }
-  .form-header h2 { font-size: 18px; margin-bottom: 2px; }
-  .form-header p { font-size: 11px; font-style: italic; color: #f0d5da; }
-  .btn-history {
-    background: #fff; color: #800020; border: 1px solid #d4a5b1;
-    padding: 6px 12px; border-radius: 8px; font-weight: bold; font-size: 11px; cursor: pointer; transition: all 0.2s;
-  }
-
-  .form-body { padding: 18px 20px; }
-  .form-section { margin-bottom: 18px; padding-bottom: 15px; border-bottom: 1px dashed #e6d3d8; }
-  .form-section:last-child { border-bottom: none; }
-  .form-section h3 { font-size: 12px; color: #800020; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
-  
-  .field { margin-bottom: 10px; }
-  .field label { display: block; font-size: 11px; font-weight: 600; color: #5E1B2B; margin-bottom: 4px; }
-  .field input, .field select, .field textarea {
-    width: 100%; padding: 8px 12px; border: 1px solid #e6d3d8;
-    border-radius: 8px; font-size: 13px; font-family: inherit; color: #331015; background: #fffdfd; outline: none;
-  }
-  .field input:focus, .field select:focus, .field textarea:focus { border-color: #800020; }
-  .field textarea { resize: vertical; min-height: 50px; }
-  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .field-row.three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-
-  .item-row {
-    background: #fcf6f8; border: 1px solid #e6d3d8; border-radius: 8px;
-    padding: 10px; margin-bottom: 8px; display: grid;
-    grid-template-columns: 2fr 0.7fr 1.2fr auto; gap: 6px; align-items: end;
-  }
-  .item-row .field { margin-bottom: 0; }
-  .item-row .field label { font-size: 9px; }
-  .item-row .field input { padding: 6px 8px; font-size: 12px; }
-  .btn-remove {
-    background: #fce4e6; border: none; color: #b91c1c;
-    width: 32px; height: 32px; border-radius: 8px; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center;
-  }
-  .btn-add {
-    width: 100%; padding: 10px; background: #fdf5f6; border: 1px dashed #d4a5b1;
-    border-radius: 8px; color: #800020; font-weight: bold; font-size: 12px; cursor: pointer;
-  }
-
-  .totals-preview {
-    background: #fcf6f8; border-radius: 8px; padding: 12px; border: 1px dashed #d4a5b1; margin-top: 8px;
-  }
-  .totals-preview .row { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; color: #5E1B2B; }
-  .totals-preview .row.total { border-top: 1px solid #800020; margin-top: 6px; padding-top: 8px; font-size: 15px; font-weight: bold; color: #4A0E17; }
-
-  /* ============ PANEL PREVIEW ============ */
-  .preview-panel { position: sticky; top: 20px; max-height: 95vh; overflow-y: auto; padding-bottom: 20px; }
-  
-  .preview-selector {
-    display: flex; gap: 6px; margin-bottom: 10px; background: #fff; padding: 5px; border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(128,0,32,0.1); border: 1px solid #e6d3d8;
-  }
-  .preview-selector button {
-    flex: 1; padding: 8px; border: none; border-radius: 6px; font-weight: bold; font-size: 12px; cursor: pointer;
-    background: transparent; color: #800020; transition: all 0.2s;
-  }
-  .preview-selector button.active:not(:disabled) { background: #800020; color: #fff; }
-  .preview-selector button:disabled { opacity: 0.4; cursor: not-allowed; }
-  
-  .hide-preview { display: none !important; }
-
-  .invoice-container, .receipt-container {
-    background: #fffdfd; border-radius: 18px; box-shadow: 0 8px 25px rgba(128, 0, 32, 0.15);
-    border: 2px dashed #d4a5b1; overflow: hidden; margin-bottom: 15px;
-  }
-  
-  /* --- STYLE HEADER --- */
-  .header {
-    background: linear-gradient(135deg, #4A0E17 0%, #800020 50%, #A83C51 100%);
-    padding: 20px; position: relative; display: flex; justify-content: space-between; align-items: center; gap: 10px;
-  }
-  .brand { display: flex; align-items: center; gap: 12px; z-index: 1; }
-  .brand-logo {
-    width: 55px; height: 55px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2); flex-shrink: 0; overflow: hidden; border: 2px solid #fff;
-  }
-  .brand-logo img { width: 100%; height: 100%; object-fit: contain; }
-  .brand-text h1 { font-size: 20px; color: #fff; letter-spacing: 0.5px; }
-  .brand-text p { font-size: 10px; color: #f0d5da; font-style: italic; font-weight: bold; }
-  .invoice-title { text-align: right; z-index: 1; }
-  .invoice-title h2 { font-size: 22px; color: #fff; letter-spacing: 1.5px; }
-  .inv-no {
-    font-size: 11px; color: #4A0E17; background: #f4ebed; padding: 3px 10px; border-radius: 15px; display: inline-block; margin-top: 4px; font-weight: bold;
-  }
-
-  .scenery {
-    background: linear-gradient(180deg, #fdf5f6 0%, #f4ebed 100%);
-    padding: 10px 15px; display: flex; justify-content: space-around; align-items: flex-end; border-bottom: 2px dotted #d4a5b1; gap: 5px;
-  }
-  .scenery svg { display: block; max-width: 60px; height: auto; }
-  .scenery-label { text-align: center; font-size: 9px; color: #800020; font-weight: bold; margin-top: 2px; }
-
-  .body-content { padding: 15px 20px; }
-  .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
-  .info-card { background: #fcf6f8; border-left: 3px solid #800020; border-radius: 8px; padding: 10px; }
-  .info-card h3 { font-size: 10px; color: #800020; text-transform: uppercase; margin-bottom: 5px; }
-  .info-card p { font-size: 11px; line-height: 1.4; color: #331015; word-break: break-word; }
-  .info-card p strong { color: #4A0E17; }
-
-  /* --- STYLE TABEL MENJADI CARD (SESUAI GAMBAR) --- */
-  .table-card-wrapper { margin-bottom: 15px; }
-  .table-card-item {
-    background: #fffdfd; border: 1px dashed #d4a5b1; border-radius: 10px; padding: 10px 12px; margin-bottom: 8px;
-  }
-  .table-card-item .item-desc { font-size: 12px; font-weight: bold; color: #4A0E17; margin-bottom: 5px; }
-  .table-card-item .item-detail { display: flex; justify-content: space-between; font-size: 11px; color: #5E1B2B; margin-bottom: 3px; }
-  .table-card-item .item-total { border-top: 1px dashed #d4a5b1; margin-top: 5px; padding-top: 5px; font-size: 12px; font-weight: bold; color: #800020; text-align: right; }
-
-  .summary { display: flex; justify-content: flex-end; }
-  .summary-box { width: 100%; background: #fcf6f8; border-radius: 10px; padding: 12px; border: 1px dashed #d4a5b1; }
-  .summary-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 11px; color: #5E1B2B; }
-  .summary-row.total { border-top: 2px solid #800020; margin-top: 5px; padding-top: 8px; font-size: 14px; font-weight: bold; color: #4A0E17; }
-  .summary-row.bg-dark { background: #800020; color: #fff; padding: 4px 6px; border-radius: 4px; font-weight: bold; margin-top: 4px; }
-
-  .footer {
-    background: linear-gradient(135deg, #5E1B2B, #800020); padding: 12px 20px; text-align: center; font-size: 10px; color: #f4ebed;
-  }
-  .footer .thanks { font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #fff; }
-  .footer .bank { background: rgba(255,255,255,0.15); display: inline-block; padding: 5px 12px; border-radius: 15px; margin-top: 5px; font-weight: bold; font-size: 10px; border: 1px solid rgba(255,255,255,0.3); }
-  .footer .contact { margin-top: 5px; }
-
-  /* --- STYLE TANDA TERIMA --- */
-  .receipt-header {
-    background: linear-gradient(135deg, #4A0E17 0%, #800020 50%, #A83C51 100%);
-    padding: 20px 15px; display: flex; justify-content: center; align-items: center; flex-direction: column; gap: 8px;
-  }
-  .receipt-header .brand { flex-direction: column; text-align: center; gap: 5px; }
-  .receipt-header .brand-logo { width: 55px; height: 55px; }
-  .receipt-header h1 { font-size: 18px; color: #fff; letter-spacing: 1px; }
-  .receipt-header p { font-size: 11px; color: #f0d5da; font-weight: bold; }
-  
-  .receipt-title-bar {
-    background: #f4ebed; text-align: center; padding: 12px; font-size: 16px; font-weight: bold; color: #800020; border-bottom: 2px dotted #d4a5b1;
-  }
-
-  .receipt-body { padding: 15px 20px; }
-  
-  /* Grid untuk data pelanggan di Tanda Terima */
-  .receipt-data-grid {
-    display: grid; grid-template-columns: 120px 10px 1fr; gap: 6px; font-size: 11px; margin-bottom: 15px;
-  }
-  .receipt-data-grid .lbl { font-weight: bold; color: #5E1B2B; }
-  .receipt-data-grid .sep { text-align: center; }
-  .receipt-data-grid .val { color: #331015; }
-
-  .receipt-payment-card {
-    border: 1px dashed #d4a5b1; border-radius: 10px; padding: 10px 12px; margin-bottom: 15px; background: #fffdfd;
-  }
-  .receipt-payment-card .rp-header { font-weight: bold; color: #800020; font-size: 12px; margin-bottom: 5px; }
-  .receipt-payment-card .rp-row { display: flex; justify-content: space-between; font-size: 11px; padding: 3px 0; color: #5E1B2B; }
-  .receipt-payment-card .rp-total { border-top: 1px dashed #d4a5b1; margin-top: 5px; padding-top: 5px; font-weight: bold; font-size: 12px; color: #4A0E17; text-align: right; }
-
-  .receipt-summary { width: 100%; margin-bottom: 15px; background: #fcf6f8; padding: 10px; border-radius: 8px; border: 1px dashed #d4a5b1; }
-  .receipt-summary .r-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 11px; font-weight: bold; color: #5E1B2B; border-bottom: 1px dotted #d4a5b1; }
-  .receipt-summary .r-row:last-child { border-bottom: none; }
-  
-  .status-box { background: #fcf6f8; border: 1px dashed #d4a5b1; border-radius: 8px; padding: 10px; margin-bottom: 15px; text-align: center; }
-  .status-box h4 { color: #800020; margin-bottom: 3px; font-size: 12px; text-transform: uppercase; }
-  .status-text { font-size: 16px; font-weight: bold; color: #b91c1c; }
-  .status-text.lunas { color: #047857; }
-
-  /* Tanda Tangan Ditumpuk ke Bawah (Sesuai Gambar) */
-  .signature-area { display: flex; flex-direction: column; gap: 20px; margin-top: 20px; text-align: center; align-items: center; }
-  .sig-box { width: 100%; max-width: 250px; }
-  .sig-box p { font-size: 11px; margin-bottom: 40px; color: #5E1B2B; }
-  .sig-line { border-top: 1px solid #331015; padding-top: 5px; font-size: 11px; font-weight: bold; color: #331015; }
-  .sig-img { height: 40px; margin-bottom: 5px; display: flex; align-items: center; justify-content: center; }
-
-  /* ============ TOMBOL AKSI ============ */
-  .main-action-btns { display: flex; gap: 10px; margin-top: 10px; }
-  .btn {
-    flex: 1; padding: 12px 15px; border: none; border-radius: 20px;
-    font-size: 14px; font-weight: bold; cursor: pointer; transition: all 0.2s; color: #fff; min-width: 120px;
-    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  }
-  .btn:hover { transform: scale(1.02); }
-  .btn-download { background: linear-gradient(135deg, #D4AF37, #B8860B); box-shadow: 0 4px 10px rgba(212,175,55,0.3); }
-  .btn-wa { background: linear-gradient(135deg, #25d366, #128c7e); box-shadow: 0 4px 10px rgba(37,211,102,0.3); }
-  .btn-save { background: linear-gradient(135deg, #800020, #4A0E17); }
-  .btn-clear { background: linear-gradient(135deg, #fca5a5, #dc2626); }
-  .btn-receipt { background: linear-gradient(135deg, #f59e0b, #d97706); }
-
-  .btn.loading { pointer-events: none; }
-  .btn.loading::before {
-    content: ''; display: inline-block; width: 12px; height: 12px;
-    border: 2px solid #fff; border-top-color: transparent; border-radius: 50%;
-    animation: spin 0.6s linear infinite; margin-right: 6px;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* ============ MODAL ============ */
-  .modal-overlay {
-    position: fixed; inset: 0; background: rgba(74, 14, 23, 0.7); backdrop-filter: blur(3px); z-index: 9999;
-    display: none; align-items: center; justify-content: center; padding: 15px;
-  }
-  .modal-overlay.show { display: flex; }
-  .modal {
-    background: #fffdfd; border-radius: 15px; max-width: 450px; width: 100%;
-    max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(74, 14, 23, 0.4); display: flex; flex-direction: column;
-  }
-  .modal-header { background: linear-gradient(135deg, #4A0E17, #800020); color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
-  .modal-header h3 { font-size: 15px; }
-  .modal-close { background: rgba(255,255,255,0.2); border: none; color: #fff; width: 28px; height: 28px; border-radius: 50%; font-size: 16px; cursor: pointer; }
-  .modal-body { padding: 15px; overflow-y: auto; }
-
-  .wa-preview { background: #dcf8c6; border-radius: 8px; padding: 12px; font-size: 11px; white-space: pre-wrap; max-height: 250px; overflow-y: auto; border: 1px solid #a4d982; margin-bottom: 10px; }
-  .wa-btn { width: 100%; padding: 10px; border: 1px solid #25d366; background: #fff; color: #128c7e; border-radius: 8px; font-weight: bold; font-size: 12px; cursor: pointer; margin-bottom: 8px; }
-  .wa-btn:hover { background: #25d366; color: #fff; }
-  .wa-btn.primary { background: #25d366; color: #fff; }
-
-  .history-list { display: flex; flex-direction: column; gap: 10px; }
-  .history-card { background: #fcf6f8; border: 1px solid #e6d3d8; border-radius: 10px; padding: 12px; display: flex; justify-content: space-between; align-items: center; }
-  .history-info h4 { font-size: 13px; color: #4A0E17; margin-bottom: 2px; }
-  .history-info p { font-size: 10px; color: #6b7280; }
-  .history-info .h-total { font-size: 12px; font-weight: bold; color: #b91c1c; margin-top: 4px; }
-  .btn-hist { padding: 5px 10px; border: none; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; margin-left: 5px; }
-  .btn-edit { background: #d1fae5; color: #047857; }
-  .btn-del { background: #fee2e2; color: #b91c1c; }
-
-  .sticky-preview-actions {
-    display: none; position: fixed; bottom: 0; left: 0; right: 0;
-    background: rgba(255, 253, 253, 0.98); backdrop-filter: blur(8px);
-    padding: 10px 15px; box-shadow: 0 -4px 15px rgba(128, 0, 32, 0.15); z-index: 500; border-top: 1px dashed #d4a5b1;
-  }
-
-  .toast {
-    position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(100px);
-    background: #4A0E17; color: #fff; padding: 10px 20px; border-radius: 20px;
-    font-size: 12px; font-weight: bold; opacity: 0; transition: all 0.3s; z-index: 9999; box-shadow: 0 5px 15px rgba(74, 14, 23, 0.4);
-  }
-  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-  /* =========================================
-     --- PDF MODE (MURNI MENGGUNAKAN LAYOUT CARD) ---
-     ========================================= */
-  body.pdf-mode { background: #fff !important; padding: 0 !important; margin: 0 !important; }
-  body.pdf-mode .tab-switch, body.pdf-mode .form-panel, body.pdf-mode .main-action-btns,
-  body.pdf-mode .sticky-preview-actions, body.pdf-mode .modal-overlay, body.pdf-mode .preview-selector { display: none !important; }
-  body.pdf-mode .wrapper { display: block !important; width: 100% !important; margin: 0 !important; padding: 0 !important; }
-  body.pdf-mode .preview-panel { display: block !important; position: static !important; max-height: none !important; padding: 0 !important; }
-  
-  body.pdf-mode .invoice-container, body.pdf-mode .receipt-container { 
-    box-shadow: none !important; border: none !important; margin: 0 !important; border-radius: 0 !important;
-    width: 100% !important; height: auto !important; background: #fffdfd !important; page-break-after: avoid !important;
-  }
-  body.pdf-mode #receiptContainer { page-break-before: always; }
-  body.pdf-mode.single-receipt #receiptContainer { page-break-before: auto !important; }
-  
-  /* Pastikan tanda tangan tetap ke bawah saat di PDF */
-  body.pdf-mode .signature-area { flex-direction: column !important; }
-  body.pdf-mode .sig-box { width: 100% !important; max-width: 250px !important; }
-
-  /* ============ RESPONSIVE (MOBILE PREVIEW) ============ */
-  @media (max-width: 1024px) {
-    .wrapper { grid-template-columns: 1fr; }
-    .preview-panel { position: static; max-height: none; }
-    .tab-switch { display: flex; }
-    .form-panel, .preview-panel { display: none; }
-    .form-panel.active, .preview-panel.active { display: block; }
-    .main-action-btns { display: none; }
-    .sticky-preview-actions { display: none; }
-    .preview-panel.active ~ .sticky-preview-actions { display: flex; }
-  }
-
-  @media (max-width: 600px) {
-    body { padding: 10px 10px 80px; }
-    .item-row { grid-template-columns: 1fr; position: relative; }
-    .btn-remove { position: absolute; top: 5px; right: 5px; width: 28px; height: 28px; }
-    .field-row, .field-row.three { grid-template-columns: 1fr; }
-    .header { flex-direction: column; text-align: center; padding: 15px; }
-    .brand { flex-direction: column; gap: 5px; }
-    .invoice-title { text-align: center; width: 100%; border-top: 1px dashed rgba(255,255,255,0.3); padding-top: 8px; }
-  }
-</style>
+        /* CSS Tabel Riwayat */
+        .history-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 900px; }
+        .history-card h3 { color: #6b162c; margin-top: 0; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin-top: 10px; }
+        th { background-color: #fbecef; color: #6b162c; padding: 10px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #eee; vertical-align: middle; }
+        
+        /* Tombol Aksi */
+        .btn-action { padding: 6px 10px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.75rem; margin-right: 5px; margin-bottom: 5px; display: inline-block;}
+        .btn-pay { background-color: #0d6efd; color: white; }
+        .btn-inv { background-color: #f7c45a; color: #333; }
+        .btn-rec { background-color: #6b162c; color: white; }
+        .btn-delete { background-color: #dc3545; color: white; }
+        .status-badge { padding: 3px 8px; border-radius: 12px; font-size: 0.75rem; font-weight: bold; color: white; }
+        .bg-lunas { background-color: #198754; }
+        .bg-belum { background-color: #d9534f; }
+    </style>
 </head>
 <body>
 
-<div class="tab-switch">
-  <button class="active" onclick="switchTab('form')">📝 Form Input</button>
-  <button onclick="switchTab('preview')">👁 Preview Dokumen</button>
-</div>
-
-<div class="wrapper">
-  <!-- ============ PANEL FORM ============ -->
-  <div class="form-panel active" id="formPanel">
-    <div class="form-header">
-      <div>
-        <h2>📝 Form Invoice</h2>
-        <p>Isi data tagihan & perjalanan</p>
-      </div>
-      <button class="btn-history" onclick="openHistory()">📊 Riwayat</button>
-    </div>
-
-    <div class="form-body">
-      <div class="form-section">
-        <h3>👤 Data Klien</h3>
-        <div class="field">
-          <label>Nama Lengkap</label>
-          <input type="text" id="clientName" value="Ahmad Fauzan">
-        </div>
-        <div class="field">
-          <label>Perusahaan / Instansi</label>
-          <input type="text" id="clientCompany" value="PT. Barokah Wisata">
-        </div>
-        <div class="field">
-          <label>Alamat</label>
-          <textarea id="clientAddress">Jl. Merdeka No. 45, Jakarta</textarea>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>No. Telepon / WA</label>
-            <input type="tel" id="clientPhone" value="0812-3456-7890">
-          </div>
-          <div class="field">
-            <label>Email</label>
-            <input type="email" id="clientEmail" placeholder="email@domain.com">
-          </div>
-        </div>
-      </div>
-
-      <div class="form-section">
-        <h3>🕋 Detail Perjalanan</h3>
-        <div class="field-row">
-          <div class="field">
-            <label>Jenis Perjalanan</label>
-            <input type="text" id="tripType" value="Umrah">
-          </div>
-          <div class="field">
-            <label>Jumlah Peserta</label>
-            <input type="number" id="paxCount" value="45">
-          </div>
-        </div>
-        <div class="field">
-          <label>Paket / Tujuan</label>
-          <input type="text" id="tripPackage" value="B2B KEB. UMROH JUNI 2027 12HARI BY SV">
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Tanggal Perjalanan</label>
-            <input type="date" id="tripDate">
-          </div>
-          <div class="field">
-            <label>Status Pembayaran</label>
-            <select id="paymentStatus">
-              <option value="Belum Lunas">Belum Lunas</option>
-              <option value="Lunas">Lunas</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-section">
-        <h3>📄 Detail Invoice</h3>
-        <div class="field-row">
-          <div class="field">
-            <label>No. Invoice</label>
-            <input type="text" id="invNo" value="TBI-INV-157">
-          </div>
-          <div class="field">
-            <label>Tanggal Invoice</label>
-            <input type="date" id="invDate">
-          </div>
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Jatuh Tempo</label>
-            <input type="date" id="invDue">
-          </div>
-          <div class="field">
-            <label>Metode</label>
-            <select id="invMethod">
-              <option>Transfer Bank</option>
-              <option>Tunai</option>
-              <option>QRIS</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-section">
-        <h3>🛎 Item Layanan</h3>
-        <div id="itemsContainer"></div>
-        <button class="btn-add" onclick="addItem()">+ Tambah Layanan</button>
-      </div>
-
-      <div class="form-section">
-        <h3>💰 Diskon & Pajak</h3>
-        <div class="field-row">
-          <div class="field">
-            <label>Diskon (%)</label>
-            <input type="number" id="discountPct" value="0" oninput="recalc()">
-          </div>
-          <div class="field">
-            <label>PPN (%)</label>
-            <input type="number" id="taxPct" value="0" oninput="recalc()">
-          </div>
-        </div>
-        <div class="totals-preview">
-          <div class="row"><span>Subtotal</span><span id="subtotalDisplay">Rp 0</span></div>
-          <div class="row"><span>Diskon</span><span id="discountDisplay">– Rp 0</span></div>
-          <div class="row"><span>PPN</span><span id="taxDisplay">Rp 0</span></div>
-          <div class="row total"><span>Total Tagihan</span><span id="totalDisplay">Rp 0</span></div>
-        </div>
-      </div>
-
-      <!-- MENU PEMBAYARAN -->
-      <div class="form-section" style="background: #fff8f9; border: 2px dashed #d4a5b1; padding: 15px; border-radius: 12px;">
-        <h3>💳 Menu Pembayaran & Tindakan</h3>
-        <div class="field">
-          <label>Nominal DP / Telah Dibayar (Rp)</label>
-          <input type="number" id="dpAmount" value="0" oninput="recalc()" placeholder="Contoh: 5000000">
-          <p style="font-size:10px; color:#6b7280; margin-top:4px; font-style:italic;">* Isi nominal jika klien sudah membayar DP.</p>
-        </div>
+    <!-- FORM INPUT AWAL -->
+    <div class="card">
+        <h2>Buat Dokumen Baru (DP Awal)</h2>
         
-        <div style="display:flex; flex-direction:column; gap:8px; margin-top:15px;">
-          <button class="btn btn-save" onclick="saveData()" style="width:100%;">💾 Simpan / Perbarui Invoice</button>
-          <button class="btn btn-receipt" id="btnIssueReceipt" onclick="issueReceipt()" style="width:100%;" disabled>🧾 Terbitkan Tanda Terima</button>
-          <button class="btn btn-clear" onclick="clearData()" style="width:100%;">🗑 Reset Form</button>
-        </div>
-      </div>
-
-      <div class="form-section">
-        <h3>🏦 Info Rekening</h3>
-        <div class="field">
-          <label>Rekening / Bank</label>
-          <input type="text" id="bankInfo" value="ONLINE Bank / Referensi: BRI 042401002611564 PT SAZIEL GRUP INDONESIA">
-        </div>
-        <div class="field-row">
-          <div class="field">
-            <label>Nama Penerima (TTD Kiri)</label>
-            <input type="text" id="signerName" value="Admin Trip">
-          </div>
-          <div class="field">
-            <label>Telepon CS</label>
-            <input type="text" id="csPhone" value="0812-3456-7890">
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============ PANEL PREVIEW ============ -->
-  <div class="preview-panel" id="previewPanel">
-    
-    <div class="preview-selector">
-      <button id="btnTabInvoice" class="active" onclick="switchPreviewMode('invoice', event)">📄 Invoice</button>
-      <button id="btnTabReceipt" onclick="switchPreviewMode('receipt', event)" disabled>🧾 Tanda Terima</button>
-      <button id="btnTabBoth" onclick="switchPreviewMode('both', event)" disabled>📚 Keduanya</button>
-    </div>
-
-    <div id="pdfWrapper">
-      <!-- HALAMAN 1: INVOICE -->
-      <div class="invoice-container" id="invoiceContainer">
-        <div>
-          <div class="header">
-            <div class="brand">
-              <div class="brand-logo">
-                <img src="logo.png" alt="TripByIhyat" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg width=\'34\' height=\'34\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'48\' fill=\'#f4ebed\'/><path d=\'M50 15 Q30 35 30 55 L70 55 Q70 35 50 15 Z\' fill=\'#800020\'/><rect x=\'30\' y=\'55\' width=\'40\' height=\'25\' fill=\'#4A0E17\'/><path d=\'M50 8 L50 15\' stroke=\'#800020\' stroke-width=\'3\'/><circle cx=\'50\' cy=\'8\' r=\'3\' fill=\'#D4AF37\'/></svg>'">
-              </div>
-              <div class="brand-text">
-                <h1>TripByIhyat</h1>
-                <p>Land Arrangement</p>
-              </div>
+        <div class="section-title">👤 Data Pemesan & Perjalanan</div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>No. Dokumen</label>
+                <input type="text" id="invNo" value="TBI-INV-157">
             </div>
-            <div class="invoice-title">
-              <h2>INVOICE</h2>
-              <span class="inv-no">#<span id="previewInvNo">TBI-INV-157</span></span>
+            <div class="form-group">
+                <label>Tanggal Cetak</label>
+                <input type="date" id="date" value="2026-11-07">
             </div>
-          </div>
-
-          <div class="scenery">
-            <div style="text-align:center;">
-              <svg class="plane-anim" width="70" height="50" viewBox="0 0 120 80">
-                <path d="M10 45 L60 40 L85 15 L95 15 L80 42 L110 45 L110 52 L80 55 L95 78 L85 78 L60 58 L10 55 Z" fill="#800020" stroke="#4A0E17" stroke-width="2"/>
-                <circle cx="50" cy="48" r="3" fill="#fff"/><circle cx="42" cy="48" r="3" fill="#fff"/><circle cx="34" cy="48" r="3" fill="#fff"/>
-              </svg>
-              <div class="scenery-label">✈ Penerbangan</div>
-            </div>
-            <div style="text-align:center;">
-              <svg width="70" height="60" viewBox="0 0 120 90">
-                <rect x="12" y="30" width="10" height="50" fill="#d4a5b1"/><path d="M17 20 L12 30 L22 30 Z" fill="#800020"/>
-                <rect x="30" y="50" width="60" height="30" fill="#f4ebed"/><path d="M60 20 Q40 40 40 55 L80 55 Q80 40 60 20 Z" fill="#800020"/>
-                <path d="M60 15 L60 20" stroke="#4A0E17" stroke-width="2"/><rect x="52" y="62" width="16" height="18" rx="6" fill="#4A0E17"/>
-              </svg>
-              <div class="scenery-label">🕌 Madinah</div>
-            </div>
-            <div style="text-align:center;">
-              <svg width="70" height="60" viewBox="0 0 120 90">
-                <rect x="35" y="35" width="50" height="45" fill="#331015"/><rect x="35" y="50" width="50" height="8" fill="#D4AF37"/>
-                <rect x="55" y="35" width="10" height="45" fill="#D4AF37" opacity="0.85"/><rect x="53" y="60" width="14" height="20" fill="#4A0E17"/>
-                <rect x="35" y="32" width="50" height="5" fill="#1a080b"/><circle cx="95" cy="20" r="8" fill="#D4AF37"/>
-              </svg>
-              <div class="scenery-label">🕋 Mekah</div>
-            </div>
-          </div>
-
-          <div class="body-content">
-            <div class="info-grid">
-              <div class="info-card">
-                <h3>Ditagihkan Kepada</h3>
-                <p id="previewClient"></p>
-              </div>
-              <div class="info-card">
-                <h3>Detail Invoice</h3>
-                <p id="previewMeta"></p>
-              </div>
-            </div>
-
-            <!-- RENDER ITEMS MENGGUNAKAN CARD -->
-            <div class="table-card-wrapper" id="previewItemsContainer"></div>
-
-            <div class="summary">
-              <div class="summary-box">
-                <div class="summary-row"><span>Subtotal</span><span id="pvSubtotal">Rp 0</span></div>
-                <div class="summary-row"><span class="label-discount" id="pvDiscLabel">Diskon (0%)</span><span class="label-discount" id="pvDiscount">– Rp 0</span></div>
-                <div class="summary-row"><span id="pvTaxLabel">PPN (0%)</span><span id="pvTax">Rp 0</span></div>
-                <div class="summary-row total"><span>Total Tagihan</span><span id="pvTotal">Rp 0</span></div>
-                
-                <!-- LOGIKA PEMBAYARAN -->
-                <div class="summary-row" id="pvDpRow" style="display:none; margin-top:5px; color:#047857;"><span>Telah Dibayar (DP)</span><span id="pvDp">Rp 0</span></div>
-                <div class="summary-row bg-dark" id="pvSisaRow" style="display:none;"><span>Sisa Tagihan</span><span id="pvSisa">Rp 0</span></div>
-              </div>
-            </div>
-          </div>
         </div>
 
-        <div class="footer">
-          <div class="thanks">🌟 Terima kasih telah mempercayakan perjalanan Anda kepada TripByIhyat! 🌟</div>
-          <div class="bank">💳 <span id="pvBank"></span></div>
-          <div class="contact">
-            <span>📱 <span id="pvPhone"></span></span>
-          </div>
-        </div>
-      </div>
-
-      <!-- HALAMAN 2: TANDA TERIMA -->
-      <div class="receipt-container hide-preview" id="receiptContainer">
-        <div>
-          <div class="receipt-header">
-            <div class="brand">
-              <div class="brand-logo">
-                <img src="logo.png" alt="TripByIhyat" onerror="this.style.display='none'; this.parentElement.innerHTML='<svg width=\'34\' height=\'34\' viewBox=\'0 0 100 100\'><circle cx=\'50\' cy=\'50\' r=\'48\' fill=\'#f4ebed\'/><path d=\'M50 15 Q30 35 30 55 L70 55 Q70 35 50 15 Z\' fill=\'#800020\'/><rect x=\'30\' y=\'55\' width=\'40\' height=\'25\' fill=\'#4A0E17\'/><path d=\'M50 8 L50 15\' stroke=\'#800020\' stroke-width=\'3\'/><circle cx=\'50\' cy=\'8\' r=\'3\' fill=\'#D4AF37\'/></svg>'">
-              </div>
-              <div class="brand-text" style="margin-left:0; text-align:center;">
-                <h1>TRIP BY IHYAT</h1>
-                <p>HAJI • UMRAH • WISATA</p>
-              </div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Diterima Dari (Nama PT/Orang)</label>
+                <input type="text" id="client" value="PT ZAM ZAM WISATA">
             </div>
-            
-            <div style="width:100%; max-width:250px; height:15px; border-bottom: 2px dashed #D4AF37; position:relative; margin-top:5px;">
-              <div style="position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); background:#800020; padding:0 8px; color:#D4AF37; font-size:12px;">✈ 🕋 🕌</div>
+            <div class="form-group">
+                <label>No. WhatsApp</label>
+                <input type="text" id="wa" value="6281287825694">
             </div>
-          </div>
-
-          <div class="receipt-title-bar">❀ TANDA TERIMA PEMBAYARAN ❀</div>
-
-          <div class="receipt-body">
-            <h3 style="font-size:11px; color:#800020; margin-bottom:8px;">❤ DATA INVOICE & PELANGGAN</h3>
-            
-            <div class="receipt-data-grid">
-              <div class="lbl">No. Invoice</div><div class="sep">:</div><div class="val"><span id="rcInvNo">-</span></div>
-              <div class="lbl">Tanggal</div><div class="sep">:</div><div class="val"><span id="rcInvDate">-</span></div>
-              
-              <div class="lbl">Diterima dari</div><div class="sep">:</div><div class="val"><span id="rcClientCompany">-</span></div>
-              <div class="lbl">No. WhatsApp</div><div class="sep">:</div><div class="val"><span id="rcClientPhone">-</span></div>
-              
-              <div class="lbl">Jenis perjalanan</div><div class="sep">:</div><div class="val"><span id="rcTripType">-</span></div>
-              <div class="lbl">Jumlah peserta</div><div class="sep">:</div><div class="val"><span id="rcPax">-</span></div>
-              
-              <div class="lbl">Paket / tujuan</div><div class="sep">:</div><div class="val"><span id="rcPackage">-</span></div>
-              <div class="lbl">Tgl perjalanan</div><div class="sep">:</div><div class="val"><span id="rcTripDate">-</span></div>
-            </div>
-
-            <h3 style="font-size:11px; color:#800020; margin-bottom:8px;">❤ RINCIAN PEMBAYARAN</h3>
-            
-            <!-- RENDER PAYMENT CARD TANDA TERIMA -->
-            <div class="receipt-payment-card">
-              <div class="rp-header">1</div>
-              <div class="rp-row"><span>Pembayaran DP / Angsuran</span></div>
-              <div class="rp-row"><span id="rcPaxRincian">0 Pax</span></div>
-              <div class="rp-row"><span>Harga: <span id="rcDpNominal">Rp 0</span></span></div>
-              <div class="rp-total">Total: <span id="rcDpTotal">Rp 0</span></div>
-            </div>
-
-            <div class="receipt-summary">
-              <div class="r-row"><span>TOTAL TAGIHAN</span><span id="rcTotalTagihan">Rp 0</span></div>
-              <div class="r-row"><span>JUMLAH DITERIMA</span><span id="rcTotalDiterima">Rp 0</span></div>
-              <div class="r-row"><span>SISA TAGIHAN</span><span id="rcSisaTagihan">Rp 0</span></div>
-            </div>
-
-            <h3 style="font-size:11px; color:#800020; margin-bottom:6px;">❤ STATUS & KETERANGAN</h3>
-            <div class="status-box">
-              <h4>Status</h4>
-              <div class="status-text" id="rcStatus">-</div>
-            </div>
-            
-            <p style="font-size:10px; margin-bottom:4px;">Catatan: Pembayaran telah diterima sesuai nominal yang tercantum di atas.</p>
-            <p style="font-size:10px;">Metode pembayaran: <span id="rcBank">-</span></p>
-          </div>
         </div>
 
-        <div style="padding: 0 20px 15px;">
-          <!-- TANDA TANGAN DITUMPUK KE BAWAH -->
-          <div class="signature-area">
-            <div class="sig-box">
-              <p>Penerima,</p>
-              <div class="sig-img"></div>
-              <div class="sig-line">( <span id="rcSigner">Nama Penerima</span> )</div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Jenis Perjalanan</label>
+                <select id="type">
+                    <option value="Umrah">Umrah</option>
+                    <option value="Haji">Haji</option>
+                    <option value="Wisata">Wisata</option>
+                </select>
             </div>
-            <div class="sig-box">
-              <p>Trip by Ihyat</p>
-              <div class="sig-img" style="font-family:'Brush Script MT', cursive; font-size:22px; color:#4A0E17; transform:rotate(-5deg);">
-                TripbyIhyat
-              </div>
-              <div class="sig-line">( Admin Trip by Ihyat )</div>
+            <div class="form-group">
+                <label>Jumlah Peserta</label>
+                <input type="number" id="pax" value="45">
             </div>
-          </div>
-
-          <p style="text-align:center; font-size:10px; color:#800020; margin-top:15px; font-weight:bold;">
-            Barakallahu fiikum Jazakumullahu Khairan Katsiran. Terima kasih, Sahabat Trip by Ihyat!
-          </p>
+            <div class="form-group">
+                <label>Tgl Perjalanan</label>
+                <input type="date" id="travelDate" value="2027-06-27">
+            </div>
         </div>
-      </div>
+
+        <div class="form-group">
+            <label>Paket / Tujuan</label>
+            <input type="text" id="package" value="B2B KEB. UMROH JUNI 2027 12HARI BY SV">
+        </div>
+
+        <div class="section-title">💰 Rincian Biaya & Pembayaran Pertama (DP)</div>
+        <div class="form-row">
+            <div class="form-group">
+                <label>Total Biaya Keseluruhan (Rp)</label>
+                <input type="number" id="totalBill" value="45000000">
+            </div>
+            <div class="form-group">
+                <label>Nominal DP / Pembayaran Awal (Rp)</label>
+                <input type="number" id="amountPaid" value="10000000">
+            </div>
+            <div class="form-group">
+                <label>Keterangan Pembayaran</label>
+                <input type="text" id="desc" value="Pembayaran DP 10 Pax">
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-invoice" onclick="simpanData('invoice')">📄 Simpan & Cetak Invoice</button>
+            <button class="btn btn-receipt" onclick="simpanData('receipt')">🧾 Simpan & Cetak Tanda Terima DP</button>
+        </div>
     </div>
 
-    <!-- Tombol Aksi (Desktop) -->
-    <div class="main-action-btns">
-      <button class="btn btn-download" onclick="downloadPDF(event)">📄 Download PDF</button>
-      <button class="btn btn-wa" onclick="openWaModal()">📱 WhatsApp</button>
-    </div>
-  </div>
-</div>
-
-<!-- Sticky Action Bar (Mobile) -->
-<div class="sticky-preview-actions">
-  <button class="btn btn-download" onclick="downloadPDF(event)">📄 PDF</button>
-  <button class="btn btn-wa" onclick="openWaModal()">📱 WA</button>
-</div>
-
-<!-- MODAL WA -->
-<div class="modal-overlay" id="waModal">
-  <div class="modal">
-    <div class="modal-header">
-      <h3>📱 Kirim via WhatsApp</h3>
-      <button class="modal-close" onclick="closeWaModal()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="wa-preview" id="waPreview"></div>
-      <button class="wa-btn primary" id="waBtnClient" onclick="sendToClient()">📞 Ke Klien</button>
-      <button class="wa-btn" onclick="sendGeneric()">📤 Pilih Kontak</button>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL RIWAYAT -->
-<div class="modal-overlay" id="historyModal">
-  <div class="modal">
-    <div class="modal-header">
-      <h3>📊 Riwayat Invoice</h3>
-      <button class="modal-close" onclick="closeHistory()">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="history-list" id="historyList"></div>
-    </div>
-  </div>
-</div>
-
-<div class="toast" id="toast">✅ Tersimpan!</div>
-
-<script>
-let items = [{ desc: 'City tour', qty: 10, price: 25000 }];
-let lastTotals = { subtotal: 0, discount: 0, tax: 0, total: 0, dp: 0, sisa: 0 };
-let currentInvoiceId = null;
-let currentPreviewMode = 'invoice';
-
-document.addEventListener('DOMContentLoaded', () => {
-  const today = new Date();
-  const nextWeek = new Date(); nextWeek.setDate(today.getDate() + 7);
-  document.getElementById('invDate').value = toDateInput(today);
-  document.getElementById('invDue').value = toDateInput(nextWeek);
-  document.getElementById('tripDate').value = toDateInput(today);
-  
-  loadDraft();
-  renderItems();
-  document.querySelectorAll('input, textarea, select').forEach(el => {
-    el.addEventListener('input', recalc);
-    el.addEventListener('change', recalc);
-  });
-  recalc();
-  renderHistory();
-});
-
-function toDateInput(d) { return d.toISOString().split('T')[0]; }
-function formatDate(str) {
-  if (!str) return '-';
-  return new Date(str).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
-}
-function rupiah(n) { return 'Rp ' + Math.round(n).toLocaleString('id-ID'); }
-function escapeHtml(s) { return String(s).replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
-
-/* ================= TABS MOBILE ================= */
-function switchTab(tab) {
-  document.querySelectorAll('.tab-switch button').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById('formPanel').classList.toggle('active', tab === 'form');
-  document.getElementById('previewPanel').classList.toggle('active', tab === 'preview');
-  
-  const stickyBar = document.querySelector('.sticky-preview-actions');
-  if (tab === 'preview') {
-    stickyBar.style.display = 'flex';
-  } else {
-    stickyBar.style.display = 'none';
-  }
-}
-
-/* ================= PREVIEW MODE TOGGLE ================= */
-function switchPreviewMode(mode, event) {
-  const dp = parseFloat(document.getElementById('dpAmount').value) || 0;
-  if ((mode === 'receipt' || mode === 'both') && dp <= 0) {
-    showToast('⚠ Isi Nominal DP terlebih dahulu!', 'warn');
-    return;
-  }
-
-  currentPreviewMode = mode;
-  
-  document.querySelectorAll('.preview-selector button').forEach(btn => btn.classList.remove('active'));
-  if (event) {
-    event.target.classList.add('active');
-  } else {
-    const btns = document.querySelectorAll('.preview-selector button');
-    if (mode === 'invoice') btns[0].classList.add('active');
-    else if (mode === 'receipt') btns[1].classList.add('active');
-    else btns[2].classList.add('active');
-  }
-
-  const inv = document.getElementById('invoiceContainer');
-  const rcp = document.getElementById('receiptContainer');
-
-  if (mode === 'invoice') {
-    inv.classList.remove('hide-preview');
-    rcp.classList.add('hide-preview');
-  } else if (mode === 'receipt') {
-    inv.classList.add('hide-preview');
-    rcp.classList.remove('hide-preview');
-  } else {
-    inv.classList.remove('hide-preview');
-    rcp.classList.remove('hide-preview');
-  }
-}
-
-/* ================= TERBITKAN TANDA TERIMA ================= */
-function issueReceipt() {
-  const dp = parseFloat(document.getElementById('dpAmount').value) || 0;
-  if (dp <= 0) {
-    showToast('⚠ Isi Nominal DP terlebih dahulu!', 'warn');
-    return;
-  }
-  
-  if (window.innerWidth <= 1024) {
-    document.querySelectorAll('.tab-switch button')[1].click();
-  }
-  switchPreviewMode('receipt');
-  showToast('🧾 Tanda Terima berhasil diterbitkan!');
-}
-
-/* ================= RENDER ITEMS FORM ================= */
-function renderItems() {
-  const c = document.getElementById('itemsContainer');
-  c.innerHTML = '';
-  items.forEach((it, i) => {
-    const row = document.createElement('div');
-    row.className = 'item-row';
-    row.innerHTML = `
-      <div class="field"><label>Deskripsi</label><input type="text" value="${escapeHtml(it.desc)}" oninput="updateItem(${i}, 'desc', this.value)"></div>
-      <div class="field"><label>Qty</label><input type="number" value="${it.qty}" oninput="updateItem(${i}, 'qty', this.value)"></div>
-      <div class="field"><label>Harga</label><input type="number" value="${it.price}" oninput="updateItem(${i}, 'price', this.value)"></div>
-      <button class="btn-remove" onclick="removeItem(${i})">✕</button>
-    `;
-    c.appendChild(row);
-  });
-}
-function updateItem(i, key, val) {
-  if (key === 'qty' || key === 'price') val = parseFloat(val) || 0;
-  items[i][key] = val;
-  recalc();
-}
-function addItem() { items.push({ desc: '', qty: 1, price: 0 }); renderItems(); recalc(); }
-function removeItem(i) { if (items.length === 1) return; items.splice(i, 1); renderItems(); recalc(); }
-
-/* ================= RECALC & LOGIKA PEMBAYARAN ================= */
-function recalc() {
-  const name = document.getElementById('clientName').value || '-';
-  const company = document.getElementById('clientCompany').value || '';
-  const address = document.getElementById('clientAddress').value || '';
-  const phone = document.getElementById('clientPhone').value || '';
-  
-  document.getElementById('previewClient').innerHTML = `<strong>${escapeHtml(name)}</strong><br>${company ? escapeHtml(company) + '<br>' : ''}${address ? escapeHtml(address) + '<br>' : ''}📞 ${escapeHtml(phone)}`;
-
-  const invNo = document.getElementById('invNo').value || '-';
-  const invDate = document.getElementById('invDate').value;
-  const invDue = document.getElementById('invDue').value;
-  
-  document.getElementById('previewInvNo').textContent = invNo;
-  document.getElementById('previewMeta').innerHTML = `<strong>Tanggal:</strong> ${formatDate(invDate)}<br><strong>Jatuh Tempo:</strong> ${formatDate(invDue)}<br><strong>Metode:</strong> ${document.getElementById('invMethod').value}`;
-
-  // RENDER PREVIEW ITEMS KE CARD FORMAT
-  const container = document.getElementById('previewItemsContainer');
-  container.innerHTML = '';
-  let subtotal = 0;
-  items.forEach(it => {
-    const sub = it.qty * it.price;
-    subtotal += sub;
-    container.innerHTML += `
-      <div class="table-card-item">
-        <div class="item-desc">${escapeHtml(it.desc) || '-'}</div>
-        <div class="item-detail"><span>Qty</span><span>${it.qty}</span></div>
-        <div class="item-detail"><span>Harga</span><span>${rupiah(it.price)}</span></div>
-        <div class="item-total">Subtotal: ${rupiah(sub)}</div>
-      </div>
-    `;
-  });
-
-  const discPct = parseFloat(document.getElementById('discountPct').value) || 0;
-  const taxPct = parseFloat(document.getElementById('taxPct').value) || 0;
-  const discount = subtotal * discPct / 100;
-  const afterDisc = subtotal - discount;
-  const tax = afterDisc * taxPct / 100;
-  const total = afterDisc + tax;
-  
-  const dp = parseFloat(document.getElementById('dpAmount').value) || 0;
-  const sisa = total - dp;
-
-  // Update Form
-  document.getElementById('subtotalDisplay').textContent = rupiah(subtotal);
-  document.getElementById('discountDisplay').textContent = '– ' + rupiah(discount);
-  document.getElementById('taxDisplay').textContent = rupiah(tax);
-  document.getElementById('totalDisplay').textContent = rupiah(total);
-
-  // Update Invoice
-  document.getElementById('pvSubtotal').textContent = rupiah(subtotal);
-  document.getElementById('pvDiscLabel').textContent = `Diskon (${discPct}%)`;
-  document.getElementById('pvDiscount').textContent = '– ' + rupiah(discount);
-  document.getElementById('pvTaxLabel').textContent = `PPN (${taxPct}%)`;
-  document.getElementById('pvTax').textContent = rupiah(tax);
-  document.getElementById('pvTotal').textContent = rupiah(total);
-  document.getElementById('pvBank').textContent = document.getElementById('bankInfo').value;
-  document.getElementById('pvPhone').textContent = document.getElementById('csPhone').value;
-
-  // Tampilkan DP dan Sisa di Invoice jika DP > 0
-  if (dp > 0) {
-    document.getElementById('pvDpRow').style.display = 'flex';
-    document.getElementById('pvSisaRow').style.display = 'flex';
-    document.getElementById('pvDp').textContent = rupiah(dp);
-    document.getElementById('pvSisa').textContent = rupiah(sisa);
-    
-    document.getElementById('btnTabReceipt').disabled = false;
-    document.getElementById('btnTabBoth').disabled = false;
-    document.getElementById('btnIssueReceipt').disabled = false;
-  } else {
-    document.getElementById('pvDpRow').style.display = 'none';
-    document.getElementById('pvSisaRow').style.display = 'none';
-    
-    document.getElementById('btnTabReceipt').disabled = true;
-    document.getElementById('btnTabBoth').disabled = true;
-    document.getElementById('btnIssueReceipt').disabled = true;
-    
-    if (currentPreviewMode !== 'invoice') {
-      switchPreviewMode('invoice');
-    }
-  }
-
-  // Update Tanda Terima
-  document.getElementById('rcInvNo').textContent = invNo;
-  document.getElementById('rcInvDate').textContent = formatDate(invDate);
-  document.getElementById('rcClientCompany').textContent = company || name;
-  document.getElementById('rcClientPhone').textContent = phone;
-  document.getElementById('rcTripType').textContent = document.getElementById('tripType').value;
-  document.getElementById('rcPax').textContent = document.getElementById('paxCount').value + ' Orang';
-  document.getElementById('rcPackage').textContent = document.getElementById('tripPackage').value;
-  document.getElementById('rcTripDate').textContent = formatDate(document.getElementById('tripDate').value);
-  
-  document.getElementById('rcPaxRincian').textContent = document.getElementById('paxCount').value + ' Pax';
-  document.getElementById('rcDpNominal').textContent = rupiah(dp > 0 ? dp / (document.getElementById('paxCount').value || 1) : 0);
-  document.getElementById('rcDpTotal').textContent = rupiah(dp);
-  
-  document.getElementById('rcTotalTagihan').textContent = rupiah(total);
-  document.getElementById('rcTotalDiterima').textContent = rupiah(dp);
-  document.getElementById('rcSisaTagihan').textContent = rupiah(sisa);
-  
-  const statusEl = document.getElementById('rcStatus');
-  const statusVal = document.getElementById('paymentStatus').value;
-  statusEl.textContent = statusVal.toUpperCase();
-  statusEl.className = 'status-text ' + (statusVal === 'Lunas' ? 'lunas' : '');
-
-  document.getElementById('rcBank').textContent = document.getElementById('bankInfo').value;
-  document.getElementById('rcSigner').textContent = document.getElementById('signerName').value || 'Admin Trip';
-
-  lastTotals = { subtotal, total, dp, sisa };
-  saveDraftSilent();
-}
-
-/* ================= DRAFT & HISTORY ================= */
-function getFormData() {
-  let data = {};
-  document.querySelectorAll('input, select, textarea').forEach(el => {
-    if (el.id && el.id !== 'items') data[el.id] = el.value;
-  });
-  data.items = items;
-  return data;
-}
-function fillForm(d) {
-  Object.keys(d).forEach(k => {
-    const el = document.getElementById(k);
-    if (el) el.value = d[k];
-  });
-  if (Array.isArray(d.items) && d.items.length) items = JSON.parse(JSON.stringify(d.items));
-  renderItems();
-  recalc();
-}
-function saveDraftSilent() { localStorage.setItem('ihyat_invoice_draft_v5', JSON.stringify(getFormData())); }
-function loadDraft() {
-  const raw = localStorage.getItem('ihyat_invoice_draft_v5');
-  if (raw) { try { fillForm(JSON.parse(raw)); } catch(e){} }
-}
-function clearData() {
-  if (!confirm('Reset semua isian form?')) return;
-  localStorage.removeItem('ihyat_invoice_draft_v5');
-  location.reload();
-}
-
-function getHistory() { return JSON.parse(localStorage.getItem('ihyat_invoice_history_v5')) || []; }
-function saveHistory(arr) { localStorage.setItem('ihyat_invoice_history_v5', JSON.stringify(arr)); }
-function saveData() {
-  const data = getFormData();
-  let history = getHistory();
-  
-  if (currentInvoiceId) {
-    const idx = history.findIndex(h => h.id === currentInvoiceId);
-    if (idx !== -1) { history[idx].data = data; history[idx].updatedAt = Date.now(); }
-    showToast('✅ Invoice diperbarui!');
-  } else {
-    currentInvoiceId = 'inv_' + Date.now();
-    history.unshift({ id: currentInvoiceId, invNo: data.invNo, clientName: data.clientName, total: lastTotals.total, date: data.invDate, data: data });
-    showToast('✅ Invoice baru disimpan!');
-  }
-  saveHistory(history);
-  renderHistory();
-}
-function renderHistory() {
-  const list = document.getElementById('historyList');
-  const history = getHistory();
-  if (!history.length) { list.innerHTML = '<div style="text-align:center; padding:20px; color:#666;">Belum ada riwayat.</div>'; return; }
-  
-  list.innerHTML = history.map(h => `
+    <!-- TABEL RIWAYAT -->
     <div class="history-card">
-      <div class="history-info">
-        <h4>#${escapeHtml(h.invNo)}</h4>
-        <p>👤 ${escapeHtml(h.clientName)}</p>
-        <div class="h-total">${rupiah(h.total)}</div>
-      </div>
-      <div>
-        <button class="btn-hist btn-edit" onclick="loadInvoice('${h.id}')">Buka</button>
-        <button class="btn-hist btn-del" onclick="deleteInvoice('${h.id}')">Hapus</button>
-      </div>
+        <h3>📁 Riwayat Dokumen & Pembayaran</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>No. Invoice</th>
+                    <th>Klien</th>
+                    <th>Total Biaya</th>
+                    <th>Total Dibayar</th>
+                    <th>Sisa</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody id="tabelRiwayat">
+                <!-- Data diisi JavaScript -->
+            </tbody>
+        </table>
     </div>
-  `).join('');
-}
-function loadInvoice(id) {
-  const inv = getHistory().find(h => h.id === id);
-  if (inv) { fillForm(inv.data); currentInvoiceId = id; closeHistory(); showToast('📝 Invoice dibuka'); }
-}
-function deleteInvoice(id) {
-  if (!confirm('Hapus invoice ini?')) return;
-  saveHistory(getHistory().filter(h => h.id !== id));
-  renderHistory();
-}
-function openHistory() { document.getElementById('historyModal').classList.add('show'); }
-function closeHistory() { document.getElementById('historyModal').classList.remove('show'); }
 
-/* ================= PDF GENERATOR ================= */
-async function downloadPDF(event) {
-  const dp = parseFloat(document.getElementById('dpAmount').value) || 0;
-  if ((currentPreviewMode === 'receipt' || currentPreviewMode === 'both') && dp <= 0) {
-    showToast('⚠ Tanda Terima butuh Nominal DP!', 'warn');
-    return;
-  }
+    <script>
+        // Format Rupiah
+        const rupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
 
-  const btn = event ? event.currentTarget : document.querySelector('.btn-download');
-  const originalHTML = btn.innerHTML;
-  btn.classList.add('loading');
-  btn.innerHTML = 'Memproses...';
+        let daftarRiwayat = JSON.parse(localStorage.getItem('riwayatDokumen')) || [];
 
-  const invNo = document.getElementById('invNo').value || 'Dokumen';
-  const fileName = currentPreviewMode === 'both' ? `Invoice_TandaTerima_${invNo}.pdf` : 
-                   currentPreviewMode === 'invoice' ? `Invoice_${invNo}.pdf` : 
-                   `TandaTerima_${invNo}.pdf`;
+        function tampilkanRiwayat() {
+            const tbody = document.getElementById('tabelRiwayat');
+            tbody.innerHTML = '';
+            
+            if(daftarRiwayat.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#888;">Belum ada riwayat dokumen.</td></tr>';
+                return;
+            }
 
-  try {
-    document.body.classList.remove('single-receipt');
-    if (currentPreviewMode === 'receipt') {
-      document.body.classList.add('single-receipt');
-    }
-    
-    document.body.classList.add('pdf-mode');
-    await new Promise(r => setTimeout(r, 400)); 
+            daftarRiwayat.forEach((item, index) => {
+                // Hitung total yang sudah dibayar
+                const totalDibayar = item.payments.reduce((sum, p) => sum + p.amount, 0);
+                const sisa = item.totalBill - totalDibayar;
+                const statusClass = sisa <= 0 ? 'bg-lunas' : 'bg-belum';
+                const statusText = sisa <= 0 ? 'LUNAS' : 'BELUM LUNAS';
 
-    let targetElement;
-    if (currentPreviewMode === 'invoice') {
-      targetElement = document.getElementById('invoiceContainer');
-    } else if (currentPreviewMode === 'receipt') {
-      targetElement = document.getElementById('receiptContainer');
-    } else {
-      targetElement = document.getElementById('pdfWrapper');
-    }
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td><strong>${item.invNo}</strong><br><small style="color:#888">${item.date}</small></td>
+                    <td>${item.client}</td>
+                    <td>${rupiah(item.totalBill)}</td>
+                    <td style="color: #198754; font-weight:bold;">${rupiah(totalDibayar)}</td>
+                    <td style="color: #d9534f; font-weight:bold;">${rupiah(sisa)}</td>
+                    <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                    <td>
+                        <button class="btn-action btn-pay" onclick="tambahPembayaran(${index})">+ Bayar</button>
+                        <button class="btn-action btn-inv" onclick="cetakDokumen(${index}, 'invoice')">Invoice</button>
+                        <button class="btn-action btn-rec" onclick="pilihTandaTerima(${index})">Tanda Terima</button>
+                        <button class="btn-action btn-delete" onclick="hapusData(${index})">Hapus</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
 
-    // MENGGUNAKAN LAYOUT MOBILE (Card Format) DI PDF
-    const opt = {
-      margin:       [10, 10, 10, 10],
-      filename:     fileName,
-      image:        { type: 'jpeg', quality: 0.98 },
-      html2canvas:  { 
-        scale: 2, 
-        useCORS: true, 
-        backgroundColor: '#ffffff',
-        windowWidth: 480, // Kunci lebar mobile agar card tampil sempurna
-        scrollX: 0,
-        scrollY: 0
-      },
-      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-      pagebreak:    { mode: ['css', 'legacy'] }
-    };
+        // Simpan Data Baru (DP Pertama)
+        function simpanData(docType) {
+            const data = {
+                id: Date.now(),
+                invNo: document.getElementById('invNo').value,
+                date: document.getElementById('date').value,
+                client: document.getElementById('client').value,
+                wa: document.getElementById('wa').value,
+                type: document.getElementById('type').value,
+                pax: document.getElementById('pax').value,
+                package: document.getElementById('package').value,
+                travelDate: document.getElementById('travelDate').value,
+                totalBill: parseFloat(document.getElementById('totalBill').value) || 0,
+                // Array untuk menyimpan riwayat pembayaran
+                payments: [
+                    {
+                        date: document.getElementById('date').value,
+                        amount: parseFloat(document.getElementById('amountPaid').value) || 0,
+                        desc: document.getElementById('desc').value
+                    }
+                ]
+            };
 
-    await html2pdf().set(opt).from(targetElement).save();
+            const indexExist = daftarRiwayat.findIndex(item => item.invNo === data.invNo);
+            if (indexExist !== -1) {
+                daftarRiwayat[indexExist] = data; // Update jika no invoice sama
+            } else {
+                daftarRiwayat.push(data); // Tambah baru
+            }
 
-    showToast('✅ PDF berhasil diunduh!');
-  } catch (err) {
-    console.error(err);
-    showToast('❌ Gagal membuat PDF.', 'warn');
-  } finally {
-    document.body.classList.remove('pdf-mode');
-    document.body.classList.remove('single-receipt');
-    btn.classList.remove('loading');
-    btn.innerHTML = originalHTML;
-  }
-}
+            localStorage.setItem('riwayatDokumen', JSON.stringify(daftarRiwayat));
+            
+            // Cetak langsung
+            localStorage.setItem('invoiceAktif', JSON.stringify(data));
+            localStorage.setItem('printType', docType);
+            localStorage.setItem('paymentIndex', 0); // Cetak pembayaran pertama (DP)
+            
+            window.location.href = 'preview.html';
+        }
 
-/* ================= WHATSAPP ================= */
-function openWaModal() {
-  const name = document.getElementById('clientName').value;
-  const invNo = document.getElementById('invNo').value;
-  const status = document.getElementById('paymentStatus').value;
-  
-  let msg = `*INVOICE TRIP BY IHYAT* ✈🕌🕋\n\nHalo *${name}*,\nBerikut rincian tagihan Anda:\n\n📄 *No. Invoice:* ${invNo}\n💰 *Total Tagihan:* ${rupiah(lastTotals.total)}\n`;
-  
-  if (lastTotals.dp > 0) {
-    msg += `✅ *Telah Dibayar:* ${rupiah(lastTotals.dp)}\n⚠️ *Sisa Tagihan:* ${rupiah(lastTotals.sisa)}\n`;
-  }
-  
-  msg += `\n*Status:* ${status.toUpperCase()}\n\n`;
-  
-  if (lastTotals.sisa > 0) {
-    msg += `Mohon segera melakukan pelunasan. Pembayaran dapat ditransfer ke:\n${document.getElementById('bankInfo').value}\n\n`;
-  }
-  msg += `Terima kasih atas kepercayaan Anda.\n\n_TripByIhyat_`;
+        // Tambah Pembayaran Lanjutan (Cicilan/Pelunasan)
+        function tambahPembayaran(index) {
+            const item = daftarRiwayat[index];
+            const totalDibayar = item.payments.reduce((sum, p) => sum + p.amount, 0);
+            const sisa = item.totalBill - totalDibayar;
 
-  document.getElementById('waPreview').textContent = msg;
-  const phone = document.getElementById('clientPhone').value;
-  const btn = document.getElementById('waBtnClient');
-  btn.innerHTML = phone ? `📞 Ke ${phone}` : `📞 (No. HP Kosong)`;
-  btn.disabled = !phone;
-  
-  document.getElementById('waModal').classList.add('show');
-}
-function closeWaModal() { document.getElementById('waModal').classList.remove('show'); }
-function sendToClient() {
-  let p = document.getElementById('clientPhone').value.replace(/\D/g, '');
-  if (p.startsWith('0')) p = '62' + p.slice(1);
-  window.open(`https://wa.me/${p}?text=${encodeURIComponent(document.getElementById('waPreview').textContent)}`, '_blank');
-  closeWaModal();
-}
-function sendGeneric() {
-  window.open(`https://wa.me/?text=${encodeURIComponent(document.getElementById('waPreview').textContent)}`, '_blank');
-  closeWaModal();
-}
+            if (sisa <= 0) {
+                alert("Invoice ini sudah LUNAS.");
+                return;
+            }
 
-function showToast(msg, type) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.style.background = type === 'warn' ? '#be123c' : '#4A0E17';
-  t.classList.add('show');
-  clearTimeout(t._timer);
-  t._timer = setTimeout(() => t.classList.remove('show'), 2500);
-}
-</script>
+            let nominalStr = prompt(`Sisa tagihan: ${rupiah(sisa)}\nMasukkan nominal pembayaran baru (Angka saja):`);
+            if (!nominalStr) return; // Batal
+
+            let nominal = parseFloat(nominalStr);
+            if (isNaN(nominal) || nominal <= 0) {
+                alert("Nominal tidak valid!");
+                return;
+            }
+
+            let ket = prompt("Keterangan Pembayaran (Contoh: Cicilan 1, Pelunasan):", "Pembayaran Lanjutan");
+            if (ket === null) ket = "Pembayaran Lanjutan";
+
+            const today = new Date().toISOString().split('T')[0];
+
+            // Masukkan ke array payments
+            item.payments.push({
+                date: today,
+                amount: nominal,
+                desc: ket
+            });
+
+            // Simpan ke localStorage
+            localStorage.setItem('riwayatDokumen', JSON.stringify(daftarRiwayat));
+            tampilkanRiwayat();
+
+            // Tawaran langsung cetak tanda terima untuk cicilan ini
+            if(confirm("Pembayaran berhasil disimpan. Cetak Tanda Terima sekarang?")) {
+                const lastPaymentIndex = item.payments.length - 1;
+                localStorage.setItem('invoiceAktif', JSON.stringify(item));
+                localStorage.setItem('printType', 'receipt');
+                localStorage.setItem('paymentIndex', lastPaymentIndex);
+                window.location.href = 'preview.html';
+            }
+        }
+
+        // Pilih Tanda Terima mana yang mau dicetak (jika ada beberapa cicilan)
+        function pilihTandaTerima(index) {
+            const item = daftarRiwayat[index];
+            let pesan = "Pilih nomor pembayaran yang ingin dicetak Tanda Terimanya:\n\n";
+            
+            item.payments.forEach((p, i) => {
+                pesan += `${i + 1}. ${p.date} - ${p.desc} (${rupiah(p.amount)})\n`;
+            });
+            
+            let pilihan = prompt(pesan + "\nKetik angka (1, 2, dst):");
+            if (!pilihan) return;
+            
+            let pIndex = parseInt(pilihan) - 1;
+            
+            if (pIndex >= 0 && pIndex < item.payments.length) {
+                cetakDokumen(index, 'receipt', pIndex);
+            } else {
+                alert("Pilihan tidak valid.");
+            }
+        }
+
+        // Fungsi cetak (dari riwayat)
+        function cetakDokumen(index, docType, paymentIndex = null) {
+            localStorage.setItem('invoiceAktif', JSON.stringify(daftarRiwayat[index]));
+            localStorage.setItem('printType', docType);
+            
+            if (docType === 'receipt' && paymentIndex !== null) {
+                localStorage.setItem('paymentIndex', paymentIndex);
+            } else {
+                localStorage.removeItem('paymentIndex'); // Invoice tidak butuh payment index
+            }
+            
+            window.location.href = 'preview.html';
+        }
+
+        // Hapus Data
+        function hapusData(index) {
+            if(confirm("Yakin ingin menghapus seluruh data invoice ini?")) {
+                daftarRiwayat.splice(index, 1);
+                localStorage.setItem('riwayatDokumen', JSON.stringify(daftarRiwayat));
+                tampilkanRiwayat();
+            }
+        }
+
+        window.onload = tampilkanRiwayat;
+    </script>
 </body>
 </html>

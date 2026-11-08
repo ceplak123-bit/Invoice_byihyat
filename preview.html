@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preview Dokumen - TripByIhyat</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6b162c;
+            --secondary: #f7c45a;
+            --light-pink: #fbecef;
+            --green: #198754;
+            --red: #d9534f;
+        }
+        * { box-sizing: border-box; font-family: 'Nunito', sans-serif; }
+        body { background-color: #e9ecef; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        .action-bar { width: 210mm; display: flex; justify-content: space-between; margin-bottom: 15px; }
+        .btn { padding: 10px 20px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; text-decoration: none; font-size: 1rem; }
+        .btn-back { background-color: #6c757d; color: white; }
+        .btn-print { background-color: var(--primary); color: white; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;}
+        
+        .invoice-wrapper { 
+            background: white; 
+            width: 210mm; 
+            min-height: 297mm; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
+            position: relative; 
+            overflow: hidden; 
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Header */
+        .invoice-header { background: linear-gradient(135deg, #e0f2fe, #fce7f3); padding: 15px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
+        .main-logo { max-height: 100px; max-width: 80%; object-fit: contain; margin-bottom: 5px; display: block; margin-left: auto; margin-right: auto; }
+        .header-title { background-color: var(--primary); color: white; display: inline-block; padding: 6px 30px; border-radius: 20px; font-weight: 800; font-size: 1.1rem; letter-spacing: 1px; border: 3px solid var(--secondary); text-transform: uppercase; margin-top: 5px;}
+        .header-subtitle { color: var(--primary); font-size: 0.85rem; font-style: italic; margin-top: 8px; font-weight: 600; }
+        
+        .invoice-content { padding: 20px 30px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        
+        /* Kotak Data */
+        .section-box { background-color: var(--light-pink); border-radius: 6px; margin-bottom: 15px; overflow: hidden; }
+        .section-title { background-color: var(--primary); color: white; padding: 6px 15px; font-size: 0.85rem; font-weight: bold; }
+        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 30px; padding: 15px; font-size: 0.85rem; }
+        .data-item { display: flex; justify-content: space-between; border-bottom: 1px dotted #ccc; padding-bottom: 5px; }
+        .data-item span:first-child { font-weight: 600; color: #555; }
+        .data-item span:last-child { font-weight: 700; text-align: right; }
+
+        /* Tabel Invoice */
+        table.payment-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; background: white; }
+        table.payment-table th { background-color: #fce2c4; color: var(--primary); padding: 10px; text-align: center; border-bottom: 2px solid var(--primary); }
+        table.payment-table td { padding: 10px; border-bottom: 1px solid #eee; }
+        .text-right { text-align: right; } .text-center { text-align: center; }
+
+        /* Ringkasan Total */
+        .summary-container { display: flex; justify-content: flex-end; margin-top: 15px; padding: 0 15px 0 0; }
+        .summary-table { width: 60%; font-size: 0.9rem; }
+        .summary-table tr td { padding: 5px; }
+        .summary-table .label { text-align: right; font-weight: 700; color: var(--primary); padding-right: 15px; }
+        .summary-table .value { background-color: #f6e6eb; padding: 8px 15px; font-weight: 800; border-radius: 4px; text-align: right; }
+        .summary-table .total-row .value { background-color: #e8d3da; color: var(--primary); font-size: 1rem; }
+
+        /* Status */
+        .status-box { background-color: white; border: 1px solid #ddd; border-radius: 6px; padding: 15px; font-size: 0.85rem; margin-bottom: 15px; }
+        .status-lunas { color: var(--green); font-weight: 800; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; }
+        .status-belum { color: var(--red); font-weight: 800; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Tanda Tangan */
+        .signature-section { display: flex; justify-content: space-between; padding: 0 40px; margin-top: 10px; text-align: center; font-size: 0.9rem; }
+        .sig-box { width: 200px; }
+        .sig-title { font-weight: 700; margin-bottom: 50px; }
+        .sig-name { border-top: 1px solid #333; padding-top: 5px; font-weight: 700; }
+        .logo-sig { font-family: 'Pacifico', cursive; font-size: 1.8rem; color: #1e3a8a; transform: rotate(-5deg); margin-bottom: 10px; }
+        
+        .footer-text { text-align: center; font-size: 0.8rem; color: var(--primary); font-style: italic; margin-top: 15px; margin-bottom: 10px; font-weight: 600; }
+
+        /* =========================================
+           LAYOUT KHUSUS KWITANSI (TANDA TERIMA)
+           ========================================= */
+        .kwitansi-box {
+            border: 2px dashed var(--primary);
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px 0;
+            background: #fff;
+        }
+        .kwitansi-row {
+            display: flex;
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            align-items: flex-start; /* Agar sejajar atas jika teks panjang */
+        }
+        .kwitansi-label {
+            width: 180px;
+            font-weight: 700;
+            color: var(--primary);
+            flex-shrink: 0; /* Mencegah label mengecil */
+        }
+        .kwitansi-value {
+            flex: 1;
+            font-weight: 600;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+        .kwitansi-amount {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            background: var(--light-pink);
+            padding: 10px 20px;
+            border-radius: 8px;
+            display: inline-block;
+            border: 2px solid var(--secondary);
+        }
+        /* Style untuk Terbilang */
+        .terbilang-text {
+            font-style: italic;
+            color: #555;
+            font-size: 0.95rem;
+            margin-top: 10px;
+            background: #f9f9f9;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border-left: 3px solid var(--secondary);
+        }
+
+        /* =========================================
+           CSS PRINT PAS 1 HALAMAN A4
+           ========================================= */
+        @media print {
+            html, body {
+                width: 210mm; height: 297mm; margin: 0 !important; padding: 0 !important;
+                background: white; overflow: hidden !important; display: block; 
+            }
+            .action-bar { display: none !important; }
+            .invoice-wrapper { 
+                box-shadow: none !important; width: 210mm !important; height: 297mm !important; 
+                margin: 0 !important; padding: 0 !important; border-radius: 0; 
+                page-break-after: avoid; page-break-inside: avoid;
+                display: flex; flex-direction: column;
+            }
+            .invoice-content { padding: 10px 25px !important; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            @page { size: A4 portrait; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="action-bar">
+        <a href="index.html" class="btn btn-back">← Kembali</a>
+        <button class="btn btn-print" onclick="window.print()">🖨️ Simpan Sebagai PDF</button>
+    </div>
+
+    <div class="invoice-wrapper">
+        <div class="invoice-header">
+            <img src="logo.png" alt="Logo TripByIhyat" class="main-logo">
+            <br>
+            <div class="header-title" id="doc-title">MEMUAT...</div>
+            <div class="header-subtitle" id="doc-subtitle">...</div>
+        </div>
+
+        <div class="invoice-content">
+            
+            <!-- BAGIAN 1: DATA PELANGGAN -->
+            <div>
+                <div class="section-box">
+                    <div class="section-title" id="data-title">♡ DATA DOKUMEN</div>
+                    <div class="data-grid">
+                        <div class="data-item"><span>No. Dokumen</span><span id="v-invNo">-</span></div>
+                        <div class="data-item"><span>Tanggal</span><span id="v-date">-</span></div>
+                        <div class="data-item"><span>Nama</span><span id="v-client">-</span></div>
+                        <div class="data-item"><span>No. WhatsApp</span><span id="v-wa">-</span></div>
+                        <div class="data-item"><span>Jenis perjalanan</span><span id="v-type">-</span></div>
+                        <div class="data-item"><span>Jumlah peserta</span><span id="v-pax">-</span></div>
+                        <div class="data-item" style="grid-column: span 2;"><span>Paket / tujuan</span><span id="v-package">-</span></div>
+                    </div>
+                </div>
+
+                <!-- BAGIAN 2A: KHUSUS INVOICE -->
+                <div id="section-invoice" style="display:none;">
+                    <div class="section-box" style="background:transparent;">
+                        <div class="section-title">♡ RINCIAN TAGIHAN & PEMBAYARAN</div>
+                        <table class="payment-table">
+                            <thead>
+                                <tr>
+                                    <th>NO</th>
+                                    <th>TANGGAL</th>
+                                    <th>URAIAN</th>
+                                    <th class="text-right">NOMINAL (Rp)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="v-tbody-invoice"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="summary-container">
+                        <table class="summary-table">
+                            <tr>
+                                <td class="label">TOTAL BIAYA PERJALANAN</td>
+                                <td class="value" id="v-total-bill">-</td>
+                            </tr>
+                            <tr>
+                                <td class="label">TOTAL TELAH DIBAYAR</td>
+                                <td class="value" style="color: var(--green);" id="v-total-paid">-</td>
+                            </tr>
+                            <tr>
+                                <td class="label">SISA TAGIHAN</td>
+                                <td class="value total-row" id="v-remaining">-</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="section-box">
+                        <div class="section-title">♡ STATUS TAGIHAN</div>
+                        <div class="status-box">
+                            <div style="display:flex; justify-content:space-between; align-items:center;">
+                                <span style="font-weight:700;">Status Pembayaran</span>
+                                <span id="v-status-invoice">-</span>
+                            </div>
+                            <p style="margin:10px 0 5px 0; color:#555;">Mohon lakukan pembayaran sisa tagihan ke rekening:</p>
+                            <p style="margin:0; font-weight:bold; color:var(--primary);">BRI 042401002611564 a.n. PT SAZIEL GRUP INDONESIA</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BAGIAN 2B: KHUSUS TANDA TERIMA (KWITANSI) -->
+                <div id="section-receipt" style="display:none;">
+                    <div class="kwitansi-box">
+                        <div class="kwitansi-row">
+                            <div class="kwitansi-label">Telah Terima Dari</div>
+                            <div class="kwitansi-value" id="v-rec-client">-</div>
+                        </div>
+                        <div class="kwitansi-row">
+                            <div class="kwitansi-label">Uang Sejumlah</div>
+                            <div class="kwitansi-value" style="border-bottom:none;">
+                                <div class="kwitansi-amount" id="v-rec-amount">Rp 0</div>
+                                <!-- BARIS TERBILANG DITAMBAHKAN DI SINI -->
+                                <div class="terbilang-text" id="v-rec-terbilang">-</div>
+                            </div>
+                        </div>
+                        <div class="kwitansi-row">
+                            <div class="kwitansi-label">Untuk Pembayaran</div>
+                            <div class="kwitansi-value" id="v-rec-desc">-</div>
+                        </div>
+                        <div class="kwitansi-row" style="margin-bottom:0;">
+                            <div class="kwitansi-label">Tanggal Terima</div>
+                            <div class="kwitansi-value" id="v-rec-date">-</div>
+                        </div>
+                    </div>
+
+                    <div class="section-box">
+                        <div class="section-title">♡ KETERANGAN</div>
+                        <div class="status-box" style="margin-bottom:0;">
+                            <p style="margin:0; color:#555;">Pembayaran ini telah diterima dan dicatat dalam sistem kami. Sisa tagihan (jika ada) akan tercantum pada Invoice.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BAGIAN 3: TANDA TANGAN -->
+            <div>
+                <div class="signature-section" id="sig-invoice" style="display:none;">
+                    <div class="sig-box">
+                        <div class="sig-title">Penerima,</div>
+                        <div class="sig-name">( ____________________ )</div>
+                    </div>
+                    <div class="sig-box">
+                        <div class="sig-title">Hormat Kami,</div>
+                        <div class="logo-sig">TripbyIhyat</div>
+                        <div class="sig-name">( ____________________ )</div>
+                    </div>
+                </div>
+
+                <div class="signature-section" id="sig-receipt" style="display:none;">
+                    <div class="sig-box">
+                        <div class="sig-title">Penyetor / Pembayar,</div>
+                        <div class="sig-name">( ____________________ )</div>
+                    </div>
+                    <div class="sig-box">
+                        <div class="sig-title">Penerima Uang,</div>
+                        <div class="logo-sig">TripbyIhyat</div>
+                        <div class="sig-name">( ____________________ )</div>
+                    </div>
+                </div>
+
+                <div class="footer-text">Barakallahu fiikum Jazakumullahu Khairan Katsiran. Terima kasih, Sahabat Trip by Ihyat!</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- FUNGSI FORMAT RUPIAH & TANGGAL ---
+        function formatRupiah(angka) {
+            return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
+        }
+        function formatTanggal(dateString) {
+            if (!dateString) return "-";
+            const options = { day: '2-digit', month: 'short', year: 'numeric' };
+            return new Date(dateString).toLocaleDateString('id-ID', options);
+        }
+
+        // --- FUNGSI TERBILANG (ANGKA KE TEKS) ---
+        function terbilang(n) {
+            n = Math.floor(n); // Pastikan bilangan bulat
+            const bilangan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
+            
+            if (n < 12) {
+                return bilangan[n];
+            } else if (n < 20) {
+                return terbilang(n - 10) + " Belas";
+            } else if (n < 100) {
+                return terbilang(Math.floor(n / 10)) + " Puluh " + terbilang(n % 10);
+            } else if (n < 200) {
+                return "Seratus " + terbilang(n - 100);
+            } else if (n < 1000) {
+                return terbilang(Math.floor(n / 100)) + " Ratus " + terbilang(n % 100);
+            } else if (n < 2000) {
+                return "Seribu " + terbilang(n - 1000);
+            } else if (n < 1000000) {
+                return terbilang(Math.floor(n / 1000)) + " Ribu " + terbilang(n % 1000);
+            } else if (n < 1000000000) {
+                return terbilang(Math.floor(n / 1000000)) + " Juta " + terbilang(n % 1000000);
+            } else if (n < 1000000000000) {
+                return terbilang(Math.floor(n / 1000000000)) + " Miliar " + terbilang(n % 1000000000);
+            } else if (n < 1000000000000000) {
+                return terbilang(Math.floor(n / 1000000000000)) + " Triliun " + terbilang(n % 1000000000000);
+            } else {
+                return "Angka Terlalu Besar";
+            }
+        }
+
+        // --- LOGIKA UTAMA SAAT HALAMAN DIMUAT ---
+        window.onload = function() {
+            const dataStr = localStorage.getItem('invoiceAktif');
+            const printType = localStorage.getItem('printType') || 'invoice';
+            const paymentIndexStr = localStorage.getItem('paymentIndex');
+            
+            if (dataStr) {
+                const data = JSON.parse(dataStr);
+                
+                document.getElementById('v-invNo').innerText = data.invNo;
+                document.getElementById('v-date').innerText = formatTanggal(data.date);
+                document.getElementById('v-client').innerText = data.client;
+                document.getElementById('v-wa').innerText = data.wa;
+                document.getElementById('v-type').innerText = data.type;
+                document.getElementById('v-pax').innerText = data.pax;
+                document.getElementById('v-package').innerText = data.package;
+
+                const titleEl = document.getElementById('doc-title');
+                const subtitleEl = document.getElementById('doc-subtitle');
+                const dataTitle = document.getElementById('data-title');
+
+                if (printType === 'invoice') {
+                    // MODE INVOICE
+                    titleEl.innerText = "INVOICE TAGIHAN";
+                    subtitleEl.innerText = "Mohon lakukan pembayaran sebelum tanggal jatuh tempo.";
+                    dataTitle.innerText = "♡ DATA TAGIHAN & PELANGGAN";
+                    
+                    document.getElementById('section-invoice').style.display = 'block';
+                    document.getElementById('section-receipt').style.display = 'none';
+                    document.getElementById('sig-invoice').style.display = 'flex';
+                    document.getElementById('sig-receipt').style.display = 'none';
+
+                    const tbody = document.getElementById('v-tbody-invoice');
+                    tbody.innerHTML = '';
+                    data.payments.forEach((p, i) => {
+                        tbody.innerHTML += `
+                            <tr>
+                                <td class="text-center">${i + 1}</td>
+                                <td class="text-center">${formatTanggal(p.date)}</td>
+                                <td>${p.desc}</td>
+                                <td class="text-right">${formatRupiah(p.amount)}</td>
+                            </tr>
+                        `;
+                    });
+
+                    let totalPaid = data.payments.reduce((sum, p) => sum + p.amount, 0);
+                    let remaining = data.totalBill - totalPaid;
+                    
+                    document.getElementById('v-total-bill').innerText = formatRupiah(data.totalBill);
+                    document.getElementById('v-total-paid').innerText = formatRupiah(totalPaid);
+                    document.getElementById('v-remaining').innerText = formatRupiah(remaining);
+
+                    const statusEl = document.getElementById('v-status-invoice');
+                    if (remaining <= 0) {
+                        statusEl.innerText = "LUNAS";
+                        statusEl.className = "status-lunas";
+                    } else {
+                        statusEl.innerText = "BELUM LUNAS";
+                        statusEl.className = "status-belum";
+                    }
+
+                } else {
+                    // MODE TANDA TERIMA (KWITANSI)
+                    titleEl.innerText = "TANDA TERIMA / KWITANSI";
+                    subtitleEl.innerText = "Bukti transaksi pembayaran yang sah.";
+                    dataTitle.innerText = "♡ DATA PENERIMAAN UANG";
+
+                    document.getElementById('section-invoice').style.display = 'none';
+                    document.getElementById('section-receipt').style.display = 'block';
+                    document.getElementById('sig-invoice').style.display = 'none';
+                    document.getElementById('sig-receipt').style.display = 'flex';
+
+                    let pIndex = parseInt(paymentIndexStr);
+                    if (isNaN(pIndex) || pIndex >= data.payments.length) pIndex = data.payments.length - 1;
+                    
+                    const selectedPayment = data.payments[pIndex];
+
+                    // Isi Data Kwitansi
+                    document.getElementById('v-rec-client').innerText = data.client;
+                    document.getElementById('v-rec-amount').innerText = formatRupiah(selectedPayment.amount);
+                    
+                    // Panggil Fungsi Terbilang & tambahkan "Rupiah"
+                    let teksTerbilang = terbilang(selectedPayment.amount).trim();
+                    // Rapikan spasi ganda
+                    teksTerbilang = teksTerbilang.replace(/\s+/g, ' ');
+                    document.getElementById('v-rec-terbilang').innerText = `Terbilang: ${teksTerbilang} Rupiah`;
+
+                    document.getElementById('v-rec-desc').innerText = selectedPayment.desc;
+                    document.getElementById('v-rec-date').innerText = formatTanggal(selectedPayment.date);
+                }
+
+            } else {
+                alert("Data tidak ditemukan.");
+                window.location.href = 'form.html';
+            }
+        }
+    </script>
+</body>
+</html>
