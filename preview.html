@@ -68,15 +68,6 @@
         .status-lunas { color: var(--green); font-weight: 800; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; }
         .status-belum { color: var(--red); font-weight: 800; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* Tanda Tangan */
-        .signature-section { display: flex; justify-content: space-between; padding: 0 50px; margin-top: 20px; text-align: center; font-size: 0.9rem; }
-        .sig-box { width: 220px; display: flex; flex-direction: column; justify-content: space-between; height: 90px; }
-        .sig-title { font-weight: 700; }
-        .sig-name { border-top: 1px solid #333; padding-top: 5px; font-weight: 700; margin-top: auto; }
-        .logo-sig { font-family: 'Pacifico', cursive; font-size: 1.8rem; color: #1e3a8a; transform: rotate(-5deg); margin-top: auto; margin-bottom: 5px; }
-        
-        .footer-text { text-align: center; font-size: 0.8rem; color: var(--primary); font-style: italic; margin-top: 20px; margin-bottom: 10px; font-weight: 600; }
-
         /* Layout Kwitansi */
         .kwitansi-box { border: 2px dashed var(--primary); border-radius: 8px; padding: 25px 30px; margin: 10px auto; background: #fff; width: 100%; max-width: 800px; }
         .kwitansi-row { display: flex; margin-bottom: 15px; font-size: 1.05rem; align-items: flex-start; }
@@ -86,13 +77,61 @@
         .terbilang-text { font-style: italic; color: #555; font-size: 0.95rem; margin-top: 10px; background: #f9f9f9; padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--secondary); }
 
         /* =========================================
+           PERBAIKAN: TANDA TANGAN & FOOTER
+           ========================================= */
+        .signature-section { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 0 50px; 
+            margin-top: 10px; /* Dikurangi agar naik ke atas */
+            margin-bottom: 10px; /* Jarak aman ke footer */
+            text-align: center; 
+            font-size: 0.9rem; 
+        }
+        
+        .sig-box { 
+            width: 220px; 
+            display: flex;
+            flex-direction: column;
+            /* Height dihilangkan agar menyesuaikan isi secara natural */
+        }
+        
+        .sig-title { 
+            font-weight: 700; 
+            margin-bottom: 40px; /* Jarak dari teks ke area tanda tangan */
+        }
+        
+        .sig-name { 
+            border-top: 1px solid #333; 
+            padding-top: 5px; 
+            font-weight: 700; 
+        }
+        
+        .logo-sig { 
+            font-family: 'Pacifico', cursive; 
+            font-size: 1.8rem; 
+            color: #1e3a8a; 
+            transform: rotate(-5deg); 
+            margin-bottom: -5px; /* Tarik sedikit ke bawah agar dekat garis */
+        }
+        
+        .footer-text { 
+            text-align: center; 
+            font-size: 0.8rem; 
+            color: var(--primary); 
+            font-style: italic; 
+            margin-top: 5px; 
+            margin-bottom: 10px; 
+            font-weight: 600; 
+        }
+
+        /* =========================================
            CSS PRINT (DIKUNCI MATI UNTUK 1 HALAMAN)
            ========================================= */
         @media print {
-            /* Hapus semua margin dan padding pada body */
             html, body {
                 width: 210mm;
-                height: 296mm; /* Gunakan 296mm, bukan 297mm untuk toleransi error browser */
+                height: 296mm; 
                 margin: 0 !important;
                 padding: 0 !important;
                 background: white;
@@ -102,22 +141,19 @@
 
             .action-bar { display: none !important; }
             
-            /* Kunci mutlak tinggi wrapper */
             .invoice-wrapper { 
                 box-shadow: none !important; 
                 width: 210mm !important; 
-                height: 296mm !important; /* Kunci tinggi di sini */
+                height: 296mm !important; 
                 margin: 0 !important;
                 padding: 0 !important;
                 border-radius: 0; 
-                /* page-break-after dihapus karena sering bikin bug di iOS/Android */
                 page-break-inside: avoid; 
                 display: flex;
                 flex-direction: column;
                 overflow: hidden;
             }
             
-            /* Rapatkan padding konten */
             .invoice-content { 
                 padding: 10px 25px !important; 
                 flex-grow: 1; 
@@ -126,18 +162,21 @@
                 justify-content: space-between; 
             }
 
-            /* Rapatkan bagian bawah (tanda tangan & footer) */
+            /* Perbaikan Spasifikasi Cetak untuk Tanda Tangan */
             .signature-section { 
-                margin-top: 10px !important; 
-                height: 80px !important; /* Kecilkan sedikit tinggi kotak ttd */
-            }
-            
-            .footer-text {
-                margin-top: 10px !important;
+                margin-top: 5px !important; 
                 margin-bottom: 5px !important;
+                padding: 0 40px !important;
+            }
+            .sig-title {
+                margin-bottom: 35px !important; /* Rapatkan sedikit */
+            }
+            .footer-text {
+                margin-top: 5px !important;
+                margin-bottom: 10px !important;
             }
 
-            /* Rapatkan kotak kwitansi (jika mode kwitansi) */
+            /* Rapatkan kotak kwitansi */
             .kwitansi-box {
                 padding: 15px 20px !important;
                 margin: 5px auto !important;
@@ -149,7 +188,6 @@
                 print-color-adjust: exact !important; 
             }
 
-            /* Paksa ukuran kertas */
             @page { 
                 size: A4 portrait; 
                 margin: 0; 
