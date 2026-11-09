@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Preview Dokumen - TripByIhyat</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+    
     <style>
         :root {
             --primary: #6b162c;
@@ -21,6 +22,7 @@
         .btn-back { background-color: #6c757d; color: white; }
         .btn-print { background-color: var(--primary); color: white; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;}
         
+        /* Wrapper utama diset menyerupai kertas A4 */
         .invoice-wrapper { 
             background: white; 
             width: 210mm; 
@@ -34,7 +36,7 @@
         
         /* Header */
         .invoice-header { background: linear-gradient(135deg, #e0f2fe, #fce7f3); padding: 15px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
-        .main-logo { max-height: 100px; max-width: 80%; object-fit: contain; margin-bottom: 5px; display: block; margin-left: auto; margin-right: auto; }
+        .main-logo { max-height: 90px; max-width: 80%; object-fit: contain; margin-bottom: 5px; display: block; margin-left: auto; margin-right: auto; }
         .header-title { background-color: var(--primary); color: white; display: inline-block; padding: 6px 30px; border-radius: 20px; font-weight: 800; font-size: 1.1rem; letter-spacing: 1px; border: 3px solid var(--secondary); text-transform: uppercase; margin-top: 5px;}
         .header-subtitle { color: var(--primary); font-size: 0.85rem; font-style: italic; margin-top: 8px; font-weight: 600; }
         
@@ -67,124 +69,98 @@
         .status-lunas { color: var(--green); font-weight: 800; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; }
         .status-belum { color: var(--red); font-weight: 800; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* =========================================
-           PERBAIKAN: TANDA TANGAN (RATA & PROPORSIONAL)
-           ========================================= */
-        .signature-section { 
-            display: flex; 
-            justify-content: space-between; 
-            padding: 0 50px; /* Padding kiri kanan disesuaikan */
-            margin-top: 20px; 
-            text-align: center; 
-            font-size: 0.9rem; 
-        }
-        .sig-box { 
-            width: 220px; 
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between; /* Mendorong elemen atas dan bawah */
-            height: 90px; /* KUNCI: Mengunci tinggi kotak agar garis sejajar */
-        }
-        .sig-title { 
-            font-weight: 700; 
-        }
-        .sig-name { 
-            border-top: 1px solid #333; 
-            padding-top: 5px; 
-            font-weight: 700; 
-            margin-top: auto; /* Memastikan garis selalu di paling bawah */
-        }
-        .logo-sig { 
-            font-family: 'Pacifico', cursive; 
-            font-size: 1.8rem; 
-            color: #1e3a8a; 
-            transform: rotate(-5deg); 
-            margin-top: auto;
-            margin-bottom: 5px;
-        }
+        /* Tanda Tangan */
+        .signature-section { display: flex; justify-content: space-between; padding: 0 50px; margin-top: 20px; text-align: center; font-size: 0.9rem; }
+        .sig-box { width: 220px; display: flex; flex-direction: column; justify-content: space-between; height: 90px; }
+        .sig-title { font-weight: 700; }
+        .sig-name { border-top: 1px solid #333; padding-top: 5px; font-weight: 700; margin-top: auto; }
+        .logo-sig { font-family: 'Pacifico', cursive; font-size: 1.8rem; color: #1e3a8a; transform: rotate(-5deg); margin-top: auto; margin-bottom: 5px; }
         
         .footer-text { text-align: center; font-size: 0.8rem; color: var(--primary); font-style: italic; margin-top: 20px; margin-bottom: 10px; font-weight: 600; }
 
-        /* =========================================
-           LAYOUT KHUSUS KWITANSI (TANDA TERIMA)
-           ========================================= */
-        .kwitansi-box {
-            border: 2px dashed var(--primary);
-            border-radius: 8px;
-            padding: 30px;
-            margin: 20px 0;
-            background: #fff;
-        }
-        .kwitansi-row {
-            display: flex;
-            margin-bottom: 20px;
-            font-size: 1.05rem;
-            align-items: flex-start; 
-        }
-        .kwitansi-label {
-            width: 180px;
-            font-weight: 700;
-            color: var(--primary);
-            flex-shrink: 0; 
-        }
-        .kwitansi-value {
-            flex: 1;
-            font-weight: 600;
-            border-bottom: 1px solid #333;
-            padding-bottom: 5px;
-        }
-        .kwitansi-amount {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--primary);
-            background: var(--light-pink);
-            padding: 10px 20px;
-            border-radius: 8px;
-            display: inline-block;
-            border: 2px solid var(--secondary);
-        }
-        .terbilang-text {
-            font-style: italic;
-            color: #555;
-            font-size: 0.95rem;
-            margin-top: 10px;
-            background: #f9f9f9;
-            padding: 8px 12px;
-            border-radius: 4px;
-            border-left: 3px solid var(--secondary);
-        }
+        /* Layout Kwitansi (Tampilan Layar) */
+        .kwitansi-box { border: 2px dashed var(--primary); border-radius: 8px; padding: 25px 30px; margin: 10px auto; background: #fff; width: 100%; max-width: 800px; }
+        .kwitansi-row { display: flex; margin-bottom: 15px; font-size: 1.05rem; align-items: flex-start; }
+        .kwitansi-label { width: 180px; font-weight: 700; color: var(--primary); flex-shrink: 0; }
+        .kwitansi-value { flex: 1; font-weight: 600; border-bottom: 1px solid #333; padding-bottom: 5px; }
+        .kwitansi-amount { font-size: 1.8rem; font-weight: 800; color: var(--primary); background: var(--light-pink); padding: 10px 20px; border-radius: 8px; display: inline-block; border: 2px solid var(--secondary); }
+        .terbilang-text { font-style: italic; color: #555; font-size: 0.95rem; margin-top: 10px; background: #f9f9f9; padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--secondary); }
 
         /* =========================================
-           CSS PRINT PAS 1 HALAMAN A4
+           CSS PRINT (DIKUNCI 1 HALAMAN PORTRAIT)
            ========================================= */
         @media print {
+            /* Paksa body dan html pas ukuran A4 */
             html, body {
-                width: 210mm; height: 297mm; margin: 0 !important; padding: 0 !important;
-                background: white; overflow: hidden !important; display: block; 
+                width: 210mm;
+                height: 297mm;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: white;
+                overflow: hidden !important; 
+                display: block; 
             }
             .action-bar { display: none !important; }
+            
+            /* Kunci wrapper agar tidak lebih dari 1 halaman */
             .invoice-wrapper { 
-                box-shadow: none !important; width: 210mm !important; height: 297mm !important; 
-                margin: 0 !important; padding: 0 !important; border-radius: 0; 
-                page-break-after: avoid; page-break-inside: avoid;
-                display: flex; flex-direction: column;
+                box-shadow: none !important; 
+                width: 210mm !important; 
+                height: 297mm !important; 
+                margin: 0 !important;
+                padding: 0 !important;
+                border-radius: 0; 
+                page-break-after: avoid; 
+                page-break-inside: avoid;
+                display: flex;
+                flex-direction: column;
             }
-            .invoice-content { padding: 10px 25px !important; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-            @page { size: A4 portrait; margin: 0; }
+            
+            /* Rapatkan padding khusus saat dicetak agar tidak terpotong */
+            .invoice-content { 
+                padding: 10px 25px !important; 
+                flex-grow: 1; 
+                display: flex; 
+                flex-direction: column; 
+                justify-content: space-between; 
+            }
+
+            /* Rapatkan kotak kwitansi saat dicetak */
+            .kwitansi-box {
+                padding: 15px 20px !important;
+                margin: 5px auto !important;
+            }
+            .kwitansi-row { margin-bottom: 10px !important; }
+            .signature-section { margin-top: 10px !important; }
+
+            * { 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+            }
+
+            /* KUNCI: Selalu gunakan A4 Portrait */
+            @page { 
+                size: A4 portrait; 
+                margin: 0; 
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="action-bar">
+    <!-- Action Bar -->
+    <div class="action-bar" id="action-bar">
         <a href="index.html" class="btn btn-back">← Kembali</a>
         <button class="btn btn-print" onclick="window.print()">🖨️ Simpan Sebagai PDF</button>
     </div>
 
-    <div class="invoice-wrapper">
+    <!-- Wrapper -->
+    <div class="invoice-wrapper" id="invoice-wrapper">
         <div class="invoice-header">
-            <img src="logo.png" alt="Logo TripByIhyat" class="main-logo">
+            <!-- LOGO -->
+            <img src="logo.png" alt="Logo TripByIhyat" class="main-logo" id="main-logo" onerror="this.style.display='none'; document.getElementById('logo-fallback').style.display='block';">
+            <div id="logo-fallback" style="display:none; font-family:'Pacifico', cursive; font-size:1.8rem; color:var(--primary); margin-bottom:10px;">TripByIhyat</div>
+            
             <br>
             <div class="header-title" id="doc-title">MEMUAT...</div>
             <div class="header-subtitle" id="doc-subtitle">...</div>
@@ -278,7 +254,7 @@
                         </div>
                     </div>
 
-                    <div class="section-box">
+                    <div class="section-box" style="max-width: 800px; margin: 0 auto;">
                         <div class="section-title">♡ KETERANGAN</div>
                         <div class="status-box" style="margin-bottom:0;">
                             <p style="margin:0; color:#555;">Pembayaran ini telah diterima dan dicatat dalam sistem kami. Sisa tagihan (jika ada) akan tercantum pada Invoice.</p>
@@ -287,7 +263,7 @@
                 </div>
             </div>
 
-            <!-- BAGIAN 3: TANDA TANGAN -->
+            <!-- BAGIAN 3: TANDA TANGAN & FOOTER -->
             <div>
                 <div class="signature-section" id="sig-invoice" style="display:none;">
                     <div class="sig-box">
@@ -365,6 +341,7 @@
                 const dataTitle = document.getElementById('data-title');
 
                 if (printType === 'invoice') {
+                    // ================= MODE INVOICE =================
                     titleEl.innerText = "INVOICE TAGIHAN";
                     subtitleEl.innerText = "Mohon lakukan pembayaran sebelum tanggal jatuh tempo.";
                     dataTitle.innerText = "♡ DATA TAGIHAN & PELANGGAN";
@@ -404,6 +381,7 @@
                     }
 
                 } else {
+                    // ================= MODE TANDA TERIMA =================
                     titleEl.innerText = "TANDA TERIMA / KWITANSI";
                     subtitleEl.innerText = "Bukti transaksi pembayaran yang sah.";
                     dataTitle.innerText = "♡ DATA PENERIMAAN UANG";

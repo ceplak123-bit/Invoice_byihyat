@@ -56,6 +56,38 @@
             table { font-size: 0.8rem; }
             th, td { padding: 8px; }
         }
+
+        /* =========================================
+           CSS UNTUK MODAL PEMBAYARAN CUSTOM
+           ========================================= */
+        .modal-overlay {
+            display: none; /* Disembunyikan default */
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #fbecef; padding-bottom: 10px; margin-bottom: 15px; }
+        .modal-title { color: #6b162c; font-weight: 800; font-size: 1.1rem; margin: 0; }
+        .modal-info { font-size: 0.85rem; color: #555; margin-bottom: 15px; background: #f8f9fa; padding: 10px; border-radius: 6px; border-left: 3px solid #f7c45a; }
+        
+        .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+        .modal-actions .btn { padding: 10px; font-size: 0.9rem; }
+        .btn-cancel { background-color: #e9ecef; color: #333; }
     </style>
 </head>
 <body>
@@ -115,12 +147,10 @@
         <div class="form-row">
             <div class="form-group">
                 <label>Total Biaya (Rp)</label>
-                <!-- PERUBAHAN: type="text" dan tambah onkeyup="formatRupiah(this)" -->
                 <input type="text" id="totalBill" value="45.000.000" inputmode="numeric" onkeyup="formatRupiah(this)">
             </div>
             <div class="form-group">
                 <label>Uang Masuk / DP (Rp)</label>
-                <!-- PERUBAHAN: type="text" dan tambah onkeyup="formatRupiah(this)" -->
                 <input type="text" id="amountPaid" value="10.000.000" inputmode="numeric" onkeyup="formatRupiah(this)">
             </div>
             <div class="form-group">
@@ -159,25 +189,51 @@
         </div>
     </div>
 
+    <!-- =========================================
+         MODAL POP-UP UNTUK PEMBAYARAN LANJUTAN
+         ========================================= -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">💰 Terima Pembayaran</h3>
+            </div>
+            
+            <div class="modal-info" id="modal-info-text">
+                Sisa tagihan: Rp 0
+            </div>
+
+            <div class="form-group">
+                <label>Nominal Pembayaran Baru (Rp)</label>
+                <input type="text" id="inputNewPayment" placeholder="Contoh: 5.000.000" inputmode="numeric" onkeyup="formatRupiah(this)">
+            </div>
+
+            <div class="form-group">
+                <label>Keterangan Pembayaran</label>
+                <input type="text" id="inputNewDesc" placeholder="Contoh: Cicilan 1, Pelunasan" value="Pembayaran Lanjutan">
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-cancel" onclick="tutupModal()">Batal</button>
+                <button class="btn btn-receipt" onclick="simpanPembayaranBaru()">Simpan</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // --- FUNGSI FORMAT TITIK RUPIAH SAAT DIKETIK ---
         function formatRupiah(input) {
-            // Hapus semua karakter selain angka
             let value = input.value.replace(/[^0-9]/g, '');
-            
-            // Jika ada angkanya, format dengan titik
             if (value) {
                 value = parseInt(value, 10).toLocaleString('id-ID');
             }
-            
-            // Kembalikan nilai yang sudah diformat ke input
             input.value = value;
         }
 
-        // Format Rupiah untuk Tampilan Tabel
         const rupiah = (angka) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
-
         let daftarRiwayat = JSON.parse(localStorage.getItem('riwayatDokumen')) || [];
+        
+        // Variabel untuk menyimpan index data yang sedang diedit di modal
+        let currentPayIndex = -1;
 
         function tampilkanRiwayat() {
             const tbody = document.getElementById('tabelRiwayat');
@@ -203,7 +259,7 @@
                     <td style="color: #d9534f; font-weight:bold;">${rupiah(sisa)}</td>
                     <td><span class="status-badge ${statusClass}">${statusText}</span></td>
                     <td style="white-space: nowrap;">
-                        <button class="btn-action btn-pay" onclick="tambahPembayaran(${index})">+ Bayar</button>
+                        <button class="btn-action btn-pay" onclick="bukaModalPembayaran(${index})">+ Bayar</button>
                         <button class="btn-action btn-inv" onclick="cetakDokumen(${index}, 'invoice')">Invoice</button>
                         <button class="btn-action btn-rec" onclick="pilihTandaTerima(${index})">Tanda Terima</button>
                         <button class="btn-action btn-delete" onclick="hapusData(${index})">Hapus</button>
@@ -213,8 +269,8 @@
             });
         }
 
+        // Simpan Data Baru (DP Pertama)
         function simpanData(docType) {
-            // PERUBAHAN: Hapus titik (.) sebelum diubah menjadi angka desimal
             let rawTotalBill = document.getElementById('totalBill').value.replace(/\./g, '');
             let rawAmountPaid = document.getElementById('amountPaid').value.replace(/\./g, '');
 
@@ -228,11 +284,11 @@
                 pax: document.getElementById('pax').value,
                 package: document.getElementById('package').value,
                 travelDate: document.getElementById('travelDate').value,
-                totalBill: parseFloat(rawTotalBill) || 0, // Gunakan angka bersih
+                totalBill: parseFloat(rawTotalBill) || 0,
                 payments: [
                     {
                         date: document.getElementById('date').value,
-                        amount: parseFloat(rawAmountPaid) || 0, // Gunakan angka bersih
+                        amount: parseFloat(rawAmountPaid) || 0,
                         desc: document.getElementById('desc').value
                     }
                 ]
@@ -253,7 +309,12 @@
             window.location.href = 'preview.html';
         }
 
-        function tambahPembayaran(index) {
+        // ==========================================
+        // FUNGSI MODAL PEMBAYARAN
+        // ==========================================
+        
+        // Buka Modal
+        function bukaModalPembayaran(index) {
             const item = daftarRiwayat[index];
             const totalDibayar = item.payments.reduce((sum, p) => sum + p.amount, 0);
             const sisa = item.totalBill - totalDibayar;
@@ -263,22 +324,58 @@
                 return;
             }
 
-            let nominalStr = prompt(`Sisa tagihan: ${rupiah(sisa)}\nMasukkan nominal pembayaran baru (Angka saja, contoh: 5000000 atau 5.000.000):`);
-            if (!nominalStr) return; 
-
-            // PERUBAHAN: Bersihkan titik jika user tidak sengaja mengetiknya di prompt
-            let nominal = parseFloat(nominalStr.replace(/\./g, ''));
+            currentPayIndex = index; // Simpan index yang sedang dibayar
+            document.getElementById('modal-info-text').innerHTML = `
+                Invoice: <b>${item.invNo}</b><br>
+                Sisa tagihan: <b style="color: #d9534f;">${rupiah(sisa)}</b>
+            `;
             
+            // Reset form modal
+            document.getElementById('inputNewPayment').value = '';
+            document.getElementById('inputNewDesc').value = 'Pembayaran Lanjutan';
+            
+            // Tampilkan Modal
+            document.getElementById('paymentModal').style.display = 'flex';
+            
+            // Fokus ke input nominal
+            setTimeout(() => document.getElementById('inputNewPayment').focus(), 100);
+        }
+
+        // Tutup Modal
+        function tutupModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            currentPayIndex = -1;
+        }
+
+        // Simpan dari Modal
+        function simpanPembayaranBaru() {
+            if (currentPayIndex === -1) return;
+
+            let nominalStr = document.getElementById('inputNewPayment').value.replace(/\./g, '');
+            let nominal = parseFloat(nominalStr);
+            let ket = document.getElementById('inputNewDesc').value.trim();
+
             if (isNaN(nominal) || nominal <= 0) {
-                alert("Nominal tidak valid!");
+                alert("Masukkan nominal pembayaran yang valid!");
                 return;
             }
 
-            let ket = prompt("Keterangan Pembayaran (Contoh: Cicilan 1, Pelunasan):", "Pembayaran Lanjutan");
-            if (ket === null) ket = "Pembayaran Lanjutan";
+            if (ket === '') ket = "Pembayaran Lanjutan";
+
+            const item = daftarRiwayat[currentPayIndex];
+            const totalDibayar = item.payments.reduce((sum, p) => sum + p.amount, 0);
+            const sisa = item.totalBill - totalDibayar;
+
+            // Peringatan jika bayar melebihi sisa (opsional, tapi disarankan)
+            if (nominal > sisa) {
+                if (!confirm(`Nominal yang dimasukkan (${rupiah(nominal)}) melebihi sisa tagihan (${rupiah(sisa)}). Lanjutkan?`)) {
+                    return;
+                }
+            }
 
             const today = new Date().toISOString().split('T')[0];
 
+            // Tambahkan pembayaran ke array
             item.payments.push({
                 date: today,
                 amount: nominal,
@@ -286,16 +383,23 @@
             });
 
             localStorage.setItem('riwayatDokumen', JSON.stringify(daftarRiwayat));
-            tampilkanRiwayat();
+            
+            tutupModal(); // Tutup modal dulu
+            tampilkanRiwayat(); // Update tabel
 
-            if(confirm("Pembayaran berhasil disimpan. Cetak Tanda Terima sekarang?")) {
-                const lastPaymentIndex = item.payments.length - 1;
-                localStorage.setItem('invoiceAktif', JSON.stringify(item));
-                localStorage.setItem('printType', 'receipt');
-                localStorage.setItem('paymentIndex', lastPaymentIndex);
-                window.location.href = 'preview.html';
-            }
+            // Tanya apakah mau langsung cetak Tanda Terima
+            setTimeout(() => {
+                if(confirm("Pembayaran berhasil disimpan. Cetak Tanda Terima sekarang?")) {
+                    const lastPaymentIndex = item.payments.length - 1;
+                    localStorage.setItem('invoiceAktif', JSON.stringify(item));
+                    localStorage.setItem('printType', 'receipt');
+                    localStorage.setItem('paymentIndex', lastPaymentIndex);
+                    window.location.href = 'preview.html';
+                }
+            }, 300);
         }
+
+        // ==========================================
 
         function pilihTandaTerima(index) {
             const item = daftarRiwayat[index];
