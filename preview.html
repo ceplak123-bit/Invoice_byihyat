@@ -67,14 +67,43 @@
         .status-lunas { color: var(--green); font-weight: 800; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; }
         .status-belum { color: var(--red); font-weight: 800; font-size: 1.2rem; letter-spacing: 2px; text-transform: uppercase; }
 
-        /* Tanda Tangan */
-        .signature-section { display: flex; justify-content: space-between; padding: 0 40px; margin-top: 10px; text-align: center; font-size: 0.9rem; }
-        .sig-box { width: 200px; }
-        .sig-title { font-weight: 700; margin-bottom: 50px; }
-        .sig-name { border-top: 1px solid #333; padding-top: 5px; font-weight: 700; }
-        .logo-sig { font-family: 'Pacifico', cursive; font-size: 1.8rem; color: #1e3a8a; transform: rotate(-5deg); margin-bottom: 10px; }
+        /* =========================================
+           PERBAIKAN: TANDA TANGAN (RATA & PROPORSIONAL)
+           ========================================= */
+        .signature-section { 
+            display: flex; 
+            justify-content: space-between; 
+            padding: 0 50px; /* Padding kiri kanan disesuaikan */
+            margin-top: 20px; 
+            text-align: center; 
+            font-size: 0.9rem; 
+        }
+        .sig-box { 
+            width: 220px; 
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Mendorong elemen atas dan bawah */
+            height: 90px; /* KUNCI: Mengunci tinggi kotak agar garis sejajar */
+        }
+        .sig-title { 
+            font-weight: 700; 
+        }
+        .sig-name { 
+            border-top: 1px solid #333; 
+            padding-top: 5px; 
+            font-weight: 700; 
+            margin-top: auto; /* Memastikan garis selalu di paling bawah */
+        }
+        .logo-sig { 
+            font-family: 'Pacifico', cursive; 
+            font-size: 1.8rem; 
+            color: #1e3a8a; 
+            transform: rotate(-5deg); 
+            margin-top: auto;
+            margin-bottom: 5px;
+        }
         
-        .footer-text { text-align: center; font-size: 0.8rem; color: var(--primary); font-style: italic; margin-top: 15px; margin-bottom: 10px; font-weight: 600; }
+        .footer-text { text-align: center; font-size: 0.8rem; color: var(--primary); font-style: italic; margin-top: 20px; margin-bottom: 10px; font-weight: 600; }
 
         /* =========================================
            LAYOUT KHUSUS KWITANSI (TANDA TERIMA)
@@ -90,13 +119,13 @@
             display: flex;
             margin-bottom: 20px;
             font-size: 1.05rem;
-            align-items: flex-start; /* Agar sejajar atas jika teks panjang */
+            align-items: flex-start; 
         }
         .kwitansi-label {
             width: 180px;
             font-weight: 700;
             color: var(--primary);
-            flex-shrink: 0; /* Mencegah label mengecil */
+            flex-shrink: 0; 
         }
         .kwitansi-value {
             flex: 1;
@@ -114,7 +143,6 @@
             display: inline-block;
             border: 2px solid var(--secondary);
         }
-        /* Style untuk Terbilang */
         .terbilang-text {
             font-style: italic;
             color: #555;
@@ -237,7 +265,6 @@
                             <div class="kwitansi-label">Uang Sejumlah</div>
                             <div class="kwitansi-value" style="border-bottom:none;">
                                 <div class="kwitansi-amount" id="v-rec-amount">Rp 0</div>
-                                <!-- BARIS TERBILANG DITAMBAHKAN DI SINI -->
                                 <div class="terbilang-text" id="v-rec-terbilang">-</div>
                             </div>
                         </div>
@@ -292,7 +319,6 @@
     </div>
 
     <script>
-        // --- FUNGSI FORMAT RUPIAH & TANGGAL ---
         function formatRupiah(angka) {
             return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(angka);
         }
@@ -302,37 +328,22 @@
             return new Date(dateString).toLocaleDateString('id-ID', options);
         }
 
-        // --- FUNGSI TERBILANG (ANGKA KE TEKS) ---
         function terbilang(n) {
-            n = Math.floor(n); // Pastikan bilangan bulat
+            n = Math.floor(n);
             const bilangan = ["", "Satu", "Dua", "Tiga", "Empat", "Lima", "Enam", "Tujuh", "Delapan", "Sembilan", "Sepuluh", "Sebelas"];
-            
-            if (n < 12) {
-                return bilangan[n];
-            } else if (n < 20) {
-                return terbilang(n - 10) + " Belas";
-            } else if (n < 100) {
-                return terbilang(Math.floor(n / 10)) + " Puluh " + terbilang(n % 10);
-            } else if (n < 200) {
-                return "Seratus " + terbilang(n - 100);
-            } else if (n < 1000) {
-                return terbilang(Math.floor(n / 100)) + " Ratus " + terbilang(n % 100);
-            } else if (n < 2000) {
-                return "Seribu " + terbilang(n - 1000);
-            } else if (n < 1000000) {
-                return terbilang(Math.floor(n / 1000)) + " Ribu " + terbilang(n % 1000);
-            } else if (n < 1000000000) {
-                return terbilang(Math.floor(n / 1000000)) + " Juta " + terbilang(n % 1000000);
-            } else if (n < 1000000000000) {
-                return terbilang(Math.floor(n / 1000000000)) + " Miliar " + terbilang(n % 1000000000);
-            } else if (n < 1000000000000000) {
-                return terbilang(Math.floor(n / 1000000000000)) + " Triliun " + terbilang(n % 1000000000000);
-            } else {
-                return "Angka Terlalu Besar";
-            }
+            if (n < 12) return bilangan[n];
+            else if (n < 20) return terbilang(n - 10) + " Belas";
+            else if (n < 100) return terbilang(Math.floor(n / 10)) + " Puluh " + terbilang(n % 10);
+            else if (n < 200) return "Seratus " + terbilang(n - 100);
+            else if (n < 1000) return terbilang(Math.floor(n / 100)) + " Ratus " + terbilang(n % 100);
+            else if (n < 2000) return "Seribu " + terbilang(n - 1000);
+            else if (n < 1000000) return terbilang(Math.floor(n / 1000)) + " Ribu " + terbilang(n % 1000);
+            else if (n < 1000000000) return terbilang(Math.floor(n / 1000000)) + " Juta " + terbilang(n % 1000000);
+            else if (n < 1000000000000) return terbilang(Math.floor(n / 1000000000)) + " Miliar " + terbilang(n % 1000000000);
+            else if (n < 1000000000000000) return terbilang(Math.floor(n / 1000000000000)) + " Triliun " + terbilang(n % 1000000000000);
+            else return "Angka Terlalu Besar";
         }
 
-        // --- LOGIKA UTAMA SAAT HALAMAN DIMUAT ---
         window.onload = function() {
             const dataStr = localStorage.getItem('invoiceAktif');
             const printType = localStorage.getItem('printType') || 'invoice';
@@ -354,7 +365,6 @@
                 const dataTitle = document.getElementById('data-title');
 
                 if (printType === 'invoice') {
-                    // MODE INVOICE
                     titleEl.innerText = "INVOICE TAGIHAN";
                     subtitleEl.innerText = "Mohon lakukan pembayaran sebelum tanggal jatuh tempo.";
                     dataTitle.innerText = "♡ DATA TAGIHAN & PELANGGAN";
@@ -394,7 +404,6 @@
                     }
 
                 } else {
-                    // MODE TANDA TERIMA (KWITANSI)
                     titleEl.innerText = "TANDA TERIMA / KWITANSI";
                     subtitleEl.innerText = "Bukti transaksi pembayaran yang sah.";
                     dataTitle.innerText = "♡ DATA PENERIMAAN UANG";
@@ -409,13 +418,10 @@
                     
                     const selectedPayment = data.payments[pIndex];
 
-                    // Isi Data Kwitansi
                     document.getElementById('v-rec-client').innerText = data.client;
                     document.getElementById('v-rec-amount').innerText = formatRupiah(selectedPayment.amount);
                     
-                    // Panggil Fungsi Terbilang & tambahkan "Rupiah"
                     let teksTerbilang = terbilang(selectedPayment.amount).trim();
-                    // Rapikan spasi ganda
                     teksTerbilang = teksTerbilang.replace(/\s+/g, ' ');
                     document.getElementById('v-rec-terbilang').innerText = `Terbilang: ${teksTerbilang} Rupiah`;
 
@@ -425,7 +431,7 @@
 
             } else {
                 alert("Data tidak ditemukan.");
-                window.location.href = 'form.html';
+                window.location.href = 'index.html';
             }
         }
     </script>
