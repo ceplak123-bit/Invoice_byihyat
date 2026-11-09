@@ -34,12 +34,13 @@
         }
         
         /* Header */
-        .invoice-header { background: linear-gradient(135deg, #e0f2fe, #fce7f3); padding: 15px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
-        .main-logo { max-height: 90px; max-width: 80%; object-fit: contain; margin-bottom: 5px; display: block; margin-left: auto; margin-right: auto; }
-        .header-title { background-color: var(--primary); color: white; display: inline-block; padding: 6px 30px; border-radius: 20px; font-weight: 800; font-size: 1.1rem; letter-spacing: 1px; border: 3px solid var(--secondary); text-transform: uppercase; margin-top: 5px;}
-        .header-subtitle { color: var(--primary); font-size: 0.85rem; font-style: italic; margin-top: 8px; font-weight: 600; }
+        .invoice-header { background: linear-gradient(135deg, #e0f2fe, #fce7f3); padding: 12px 20px; text-align: center; border-bottom: 4px solid var(--primary); }
+        .main-logo { max-height: 80px; max-width: 80%; object-fit: contain; margin-bottom: 5px; display: block; margin-left: auto; margin-right: auto; }
+        .header-title { background-color: var(--primary); color: white; display: inline-block; padding: 5px 30px; border-radius: 20px; font-weight: 800; font-size: 1.1rem; letter-spacing: 1px; border: 3px solid var(--secondary); text-transform: uppercase; margin-top: 2px;}
+        .header-subtitle { color: var(--primary); font-size: 0.85rem; font-style: italic; margin-top: 5px; font-weight: 600; }
         
-        .invoice-content { padding: 20px 30px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        /* Konten Utama */
+        .invoice-content { padding: 20px 30px; flex-grow: 1; display: flex; flex-direction: column; }
         
         /* Kotak Data */
         .section-box { background-color: var(--light-pink); border-radius: 6px; margin-bottom: 15px; overflow: hidden; }
@@ -77,42 +78,36 @@
         .terbilang-text { font-style: italic; color: #555; font-size: 0.95rem; margin-top: 10px; background: #f9f9f9; padding: 8px 12px; border-radius: 4px; border-left: 3px solid var(--secondary); }
 
         /* =========================================
-           PERBAIKAN: TANDA TANGAN & FOOTER
+           TANDA TANGAN & FOOTER
            ========================================= */
         .signature-section { 
             display: flex; 
             justify-content: space-between; 
             padding: 0 50px; 
-            margin-top: 10px; /* Dikurangi agar naik ke atas */
-            margin-bottom: 10px; /* Jarak aman ke footer */
-            text-align: center; 
-            font-size: 0.9rem; 
+            margin-top: 30px; 
+            margin-bottom: 10px;
         }
         
-        .sig-box { 
-            width: 220px; 
-            display: flex;
-            flex-direction: column;
-            /* Height dihilangkan agar menyesuaikan isi secara natural */
-        }
+        .sig-box { width: 250px; text-align: center; }
+        .sig-title { font-weight: 700; margin-bottom: 5px; }
+        .sig-area { height: 70px; position: relative; display: flex; align-items: flex-end; justify-content: center; }
         
-        .sig-title { 
-            font-weight: 700; 
-            margin-bottom: 40px; /* Jarak dari teks ke area tanda tangan */
-        }
-        
+        /* PERUBAHAN: border-top dihapus agar garis hilang */
         .sig-name { 
-            border-top: 1px solid #333; 
             padding-top: 5px; 
             font-weight: 700; 
+            width: 100%; 
         }
         
         .logo-sig { 
             font-family: 'Pacifico', cursive; 
-            font-size: 1.8rem; 
+            font-size: 1.6rem; 
             color: #1e3a8a; 
-            transform: rotate(-5deg); 
-            margin-bottom: -5px; /* Tarik sedikit ke bawah agar dekat garis */
+            position: absolute;
+            bottom: 20px; /* Sedikit dinaikkan karena garis atas sudah hilang */
+            left: 50%;
+            transform: translateX(-50%) rotate(-5deg);
+            white-space: nowrap;
         }
         
         .footer-text { 
@@ -120,7 +115,7 @@
             font-size: 0.8rem; 
             color: var(--primary); 
             font-style: italic; 
-            margin-top: 5px; 
+            margin-top: 10px; 
             margin-bottom: 10px; 
             font-weight: 600; 
         }
@@ -159,24 +154,14 @@
                 flex-grow: 1; 
                 display: flex; 
                 flex-direction: column; 
-                justify-content: space-between; 
             }
 
-            /* Perbaikan Spasifikasi Cetak untuk Tanda Tangan */
             .signature-section { 
-                margin-top: 5px !important; 
+                margin-top: 25px !important; 
                 margin-bottom: 5px !important;
                 padding: 0 40px !important;
             }
-            .sig-title {
-                margin-bottom: 35px !important; /* Rapatkan sedikit */
-            }
-            .footer-text {
-                margin-top: 5px !important;
-                margin-bottom: 10px !important;
-            }
-
-            /* Rapatkan kotak kwitansi */
+            
             .kwitansi-box {
                 padding: 15px 20px !important;
                 margin: 5px auto !important;
@@ -316,24 +301,32 @@
                 <div class="signature-section" id="sig-invoice" style="display:none;">
                     <div class="sig-box">
                         <div class="sig-title">Penerima,</div>
-                        <div class="sig-name">( ____________________ )</div>
+                        <div class="sig-area">
+                            <div class="sig-name">( ____________________ )</div>
+                        </div>
                     </div>
                     <div class="sig-box">
                         <div class="sig-title">Hormat Kami,</div>
-                        <div class="logo-sig">TripbyIhyat</div>
-                        <div class="sig-name">( ____________________ )</div>
+                        <div class="sig-area">
+                            <div class="logo-sig">TripbyIhyat</div>
+                            <div class="sig-name">( ____________________ )</div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="signature-section" id="sig-receipt" style="display:none;">
                     <div class="sig-box">
                         <div class="sig-title">Penyetor / Pembayar,</div>
-                        <div class="sig-name">( ____________________ )</div>
+                        <div class="sig-area">
+                            <div class="sig-name">( ____________________ )</div>
+                        </div>
                     </div>
                     <div class="sig-box">
                         <div class="sig-title">Penerima Uang,</div>
-                        <div class="logo-sig">TripbyIhyat</div>
-                        <div class="sig-name">( ____________________ )</div>
+                        <div class="sig-area">
+                            <div class="logo-sig">TripbyIhyat</div>
+                            <div class="sig-name">( ____________________ )</div>
+                        </div>
                     </div>
                 </div>
 
